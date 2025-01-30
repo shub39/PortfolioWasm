@@ -300,7 +300,8 @@ fun NavHeader(
 
                                         IconButton(
                                             onClick = { changeSeedColor(controller.selectedColor.value) },
-                                            enabled = seedColor != controller.selectedColor.value
+                                            enabled = seedColor != controller.selectedColor.value,
+                                            colors = IconButtonDefaults.filledIconButtonColors()
                                         ) {
                                             Icon(
                                                 imageVector = FontAwesomeIcons.Solid.Check,

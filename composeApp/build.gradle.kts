@@ -1,7 +1,6 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
@@ -14,10 +13,6 @@ kotlin {
     wasmJs {
         browser()
         binaries.executable()
-    }
-
-    composeCompiler {
-        featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
     }
 
     sourceSets {
