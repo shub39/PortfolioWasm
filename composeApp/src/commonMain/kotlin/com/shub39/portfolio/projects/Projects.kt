@@ -73,7 +73,7 @@ fun Projects() {
             AnimatedContent(projectType) {
                 when (it) {
                     ProjectTypes.Apps -> AppPager()
-                    ProjectTypes.Others -> OtherList()
+                    ProjectTypes.Others -> OtherPager()
                 }
             }
         }

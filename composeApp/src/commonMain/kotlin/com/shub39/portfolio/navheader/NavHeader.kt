@@ -35,6 +35,8 @@ fun NavHeader(
     var paletteSelectDialog by remember { mutableStateOf(false) }
     var siteInfoDialog by remember { mutableStateOf(false) }
 
+    val cardColors = CardDefaults.cardColors()
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -123,7 +125,12 @@ fun NavHeader(
                                     )
                                 }
                             },
-                            modifier = Modifier.clip(MaterialTheme.shapes.large)
+                            modifier = Modifier.clip(MaterialTheme.shapes.large),
+                            colors = ListItemDefaults.colors(
+                                containerColor = cardColors.containerColor,
+                                headlineColor = cardColors.contentColor,
+                                trailingIconColor = cardColors.contentColor
+                            )
                         )
                     }
 
@@ -151,7 +158,12 @@ fun NavHeader(
                                     )
                                 }
                             },
-                            modifier = Modifier.clip(MaterialTheme.shapes.large)
+                            modifier = Modifier.clip(MaterialTheme.shapes.large),
+                            colors = ListItemDefaults.colors(
+                                containerColor = cardColors.containerColor,
+                                headlineColor = cardColors.contentColor,
+                                trailingIconColor = cardColors.contentColor
+                            )
                         )
                     }
 
@@ -179,7 +191,12 @@ fun NavHeader(
                                     )
                                 }
                             },
-                            modifier = Modifier.clip(MaterialTheme.shapes.large)
+                            modifier = Modifier.clip(MaterialTheme.shapes.large),
+                            colors = ListItemDefaults.colors(
+                                containerColor = cardColors.containerColor,
+                                headlineColor = cardColors.contentColor,
+                                trailingIconColor = cardColors.contentColor
+                            )
                         )
                     }
                 }
@@ -189,7 +206,6 @@ fun NavHeader(
 
     if (paletteSelectDialog) {
         val controller = rememberColorPickerController()
-        val cardColors = CardDefaults.cardColors()
 
         Dialog(
             onDismissRequest = { paletteSelectDialog = false }

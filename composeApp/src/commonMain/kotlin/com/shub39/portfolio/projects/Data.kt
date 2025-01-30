@@ -47,12 +47,12 @@ val MY_APPS = listOf<App>(
 val MY_PROJECTS = listOf<OtherProject>(
     OtherProject(
         name = "Portfolio Site",
-        shortDesc = "My portfolio site made using kobweb",
-        desc = "This site was made in compose multiplatform using kobweb, " +
-                "a web framework for kotlin and compose. This is for primarily " +
+        shortDesc = "My portfolio site made using kotlin/wasm",
+        desc = "This site was made in compose multiplatform using kotlin/wasm, " +
+                "This is for primarily " +
                 "showcasing my work and some basic utilities like color pickers " +
                 "that I find myself using often.",
-        github = "https://github.com/shub39/portfolio"
+        github = "https://github.com/shub39/PortfolioWasm"
     ),
 
     OtherProject(

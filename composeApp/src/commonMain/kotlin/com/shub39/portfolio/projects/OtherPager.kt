@@ -1,14 +1,24 @@
 package com.shub39.portfolio.projects
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -16,22 +26,18 @@ import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
-import compose.icons.fontawesomeicons.brands.GooglePlay
 import compose.icons.fontawesomeicons.solid.ArrowLeft
 import compose.icons.fontawesomeicons.solid.ArrowRight
-import compose.icons.fontawesomeicons.solid.Globe
-import compose.icons.fontawesomeicons.solid.Store
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.JetBrainsMono_Regular
 import portfolio.composeapp.generated.resources.Res
 
 @Composable
-fun AppPager() {
+fun OtherPager() {
     val uriHandler = LocalUriHandler.current
     val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState { MY_APPS.size }
+    val pagerState = rememberPagerState { MY_PROJECTS.size }
 
     val jetbrains = FontFamily(Font(Res.font.JetBrainsMono_Regular))
     val cardColors = CardDefaults.cardColors()
@@ -43,7 +49,7 @@ fun AppPager() {
             contentPadding = PaddingValues(16.dp),
             userScrollEnabled = false
         ) {
-            val app = MY_APPS[it]
+            val project = MY_PROJECTS[it]
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -53,53 +59,25 @@ fun AppPager() {
                 ListItem(
                     headlineContent = {
                         Text(
-                            text = app.name
+                            text = project.name
                         )
                     },
                     supportingContent = {
-                        Column {
-                            Text(
-                                text = app.shortDesc,
-                                fontFamily = jetbrains
-                            )
-
-                            Row {
-                                IconButton(
-                                    onClick = { uriHandler.openUri(app.github) }
-                                ) {
-                                    Icon(
-                                        imageVector = FontAwesomeIcons.Brands.Github,
-                                        contentDescription = "Github",
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-
-                                app.links.forEach {
-                                    IconButton(
-                                        onClick = { uriHandler.openUri(it.value) }
-                                    ) {
-                                        Icon(
-                                            imageVector = when (it.key) {
-                                                AppSources.PlayStore.name -> FontAwesomeIcons.Brands.GooglePlay
-                                                AppSources.FDroid.name -> FontAwesomeIcons.Solid.Store
-                                                else -> FontAwesomeIcons.Solid.Globe
-                                            },
-                                            contentDescription = "Link",
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    leadingContent = {
-                        Image(
-                            painter = painterResource(app.iconRes),
-                            contentDescription = "App Icon",
-                            modifier = Modifier
-                                .clip(MaterialTheme.shapes.large)
-                                .size(100.dp)
+                        Text(
+                            text = project.shortDesc,
+                            fontFamily = jetbrains
                         )
+                    },
+                    trailingContent = {
+                        IconButton(
+                            onClick = { uriHandler.openUri(project.github) }
+                        ) {
+                            Icon(
+                                imageVector = FontAwesomeIcons.Brands.Github,
+                                contentDescription = "Github",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     },
                     colors = ListItemDefaults.colors(
                         containerColor = cardColors.containerColor,
@@ -133,10 +111,10 @@ fun AppPager() {
             IconButton(
                 onClick = {
                     coroutineScope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage  + 1)
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
                 },
-                enabled = pagerState.currentPage < MY_APPS.size - 1
+                enabled = pagerState.currentPage < MY_PROJECTS.size - 1
             ) {
                 Icon(
                     imageVector = FontAwesomeIcons.Solid.ArrowRight,
