@@ -1,6 +1,5 @@
 package com.shub39.portfolio.navheader
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -20,14 +19,12 @@ import com.github.skydoves.colorpicker.compose.BrightnessSlider
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.materialkolor.PaletteStyle
-import com.materialkolor.ktx.toHct
 import com.materialkolor.ktx.toHex
 import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.Check
-import compose.icons.fontawesomeicons.solid.Moon
-import compose.icons.fontawesomeicons.solid.PaintBrush
-import compose.icons.fontawesomeicons.solid.Sun
+import compose.icons.fontawesomeicons.brands.Github
+import compose.icons.fontawesomeicons.solid.*
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -40,6 +37,7 @@ fun NavHeader(
     changePalette: (PaletteStyle) -> Unit
 ) {
     var paletteSelectDialog by remember { mutableStateOf(false) }
+    var siteInfoDialog by remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -71,6 +69,121 @@ fun NavHeader(
                 contentDescription = "Change Palette",
                 modifier = Modifier.size(24.dp)
             )
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        IconButton(
+            onClick = { siteInfoDialog = true }
+        ) {
+            Icon(
+                imageVector = FontAwesomeIcons.Solid.Info,
+                contentDescription = "Info",
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+
+    if (siteInfoDialog) {
+        val uriHandler = LocalUriHandler.current
+
+        Dialog(
+            onDismissRequest = { siteInfoDialog = false }
+        ) {
+            Card(
+                modifier = Modifier.padding(vertical = 32.dp),
+                shape = MaterialTheme.shapes.large
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    item {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = "Source"
+                                )
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = "Link to the Site's Github Repo"
+                                )
+                            },
+                            trailingContent = {
+                                IconButton(
+                                    onClick = {
+                                        uriHandler.openUri("https://github.com/shub39/PortfolioWasm")
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = FontAwesomeIcons.Brands.Github,
+                                        contentDescription = "Github"
+                                    )
+                                }
+                            },
+                            modifier = Modifier.clip(MaterialTheme.shapes.large)
+                        )
+                    }
+
+                    item {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = "MaterialKolor"
+                                )
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = "Library used for generating Color Palettes"
+                                )
+                            },
+                            trailingContent = {
+                                IconButton(
+                                    onClick = {
+                                        uriHandler.openUri("https://github.com/jordond/MaterialKolor")
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = FontAwesomeIcons.Brands.Github,
+                                        contentDescription = "Github"
+                                    )
+                                }
+                            },
+                            modifier = Modifier.clip(MaterialTheme.shapes.large)
+                        )
+                    }
+
+                    item {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = "Colorpicker Compose"
+                                )
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = "Library used for the color picker"
+                                )
+                            },
+                            trailingContent = {
+                                IconButton(
+                                    onClick = {
+                                        uriHandler.openUri("https://github.com/skydoves/colorpicker-compose")
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = FontAwesomeIcons.Brands.Github,
+                                        contentDescription = "Github"
+                                    )
+                                }
+                            },
+                            modifier = Modifier.clip(MaterialTheme.shapes.large)
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -187,11 +300,7 @@ fun NavHeader(
 
                                         IconButton(
                                             onClick = { changeSeedColor(controller.selectedColor.value) },
-                                            colors = if (seedColor != controller.selectedColor.value) {
-                                                IconButtonDefaults.filledIconButtonColors()
-                                            } else {
-                                                IconButtonDefaults.iconButtonColors()
-                                            }
+                                            enabled = seedColor != controller.selectedColor.value
                                         ) {
                                             Icon(
                                                 imageVector = FontAwesomeIcons.Solid.Check,
