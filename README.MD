@@ -1,6 +1,3 @@
-# Compose Multiplatform Application
+# Portfolio Wasm
 
-### Wasm Browser (Alpha)
-Run the browser application: `./gradlew :composeApp:wasmJsBrowserDevelopmentRun --continue`
-Run browser UI tests: `./gradlew :composeApp:wasmJsBrowserTest`
-
+My portfolio site made with Kotlin Wasm
