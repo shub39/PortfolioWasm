@@ -8,19 +8,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.materialkolor.DynamicMaterialTheme
-import com.materialkolor.PaletteStyle
 import com.shub39.portfolio.intro.Intro
 import com.shub39.portfolio.navheader.NavHeader
+import com.shub39.portfolio.projects.Projects
 import com.shub39.portfolio.theme.provideTypography
 
 @Composable
 internal fun App() {
-    var isDark by remember { mutableStateOf(true) }
-    var seedColor by remember { mutableStateOf(Color.Red) }
-    var style by remember { mutableStateOf(PaletteStyle.TonalSpot) }
+    var colorState by remember { mutableStateOf(ColorState()) }
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -35,9 +32,10 @@ internal fun App() {
     )
 
     DynamicMaterialTheme(
-        seedColor = seedColor,
-        useDarkTheme = isDark,
-        style = style,
+        seedColor = colorState.seedColor,
+        useDarkTheme = colorState.isDark,
+        withAmoled = colorState.isAmoled,
+        style = colorState.style,
         typography = provideTypography(1f),
         animate = true
     ) {
@@ -59,26 +57,23 @@ internal fun App() {
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     NavHeader(
-                        isDark = isDark,
-                        seedColor = seedColor,
-                        palette = style,
-                        changeSeedColor = { seedColor = it },
-                        changeTheme = { isDark = it },
-                        changePalette = { style = it }
+                        state = colorState,
+                        editState = { colorState = it }
                     )
 
                     LazyColumn (
                         modifier = Modifier.fillMaxSize(),
-                        state = listState
+                        state = listState,
+                        verticalArrangement = Arrangement.spacedBy(32.dp)
                     ) {
                         item {
                             Intro(
-                                isDark = isDark
+                                isDark = colorState.isDark
                             )
                         }
 
                         item {
-
+                            Projects()
                         }
                     }
                 }

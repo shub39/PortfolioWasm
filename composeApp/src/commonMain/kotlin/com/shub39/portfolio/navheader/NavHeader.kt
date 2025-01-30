@@ -8,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.buildAnnotatedString
@@ -20,6 +19,7 @@ import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.materialkolor.PaletteStyle
 import com.materialkolor.ktx.toHex
+import com.shub39.portfolio.ColorState
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
@@ -29,12 +29,8 @@ import compose.icons.fontawesomeicons.solid.*
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun NavHeader(
-    isDark: Boolean,
-    seedColor: Color,
-    palette: PaletteStyle,
-    changeSeedColor: (Color) -> Unit,
-    changeTheme: (Boolean) -> Unit,
-    changePalette: (PaletteStyle) -> Unit
+    state: ColorState,
+    editState: (ColorState) -> Unit
 ) {
     var paletteSelectDialog by remember { mutableStateOf(false) }
     var siteInfoDialog by remember { mutableStateOf(false) }
@@ -45,11 +41,15 @@ fun NavHeader(
     ) {
         IconButton(
             onClick = {
-                changeTheme(!isDark)
+                editState(
+                    state.copy(
+                        isDark = !state.isDark
+                    )
+                )
             }
         ) {
             Icon(
-                imageVector = if (isDark) {
+                imageVector = if (state.isDark) {
                     FontAwesomeIcons.Solid.Moon
                 } else {
                     FontAwesomeIcons.Solid.Sun
@@ -92,7 +92,7 @@ fun NavHeader(
         ) {
             Card(
                 modifier = Modifier.padding(vertical = 32.dp),
-                shape = MaterialTheme.shapes.large
+                shape = MaterialTheme.shapes.extraLarge
             ) {
                 LazyColumn(
                     modifier = Modifier
@@ -196,7 +196,7 @@ fun NavHeader(
         ) {
             Card(
                 modifier = Modifier.padding(vertical = 32.dp),
-                shape = MaterialTheme.shapes.large
+                shape = MaterialTheme.shapes.extraLarge
             ) {
                 LazyColumn(
                     modifier = Modifier
@@ -219,8 +219,47 @@ fun NavHeader(
                             },
                             trailingContent = {
                                 Switch(
-                                    checked = isDark,
-                                    onCheckedChange = { changeTheme(it) }
+                                    checked = state.isDark,
+                                    onCheckedChange = {
+                                        editState(
+                                            state.copy(
+                                                isDark = !state.isDark
+                                            )
+                                        )
+                                    }
+                                )
+                            },
+                            colors = ListItemDefaults.colors(
+                                containerColor = cardColors.containerColor,
+                                headlineColor = cardColors.contentColor
+                            )
+                        )
+                    }
+
+                    item {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = "Amoled",
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = "Why would you turn this on?"
+                                )
+                            },
+                            trailingContent = {
+                                Switch(
+                                    checked = state.isAmoled,
+                                    onCheckedChange = {
+                                        editState(
+                                            state.copy(
+                                                isAmoled = !state.isAmoled
+                                            )
+                                        )
+                                    },
+                                    enabled = state.isDark
                                 )
                             },
                             colors = ListItemDefaults.colors(
@@ -257,8 +296,14 @@ fun NavHeader(
                                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                     triplet.forEach {
                                         InputChip(
-                                            selected = palette == it,
-                                            onClick = { changePalette(it) },
+                                            selected = state.style == it,
+                                            onClick = {
+                                                editState(
+                                                    state.copy(
+                                                        style = it
+                                                    )
+                                                )
+                                            },
                                             label = {
                                                 Text(
                                                     text = it.name
@@ -299,8 +344,14 @@ fun NavHeader(
                                         )
 
                                         IconButton(
-                                            onClick = { changeSeedColor(controller.selectedColor.value) },
-                                            enabled = seedColor != controller.selectedColor.value,
+                                            onClick = {
+                                                editState(
+                                                    state.copy(
+                                                        seedColor = controller.selectedColor.value
+                                                    )
+                                                )
+                                            },
+                                            enabled = state.seedColor != controller.selectedColor.value,
                                             colors = IconButtonDefaults.filledIconButtonColors()
                                         ) {
                                             Icon(
@@ -323,7 +374,7 @@ fun NavHeader(
                                     .height(250.dp)
                                     .padding(10.dp),
                                 controller = controller,
-                                initialColor = seedColor
+                                initialColor = state.seedColor
                             )
 
                             BrightnessSlider(
@@ -332,7 +383,7 @@ fun NavHeader(
                                     .padding(10.dp)
                                     .height(35.dp),
                                 controller = controller,
-                                initialColor = seedColor
+                                initialColor = state.seedColor
                             )
                         }
                     }
