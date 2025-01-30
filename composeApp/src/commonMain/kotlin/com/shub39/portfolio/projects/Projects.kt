@@ -2,8 +2,6 @@ package com.shub39.portfolio.projects
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -74,7 +72,7 @@ fun Projects() {
 
             AnimatedContent(projectType) {
                 when (it) {
-                    ProjectTypes.Apps -> AppList()
+                    ProjectTypes.Apps -> AppPager()
                     ProjectTypes.Others -> OtherList()
                 }
             }

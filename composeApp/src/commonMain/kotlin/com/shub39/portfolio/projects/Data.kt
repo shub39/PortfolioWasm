@@ -34,7 +34,7 @@ val MY_APPS = listOf<App>(
     ),
     App(
         name = "Plumbus",
-        shortDesc = "Multiplatform app to browse info on the Rick and Morty universe",
+        shortDesc = "app to browse info on Rick and Morty",
         desc = "Plumbus is a Compose Multiplatform app targeting android and desktop that " +
                 "lets you browse information on characters, episodes and locations from the Rick and Morty" +
                 " Universe",
