@@ -8,9 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.github.skydoves.colorpicker.compose.AlphaTile
@@ -18,7 +16,6 @@ import com.github.skydoves.colorpicker.compose.BrightnessSlider
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.materialkolor.PaletteStyle
-import com.materialkolor.ktx.toHex
 import com.shub39.portfolio.ColorState
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
@@ -216,7 +213,6 @@ fun NavHeader(
             ) {
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxSize()
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -243,39 +239,6 @@ fun NavHeader(
                                             )
                                         )
                                     }
-                                )
-                            },
-                            colors = ListItemDefaults.colors(
-                                containerColor = cardColors.containerColor,
-                                headlineColor = cardColors.contentColor
-                            )
-                        )
-                    }
-
-                    item {
-                        ListItem(
-                            headlineContent = {
-                                Text(
-                                    text = "Amoled",
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                            },
-                            supportingContent = {
-                                Text(
-                                    text = "Why would you turn this on?"
-                                )
-                            },
-                            trailingContent = {
-                                Switch(
-                                    checked = state.isAmoled,
-                                    onCheckedChange = {
-                                        editState(
-                                            state.copy(
-                                                isAmoled = !state.isAmoled
-                                            )
-                                        )
-                                    },
-                                    enabled = state.isDark
                                 )
                             },
                             colors = ListItemDefaults.colors(
@@ -405,58 +368,35 @@ fun NavHeader(
                     }
 
                     item {
-                        val clipboardManager = LocalClipboardManager.current
-                        var colorType by remember { mutableStateOf(ColorType.HEX) }
-
                         ListItem(
                             headlineContent = {
                                 Text(
-                                    text = "Copy Colors",
+                                    text = "Amoled",
                                     style = MaterialTheme.typography.titleLarge
                                 )
                             },
                             supportingContent = {
                                 Text(
-                                    text = "Click on the color to copy to clipboard"
+                                    text = "Why would you turn this on?"
                                 )
                             },
                             trailingContent = {
-                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                    ColorType.entries.toList().forEach {
-                                        TextButton(
-                                            onClick = { colorType = it },
-                                            colors = if (colorType == it) {
-                                                ButtonDefaults.buttonColors()
-                                            } else {
-                                                ButtonDefaults.filledTonalButtonColors()
-                                            }
-                                        ) {
-                                            Text(text = it.name)
-                                        }
-                                    }
-                                }
+                                Switch(
+                                    checked = state.isAmoled,
+                                    onCheckedChange = {
+                                        editState(
+                                            state.copy(
+                                                isAmoled = !state.isAmoled
+                                            )
+                                        )
+                                    },
+                                    enabled = state.isDark
+                                )
                             },
                             colors = ListItemDefaults.colors(
                                 containerColor = cardColors.containerColor,
-                                headlineColor = cardColors.contentColor,
-                                trailingIconColor = cardColors.contentColor
+                                headlineColor = cardColors.contentColor
                             )
-                        )
-
-                        ColorSchemeDisplay(
-                            onClick = {
-                                clipboardManager.setText(
-                                    annotatedString = buildAnnotatedString {
-                                        append(
-                                            when (colorType) {
-                                                ColorType.HEX -> it.toHex().toString()
-                                                ColorType.RGB -> it.toRgbString()
-                                                ColorType.HSL -> it.toHslString()
-                                            }
-                                        )
-                                    }
-                                )
-                            }
                         )
                     }
                 }

@@ -1,4 +1,4 @@
-package com.shub39.portfolio.navheader
+package com.shub39.portfolio.colorPicker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -87,7 +88,9 @@ fun ColorBox(
             text = name,
             color = if (color.luminance() > 0.5f) Color.Black else Color.White,
             textAlign = TextAlign.Center,
-            fontSize = 14.sp
+            fontSize = 14.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

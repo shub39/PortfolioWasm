@@ -1,4 +1,4 @@
-package com.shub39.portfolio.navheader
+package com.shub39.portfolio.colorPicker
 
 import androidx.compose.ui.graphics.Color
 

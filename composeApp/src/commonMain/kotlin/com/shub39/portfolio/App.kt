@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.materialkolor.DynamicMaterialTheme
+import com.shub39.portfolio.colorPicker.ColorPicker
 import com.shub39.portfolio.intro.Intro
 import com.shub39.portfolio.navheader.NavHeader
 import com.shub39.portfolio.projects.Projects
@@ -20,13 +21,12 @@ internal fun App() {
     var colorState by remember { mutableStateOf(ColorState()) }
 
     val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
 
     val currentItemIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
 
     val topPadding by animateDpAsState(
         targetValue = when {
-            currentItemIndex > 1 -> 16.dp
+            currentItemIndex > 0 -> 16.dp
             else -> 32.dp
         }
     )
@@ -75,6 +75,12 @@ internal fun App() {
                         item {
                             Projects()
                         }
+
+                        item {
+                            ColorPicker()
+                        }
+
+                        item { Spacer(modifier = Modifier.padding(60.dp)) }
                     }
                 }
             }

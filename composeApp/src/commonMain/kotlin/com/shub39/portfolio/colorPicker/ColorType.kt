@@ -1,4 +1,4 @@
-package com.shub39.portfolio.navheader
+package com.shub39.portfolio.colorPicker
 
 enum class ColorType {
     HEX,
