@@ -22,8 +22,6 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.coil)
-            implementation(libs.coil.network.ktor)
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.materialKolor)
             implementation(libs.compose.colorpicker)
@@ -36,4 +34,11 @@ kotlin {
         }
 
     }
+}
+
+tasks.register<Copy>("copyWasmArtifacts") {
+    dependsOn("wasmJsBrowserDistribution")
+
+    from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
+    into(layout.projectDirectory.dir("site"))
 }

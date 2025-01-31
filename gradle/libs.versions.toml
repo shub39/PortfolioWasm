@@ -2,15 +2,12 @@
 
 kotlin = "2.1.0"
 compose = "1.7.3"
-coil = "3.0.4"
 composeIcons = "1.1.1"
 materialKolor = "2.0.1"
 colorpicker = "1.1.2"
 
 [libraries]
 
-coil = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
