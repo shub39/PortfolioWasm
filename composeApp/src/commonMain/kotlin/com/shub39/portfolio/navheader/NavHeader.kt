@@ -208,7 +208,7 @@ fun NavHeader(
             onDismissRequest = { paletteSelectDialog = false }
         ) {
             Card(
-                modifier = Modifier.padding(vertical = 32.dp),
+                modifier = Modifier.padding(32.dp),
                 shape = MaterialTheme.shapes.extraLarge
             ) {
                 LazyColumn(

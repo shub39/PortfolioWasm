@@ -27,7 +27,7 @@ internal fun App() {
     val topPadding by animateDpAsState(
         targetValue = when {
             currentItemIndex > 0 -> 16.dp
-            else -> 32.dp
+            else -> 64.dp
         }
     )
 
