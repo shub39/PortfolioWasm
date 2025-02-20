@@ -1,4 +1,4 @@
-package com.shub39.portfolio.colorPicker
+package com.shub39.portfolio.color
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

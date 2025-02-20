@@ -3,11 +3,13 @@ package com.shub39.portfolio.intro
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import com.shub39.portfolio.components.ExpandingIconButton
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
@@ -17,12 +19,21 @@ import compose.icons.fontawesomeicons.brands.Telegram
 import compose.icons.fontawesomeicons.solid.Envelope
 
 @Composable
-fun SocialLinksRow() {
+fun SocialLinksRow(
+    modifier: Modifier = Modifier
+) {
     val uriHandler = LocalUriHandler.current
 
-    Row {
-        IconButton(
-            onClick = { uriHandler.openUri("https://github.com/shub39") }
+    val iconColors = IconButtonDefaults.filledTonalIconButtonColors(
+        contentColor = MaterialTheme.colorScheme.onSecondary,
+        containerColor = MaterialTheme.colorScheme.secondary
+    )
+
+    Row(modifier = modifier) {
+        ExpandingIconButton(
+            onClick = { uriHandler.openUri("https://github.com/shub39") },
+            colors = iconColors,
+            tooltip = "Github"
         ) {
             Icon(
                 imageVector = FontAwesomeIcons.Brands.Github,
@@ -31,8 +42,10 @@ fun SocialLinksRow() {
             )
         }
 
-        IconButton(
-            onClick = { uriHandler.openUri("https://t.me/shub39") }
+        ExpandingIconButton(
+            onClick = { uriHandler.openUri("https://t.me/shub39") },
+            colors = iconColors,
+            tooltip = "Telegram"
         ) {
             Icon(
                 imageVector = FontAwesomeIcons.Brands.Telegram,
@@ -41,8 +54,10 @@ fun SocialLinksRow() {
             )
         }
 
-        IconButton(
-            onClick = { uriHandler.openUri("https://www.linkedin.com/in/shub39/") }
+        ExpandingIconButton(
+            onClick = { uriHandler.openUri("https://www.linkedin.com/in/shub39/") },
+            colors = iconColors,
+            tooltip = "LinkedIn"
         ) {
             Icon(
                 imageVector = FontAwesomeIcons.Brands.Linkedin,
@@ -51,8 +66,10 @@ fun SocialLinksRow() {
             )
         }
 
-        IconButton(
-            onClick = { uriHandler.openUri("mailto:cptnshubham39@gmail.com") }
+        ExpandingIconButton(
+            onClick = { uriHandler.openUri("mailto:cptnshubham39@gmail.com") },
+            colors = iconColors,
+            tooltip = "Email"
         ) {
             Icon(
                 imageVector = FontAwesomeIcons.Solid.Envelope,

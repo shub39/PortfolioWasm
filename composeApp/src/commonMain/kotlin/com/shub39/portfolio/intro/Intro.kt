@@ -1,85 +1,90 @@
 package com.shub39.portfolio.intro
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import com.shub39.portfolio.WindowSize
 import org.jetbrains.compose.resources.Font
 import portfolio.composeapp.generated.resources.JetBrainsMono_Regular
 import portfolio.composeapp.generated.resources.Res
 
 @Composable
 fun Intro(
-    isDark: Boolean
+    modifier: Modifier = Modifier,
+    windowSize: WindowSize
 ) {
     val jetbrains = FontFamily(Font(Res.font.JetBrainsMono_Regular))
-    val cardColors = CardDefaults.cardColors()
-
-    Card(
-        shape = MaterialTheme.shapes.extraLarge,
-        modifier = Modifier.border(
-            width = 3.dp,
-            color = MaterialTheme.colorScheme.primary,
-            shape = MaterialTheme.shapes.extraLarge
+    val brush = Brush.verticalGradient(
+        listOf(
+            MaterialTheme.colorScheme.onTertiary,
+            MaterialTheme.colorScheme.onSecondary,
+            MaterialTheme.colorScheme.onPrimary
         )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .height(100.dp)
-                    .fillMaxWidth()
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = if (isDark) {
-                                listOf(
-                                    MaterialTheme.colorScheme.inverseSurface,
-                                    MaterialTheme.colorScheme.primary,
-                                    MaterialTheme.colorScheme.inversePrimary
-                                )
-                            } else {
-                                listOf(
-                                    MaterialTheme.colorScheme.background,
-                                    MaterialTheme.colorScheme.primaryContainer,
-                                    MaterialTheme.colorScheme.secondaryContainer
-                                )
-                            }
-                        ),
-                        shape = MaterialTheme.shapes.large
-                    )
-            )
+    )
 
-            Spacer(modifier = Modifier.padding(8.dp))
-
-            ListItem(
-                headlineContent = {
-                    Text(
-                        text = "Hello! I'm Shubham",
-                        style = MaterialTheme.typography.titleLarge,
-                    )
-                },
-                supportingContent =  {
-                    Text(
-                        text = "Beginner Android Dev and Linux Nerd from India",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontFamily = jetbrains
-                    )
-                },
-                colors = ListItemDefaults.colors(
-                    containerColor = cardColors.containerColor,
-                    headlineColor = cardColors.contentColor
+    when (windowSize) {
+        WindowSize.Compact -> {
+            Column(
+                modifier = modifier,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Shubham Gorai",
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.displaySmall.copy(
+                        brush = brush
+                    ),
+                    textAlign = TextAlign.Center
                 )
-            )
 
-            SocialLinksRow()
+                Text(
+                    text = "Beginner Android dev and Linux Nerd from India",
+                    fontFamily = jetbrains,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        brush = brush
+                    ),
+                    textAlign = TextAlign.Center
+                )
+
+                SocialLinksRow()
+            }
+        }
+
+        else -> {
+            Column(
+                modifier = modifier,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Shubham Gorai",
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.displayMedium.copy(
+                        brush = brush
+                    ),
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = "Beginner Android dev and Linux Nerd from India",
+                    fontFamily = jetbrains,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        brush = brush
+                    ),
+                    textAlign = TextAlign.Center
+                )
+
+                SocialLinksRow()
+            }
         }
     }
 }

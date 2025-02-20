@@ -1,4 +1,4 @@
-package com.shub39.portfolio.colorPicker
+package com.shub39.portfolio.color
 
 import androidx.compose.ui.graphics.Color
 

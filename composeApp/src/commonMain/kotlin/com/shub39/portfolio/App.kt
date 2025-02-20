@@ -1,47 +1,63 @@
 package com.shub39.portfolio
 
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
-import com.materialkolor.DynamicMaterialTheme
-import com.shub39.portfolio.colorPicker.ColorPicker
+import com.shub39.portfolio.color.ColorCopy
+import com.shub39.portfolio.color.ColorPicker
 import com.shub39.portfolio.intro.Intro
-import com.shub39.portfolio.navheader.NavHeader
-import com.shub39.portfolio.projects.Projects
-import com.shub39.portfolio.theme.provideTypography
+import com.shub39.portfolio.nav.NavRow
+import com.shub39.portfolio.theme.PortfolioTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun App() {
     var colorState by remember { mutableStateOf(ColorState()) }
+    val size = LocalWindowInfo.current.containerSize
+    val windowSize = getWindowSize(size.width)
 
     val listState = rememberLazyListState()
 
-    val currentItemIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
-
-    val topPadding by animateDpAsState(
-        targetValue = when {
-            currentItemIndex > 0 -> 16.dp
-            else -> 64.dp
-        }
-    )
-
-    DynamicMaterialTheme(
-        seedColor = colorState.seedColor,
-        useDarkTheme = colorState.isDark,
-        withAmoled = colorState.isAmoled,
-        style = colorState.style,
-        typography = provideTypography(1f),
-        animate = true
+    PortfolioTheme(
+       state = colorState
     ) {
         Surface(
+            color = Color.Transparent,
             modifier = Modifier
                 .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.secondary,
+                            MaterialTheme.colorScheme.tertiary
+                        )
+                    )
+                )
                 .windowInsetsPadding(WindowInsets.safeDrawing)
         ) {
             Box(
@@ -50,39 +66,50 @@ internal fun App() {
             ) {
                 Column(
                     modifier = Modifier
-                        .widthIn(max = 700.dp)
-                        .padding(top = topPadding, start = 16.dp, end = 16.dp)
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    NavHeader(
-                        state = colorState,
-                        editState = { colorState = it }
-                    )
-
-                    LazyColumn (
-                        modifier = Modifier.fillMaxSize(),
+                    LazyColumn(
                         state = listState,
-                        verticalArrangement = Arrangement.spacedBy(32.dp)
+                        modifier = Modifier.fillMaxSize()
                     ) {
                         item {
                             Intro(
-                                isDark = colorState.isDark
+                                modifier = Modifier
+                                    .size(size.width.dp, size.height.dp)
+                                    .padding(32.dp)
+                                    .fillMaxWidth(),
+                                windowSize = windowSize
                             )
                         }
 
                         item {
-                            Projects()
+                            ColorPicker(
+                                state = colorState,
+                                editState = { colorState = it },
+                                modifier = Modifier
+                                    .size(size.width.dp, size.height.dp)
+                                    .padding(16.dp)
+                            )
                         }
 
                         item {
-                            ColorPicker()
+                            ColorCopy(
+                                modifier = Modifier
+                                    .size(size.width.dp, size.height.dp)
+                                    .padding(16.dp)
+                            )
                         }
-
-                        item { Spacer(modifier = Modifier.padding(60.dp)) }
                     }
                 }
+
+                NavRow(
+                    listState = listState,
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                        .align(Alignment.BottomCenter)
+                )
             }
         }
     }
