@@ -1,18 +1,13 @@
 package com.shub39.portfolio
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -37,10 +32,9 @@ import com.shub39.portfolio.theme.PortfolioTheme
 @Composable
 internal fun App() {
     var colorState by remember { mutableStateOf(ColorState()) }
+    var section by remember { mutableStateOf(Sections.Home) }
     val size = LocalWindowInfo.current.containerSize
     val windowSize = getWindowSize(size.width)
-
-    val listState = rememberLazyListState()
 
     PortfolioTheme(
        state = colorState
@@ -64,48 +58,36 @@ internal fun App() {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                AnimatedContent(
+                    targetState = section
                 ) {
-                    LazyColumn(
-                        state = listState,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        item {
-                            Intro(
-                                modifier = Modifier
-                                    .size(size.width.dp, size.height.dp)
-                                    .padding(32.dp)
-                                    .fillMaxWidth(),
-                                windowSize = windowSize
-                            )
-                        }
+                    when (it) {
+                        Sections.Home -> Intro(
+                            modifier = Modifier
+                                .padding(32.dp)
+                                .fillMaxSize(),
+                            windowSize = windowSize
+                        )
 
-                        item {
-                            ColorPicker(
-                                state = colorState,
-                                editState = { colorState = it },
-                                modifier = Modifier
-                                    .size(size.width.dp, size.height.dp)
-                                    .padding(16.dp)
-                            )
-                        }
+                        Sections.ColorPicker -> ColorPicker(
+                            state = colorState,
+                            editState = { colorState = it },
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxSize()
+                        )
 
-                        item {
-                            ColorCopy(
-                                modifier = Modifier
-                                    .size(size.width.dp, size.height.dp)
-                                    .padding(16.dp)
-                            )
-                        }
+                        Sections.CopyColor -> ColorCopy(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxSize()
+                        )
                     }
                 }
 
                 NavRow(
-                    listState = listState,
+                    sections = section,
+                    onChange = { section = it },
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .align(Alignment.BottomCenter)
