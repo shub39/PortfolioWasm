@@ -10,6 +10,7 @@ pluginManagement {
               	includeGroupByRegex("android.*")
             }
         }
+        maven("https://packages.jetbrains.team/maven/p/firework/dev")
         gradlePluginPortal()
         mavenCentral()
     }
@@ -25,8 +26,12 @@ dependencyResolutionManagement {
               	includeGroupByRegex("android.*")
             }
         }
+        maven("https://packages.jetbrains.team/maven/p/firework/dev")
         mavenCentral()
     }
 }
 include(":composeApp")
 
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+}

@@ -1,21 +1,28 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.compose.reload.ComposeHotRun
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
+    id("org.jetbrains.compose.hot-reload") version "1.0.0-dev-59"
 }
 
 kotlin {
+    jvm("desktop")
+
     wasmJs {
         browser()
         binaries.executable()
     }
 
     sourceSets {
+        val desktopMain by getting
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -27,6 +34,11 @@ kotlin {
             implementation(libs.compose.colorpicker)
         }
 
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
+        }
+
         commonTest.dependencies {
             implementation(kotlin("test"))
             @OptIn(ExperimentalComposeLibrary::class)
@@ -36,9 +48,23 @@ kotlin {
     }
 }
 
+compose.desktop {
+    application {
+        mainClass = "com.shub39.portfolio.MainKt"
+    }
+}
+
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
+}
+
 tasks.register<Copy>("copyWasmArtifacts") {
     dependsOn("wasmJsBrowserDistribution")
 
     from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
     into(layout.projectDirectory.dir("site"))
+}
+
+tasks.register<ComposeHotRun>("runHot") {
+    mainClass.set("com.shub39.portfolio.MainKt")
 }

@@ -1,16 +1,18 @@
 [versions]
 
-kotlin = "2.1.0"
+kotlin = "2.1.20-RC"
 compose = "1.7.3"
 composeIcons = "1.1.1"
 materialKolor = "2.0.1"
 colorpicker = "1.1.2"
+kotlinx-coroutines = "1.10.1"
 
 [libraries]
 
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 
 [plugins]
 
