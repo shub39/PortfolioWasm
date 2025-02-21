@@ -1,76 +1,114 @@
 package com.shub39.portfolio.projects
 
 import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.dharmik_icon
 import portfolio.composeapp.generated.resources.grit_icon
 import portfolio.composeapp.generated.resources.plumbus_icon
 import portfolio.composeapp.generated.resources.rush_icon
 
-val MY_APPS = listOf<App>(
-    App(
+val PROJECTS = listOf(
+    
+    // Apps
+    Project(
         name = "Rush",
-        shortDesc = "Search, Save and Share lyrics like Spotify!",
+        shortDesc = "Lyrics App",
         desc = "Rush is an Android App to get lyrics for your favorite tracks and share them through " +
                 "colorful cards, with features like synced lyrics and importing lyrics for local files. " +
-                "it is a perfect tool for audiophiles and music nerds like myself.",
+                "it is a perfect tool for audiophiles and music nerds like myself. It is available on " +
+                "Playstore and has 450+ stars on Github",
         github = "https://github.com/shub39/Rush",
-        links = mapOf(
-            AppSources.PlayStore.name to "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
-            AppSources.FDroid.name to "https://f-droid.org/packages/com.shub39.rush/",
-            AppSources.Izzy.name to "https://apt.izzysoft.de/packages/com.shub39.rush/latest"
-        ),
-        iconRes = Res.drawable.rush_icon
+        iconRes = Res.drawable.rush_icon,
+        tech = listOf(
+            MainTech.Android, MainTech.AndroidStudio, MainTech.MVI,
+            MainTech.Material3, MainTech.Koin, MainTech.JetpackCompose,
+            MainTech.CleanArch, MainTech.Ktor, MainTech.Fdroid,
+            MainTech.Playstore, MainTech.IzzyOnDroid, MainTech.Room,
+            MainTech.Kotlin, MainTech.DataStore
+        )
     ),
-    App(
+    Project(
         name = "Grit",
-        shortDesc = "A simple TODO list and Habit Tracker",
+        shortDesc = "Todo list and Habit Tracker",
         desc = "Grit is a simple TODO list and Habit tracker for android that helps you " +
-                "visualise your progress through maps.",
+                "visualise your progress through maps. It has daily reminders for habits, categories " +
+                "for tasks and a simple Home Screen Widget. Has 120+ Stars on Github",
         github = "https://www.github.com/shub39/Grit",
-        links = mapOf(
-            AppSources.FDroid.name to "https://f-droid.org/packages/com.shub39.grit/",
-            AppSources.Izzy.name to "https://apt.izzysoft.de/packages/com.shub39.grit/latest"
-        ),
-        iconRes = Res.drawable.grit_icon
+        iconRes = Res.drawable.grit_icon,
+        tech = listOf(
+            MainTech.Android, MainTech.AndroidStudio, MainTech.MVI,
+            MainTech.Material3, MainTech.Koin, MainTech.JetpackCompose,
+            MainTech.CleanArch, MainTech.Fdroid, MainTech.IzzyOnDroid,
+            MainTech.Room, MainTech.Kotlin, MainTech.Widgets, MainTech.DataStore
+        )
     ),
-    App(
+    Project(
         name = "Plumbus",
-        shortDesc = "app to browse info on Rick and Morty",
+        shortDesc = "Browse info on Rick and Morty",
         desc = "Plumbus is a Compose Multiplatform app targeting android and desktop that " +
                 "lets you browse information on characters, episodes and locations from the Rick and Morty" +
-                " Universe",
+                " Universe. Participated in the KotlinConf Contest 2025",
         github = "https://github.com/shub39/Plumbus",
-        links = mapOf(),
-        iconRes = Res.drawable.plumbus_icon
-    )
-)
-
-val MY_PROJECTS = listOf<OtherProject>(
-    OtherProject(
-        name = "Portfolio Site",
-        shortDesc = "My portfolio site made using kotlin/wasm",
-        desc = "This site was made in compose multiplatform using kotlin/wasm, " +
-                "This is for primarily " +
-                "showcasing my work and some basic utilities like color pickers " +
-                "that I find myself using often.",
-        github = "https://github.com/shub39/PortfolioWasm"
+        iconRes = Res.drawable.plumbus_icon,
+        tech = listOf(
+            MainTech.Android, MainTech.AndroidStudio, MainTech.MVI,
+            MainTech.Material3, MainTech.Koin, MainTech.ComposeMultiplatform,
+            MainTech.CleanArch, MainTech.Room, MainTech.Kotlin, MainTech.Desktop,
+            MainTech.Ktor
+        )
     ),
-
-    OtherProject(
-        name = "Biometric Attendance",
-        shortDesc = "An attendance system made with raspberry pi 4B",
-        desc = "This is a simple biometric attendance system made with " +
-                "Raspberry Pi 4B, it can enroll students through fingerprints, take attendance and share them" +
-                "directly with teachers to save time during classes, A better version with facial recognition is " +
-                "currently in the works.",
-        github = "https://github.com/shub39/biometric-attendance"
+    Project(
+        name = "Dharmik",
+        shortDesc = "Browse Hindu Texts",
+        desc = "Dharmik is a Compose Multiplatform app targeting android and desktop. " +
+                "It is a completely offline browser for Hindu Texts complete with bookmarks, " +
+                "copy to clipboard, and liked feature for verses. It currently contains Bhagavad Gita " +
+                "and Atharvaveda",
+        github = "https://github.com/shub39/Dharmik",
+        iconRes = Res.drawable.dharmik_icon,
+        tech = listOf(
+            MainTech.Android, MainTech.AndroidStudio, MainTech.MVI, MainTech.IzzyOnDroid,
+            MainTech.Material3, MainTech.Koin, MainTech.ComposeMultiplatform,
+            MainTech.CleanArch, MainTech.Room, MainTech.Kotlin, MainTech.Desktop
+        )
     ),
-
-    OtherProject(
+    
+    // Others
+    Project(
+        name = "Portfolio",
+        shortDesc = "This site",
+        desc = "This site was made using Kotlin/Wasm and deployed on netlify. " +
+                "It's mainly to showcase my work and has a basic Material theme color " +
+                "palette generator that I find myself using often",
+        github = "https://github.com/shub39/PortfolioWasm",
+        iconRes = null,
+        tech = listOf(
+            MainTech.Kotlin, MainTech.ComposeMultiplatform, MainTech.WebAssembly,
+            MainTech.Material3
+        )
+    ),
+    Project(
         name = "Dotfiles",
-        shortDesc = "dotfiles for my Arch linux + Hyprland config",
-        desc = "dotfiles stand for configuration files. As an arch user I've spent a lot of time customising " +
-                "my desktop for maximum productivity and performance without looking bad. Used some basic shell scripting " +
-                "and CSS to get this",
-        github = "https://github.com/shub39/dotfiles"
+        shortDesc = "I use Arch btw",
+        desc = "Dotfiles stand for configuration files, as an Arch Linux user " +
+                "these are my heavily customised dotfiles for the Hyprland tiling window " +
+                "manager, It has 200+ stars on Github",
+        github = "https://github.com/shub39/dotfiles",
+        iconRes = null,
+        tech = listOf(
+            MainTech.Arch, MainTech.Shell
+        )
+    ),
+    Project(
+        name = "Student Dropper",
+        shortDesc = "Iot attendance system",
+        desc = "This is a simple biometric attendance system made using " +
+                "Raspberry Pi using python as the scripting language " +
+                "It supports fingerprint and face recognition and currently " +
+                "under development",
+        github = "https://github.com/shub39/student-dropper",
+        iconRes = null,
+        tech = listOf(
+            MainTech.Iot, MainTech.Rpi, MainTech.Python
+        )
     )
 )

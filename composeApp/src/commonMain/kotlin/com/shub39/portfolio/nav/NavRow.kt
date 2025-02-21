@@ -21,6 +21,7 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Clipboard
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.PaintRoller
+import compose.icons.fontawesomeicons.solid.Tools
 
 @Composable
 fun NavRow(
@@ -49,6 +50,7 @@ fun NavRow(
                         },
                         tooltip = when (secs) {
                             Sections.Home -> "Home"
+                            Sections.Projects -> "Projects"
                             Sections.ColorPicker -> "Color Picker"
                             Sections.CopyColor -> "Copy Colors"
                         },
@@ -57,6 +59,7 @@ fun NavRow(
                         Icon(
                             imageVector = when (secs) {
                                 Sections.Home -> FontAwesomeIcons.Solid.Home
+                                Sections.Projects -> FontAwesomeIcons.Solid.Tools
                                 Sections.ColorPicker -> FontAwesomeIcons.Solid.PaintRoller
                                 Sections.CopyColor -> FontAwesomeIcons.Solid.Clipboard
                             },

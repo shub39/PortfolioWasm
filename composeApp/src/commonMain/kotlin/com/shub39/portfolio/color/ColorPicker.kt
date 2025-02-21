@@ -83,7 +83,9 @@ fun ColorPicker(
             colors = CardDefaults.cardColors(
                 containerColor = cardColors.containerColor.copy(alpha = 0.7f)
             ),
-            modifier = Modifier.widthIn(max = 700.dp),
+            modifier = Modifier
+                .padding(bottom = 80.dp)
+                .widthIn(max = 700.dp),
             shape = MaterialTheme.shapes.extraLarge
         ) {
             Column(

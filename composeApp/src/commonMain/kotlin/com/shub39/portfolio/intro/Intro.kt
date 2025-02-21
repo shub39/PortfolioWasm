@@ -11,15 +11,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.shub39.portfolio.WindowSize
 import org.jetbrains.compose.resources.Font
 import portfolio.composeapp.generated.resources.JetBrainsMono_Regular
 import portfolio.composeapp.generated.resources.Res
 
 @Composable
 fun Intro(
-    modifier: Modifier = Modifier,
-    windowSize: WindowSize
+    modifier: Modifier = Modifier
 ) {
     val jetbrains = FontFamily(Font(Res.font.JetBrainsMono_Regular))
     val brush = Brush.verticalGradient(
@@ -30,61 +28,30 @@ fun Intro(
         )
     )
 
-    when (windowSize) {
-        WindowSize.Compact -> {
-            Column(
-                modifier = modifier,
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Shubham Gorai",
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.displaySmall.copy(
-                        brush = brush
-                    ),
-                    textAlign = TextAlign.Center
-                )
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "{shub39}",
+            fontWeight = FontWeight.Bold,
+            fontFamily = jetbrains,
+            style = MaterialTheme.typography.displayMedium.copy(
+                brush = brush
+            ),
+            textAlign = TextAlign.Center
+        )
 
-                Text(
-                    text = "Beginner Android dev and Linux Nerd from India",
-                    fontFamily = jetbrains,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        brush = brush
-                    ),
-                    textAlign = TextAlign.Center
-                )
+        Text(
+            text = "Beginner Android dev and Linux Nerd from India",
+            fontFamily = jetbrains,
+            style = MaterialTheme.typography.titleLarge.copy(
+                brush = brush
+            ),
+            textAlign = TextAlign.Center
+        )
 
-                SocialLinksRow()
-            }
-        }
-
-        else -> {
-            Column(
-                modifier = modifier,
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Shubham Gorai",
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.displayMedium.copy(
-                        brush = brush
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                Text(
-                    text = "Beginner Android dev and Linux Nerd from India",
-                    fontFamily = jetbrains,
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        brush = brush
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                SocialLinksRow()
-            }
-        }
+        SocialLinksRow()
     }
 }

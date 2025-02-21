@@ -1,80 +1,226 @@
 package com.shub39.portfolio.projects
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.Font
-import portfolio.composeapp.generated.resources.JetBrainsMono_Regular
-import portfolio.composeapp.generated.resources.Res
+import com.shub39.portfolio.components.ExpandingIconButton
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Brands
+import compose.icons.fontawesomeicons.brands.Github
+import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun Projects() {
-    val jetbrains = FontFamily(Font(Res.font.JetBrainsMono_Regular))
+fun Projects(
+    modifier: Modifier = Modifier
+) {
+    val uriHandler = LocalUriHandler.current
+
     val cardColors = CardDefaults.cardColors()
 
-    var projectType by remember { mutableStateOf(ProjectTypes.Apps) }
+    var selectedTech by remember { mutableStateOf(emptySet<MainTech>()) }
+    var selectedProjects by remember { mutableStateOf(PROJECTS) }
 
-    Card(
-        shape = MaterialTheme.shapes.extraLarge,
-        modifier = Modifier.border(
-            width = 3.dp,
-            color = MaterialTheme.colorScheme.primary,
-            shape = MaterialTheme.shapes.extraLarge
-        )
+    LaunchedEffect(selectedTech) {
+        selectedProjects = if (selectedTech.isEmpty()) {
+            PROJECTS
+        } else {
+            PROJECTS.filter { project ->
+                selectedTech.all { it in project.tech }
+            }
+        }
+    }
+
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
+                .animateContentSize()
+                .widthIn(max = 700.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            ListItem(
-                headlineContent = {
-                    Text(
-                        text = "My Projects",
-                        style = MaterialTheme.typography.titleLarge
+            item {
+                Spacer(modifier = Modifier.padding(vertical = 80.dp))
+            }
+
+            item {
+                Card(
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors = CardDefaults.cardColors(
+                        containerColor = cardColors.containerColor.copy(alpha = 0.7f),
+                        contentColor = cardColors.contentColor
                     )
-                },
-                supportingContent = {
+                ) {
                     Text(
-                        text = "Apps and Other stuff",
-                        fontFamily = jetbrains,
-                        style = MaterialTheme.typography.titleMedium
+                        text = "Filters",
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.displaySmall
                     )
-                },
-                trailingContent = {
-                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                        ProjectTypes.entries.toList().forEach {
-                            TextButton(
-                                onClick = { projectType = it },
-                                colors = if (projectType != it) {
-                                    ButtonDefaults.filledTonalButtonColors()
-                                } else {
-                                    ButtonDefaults.buttonColors()
-                                }
+
+                    FlowRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        MainTech.entries.forEach { tech ->
+                            FilterChip(
+                                shape = CircleShape,
+                                modifier = Modifier.padding(horizontal = 8.dp),
+                                selected = selectedTech.contains(tech),
+                                onClick = {
+                                    selectedTech = if (selectedTech.contains(tech)) {
+                                        selectedTech.minus(tech)
+                                    } else {
+                                        selectedTech.plus(tech)
+                                    }
+                                },
+                                label = { Text(text = tech.tech) }
+                            )
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Button(
+                            onClick = {
+                                selectedTech = emptySet()
+                            },
+                            enabled = selectedTech.isNotEmpty()
+                        ) {
+                            Text(
+                                text = "Clear"
+                            )
+                        }
+                    }
+                }
+            }
+
+            items(selectedProjects, key = { it.name }) { project ->
+                Card(
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors = CardDefaults.cardColors(
+                        containerColor = cardColors.containerColor.copy(alpha = 0.7f),
+                        contentColor = cardColors.contentColor
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            project.iconRes?.let {
+                                Image(
+                                    painter = painterResource(it),
+                                    contentDescription = "App Icon",
+                                    modifier = Modifier
+                                        .size(64.dp)
+                                        .clip(MaterialTheme.shapes.medium)
+                                )
+                            }
+
+                            Column(
+                                modifier = Modifier.weight(1f)
                             ) {
                                 Text(
-                                    text = it.name
+                                    text = project.name,
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+
+                                Text(
+                                    text = project.shortDesc,
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+
+                            ExpandingIconButton(
+                                onClick = {
+                                    uriHandler.openUri(project.github)
+                                },
+                                tooltip = "Github",
+                            ) {
+                                Icon(
+                                    imageVector = FontAwesomeIcons.Brands.Github,
+                                    contentDescription = "Github",
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
+
+                        Text(
+                            text = project.desc,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+
+                        FlowRow {
+                            project.tech.forEach { tech ->
+                                AssistChip(
+                                    colors = AssistChipDefaults.assistChipColors(),
+                                    shape = CircleShape,
+                                    modifier = Modifier.padding(horizontal = 8.dp),
+                                    onClick = {},
+                                    label = {
+                                        Text(
+                                            text = tech.tech
+                                        )
+                                    }
                                 )
                             }
                         }
                     }
-                },
-                colors = ListItemDefaults.colors(
-                    containerColor = cardColors.containerColor,
-                    headlineColor = cardColors.contentColor
-                )
-            )
-
-            AnimatedContent(projectType) {
-                when (it) {
-                    ProjectTypes.Apps -> AppPager()
-                    ProjectTypes.Others -> OtherPager()
                 }
+            }
+
+            item {
+                Spacer(modifier = Modifier.padding(vertical = 80.dp))
             }
         }
     }
