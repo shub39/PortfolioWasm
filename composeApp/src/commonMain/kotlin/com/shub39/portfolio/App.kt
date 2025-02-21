@@ -73,13 +73,13 @@ internal fun App() {
                             state = colorState,
                             editState = { colorState = it },
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 86.dp)
                                 .fillMaxSize()
                         )
 
                         Sections.CopyColor -> ColorCopy(
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 86.dp)
                                 .fillMaxSize()
                         )
                     }

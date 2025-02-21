@@ -1,11 +1,14 @@
 package com.shub39.portfolio
 
+import androidx.compose.runtime.Composable
+
 enum class WindowSize {
     Compact,
     Medium,
     Expanded;
 }
 
+@Composable
 fun getWindowSize(width: Int): WindowSize {
     return when (width) {
         in 0..599 -> WindowSize.Compact

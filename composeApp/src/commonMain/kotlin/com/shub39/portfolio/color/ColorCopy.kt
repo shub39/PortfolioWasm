@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -45,8 +47,11 @@ fun ColorCopy(
 
     val jetbrains = FontFamily(Font(Res.font.JetBrainsMono_Regular))
 
+    val scrollState = rememberScrollState()
+
     Box(
-        modifier = modifier,
+        modifier = modifier
+            .verticalScroll(scrollState),
         contentAlignment = Alignment.Center
     ) {
         Card(
