@@ -176,7 +176,7 @@ fun Projects(
                                 .fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             text = if (selectedProjects.isEmpty()) {
-                                "Quite the unusual selection of skills you look for \uD83D\uDE42"
+                                "Quite the unusual selection of skills you look for..."
                             } else {
                                 "${selectedProjects.size} Result(s)"
                             }
