@@ -18,7 +18,6 @@ import com.shub39.portfolio.Sections
 import com.shub39.portfolio.components.ExpandingIconButton
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.Clipboard
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.PaintRoller
 import compose.icons.fontawesomeicons.solid.Tools
@@ -52,7 +51,6 @@ fun NavRow(
                             Sections.Home -> "Home"
                             Sections.Projects -> "Projects"
                             Sections.ColorPicker -> "Color Picker"
-                            Sections.CopyColor -> "Copy Colors"
                         },
                         colors = if (sections != secs) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.filledIconButtonColors()
                     ) {
@@ -61,7 +59,6 @@ fun NavRow(
                                 Sections.Home -> FontAwesomeIcons.Solid.Home
                                 Sections.Projects -> FontAwesomeIcons.Solid.Tools
                                 Sections.ColorPicker -> FontAwesomeIcons.Solid.PaintRoller
-                                Sections.CopyColor -> FontAwesomeIcons.Solid.Clipboard
                             },
                             contentDescription = "Change Palette",
                             modifier = Modifier.size(24.dp)

@@ -1,6 +1,7 @@
 package com.shub39.portfolio.color
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
@@ -9,11 +10,13 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,10 +24,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Card
@@ -72,140 +74,154 @@ fun ColorPicker(
 
     val controller = rememberColorPickerController()
 
-    val scrollState = rememberScrollState()
-
     Box(
-        modifier = modifier
-            .verticalScroll(scrollState),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = cardColors.containerColor.copy(alpha = 0.7f)
-            ),
+        LazyColumn(
             modifier = Modifier
-                .padding(bottom = 80.dp)
+                .animateContentSize()
                 .widthIn(max = 700.dp),
-            shape = MaterialTheme.shapes.extraLarge
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                ListItem(
-                    headlineContent = {
-                        Text(
-                            text = "Select Palette Style",
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    },
-                    supportingContent = {
-                        Text(
-                            text = "Select the variant of palette generated from seed color"
-                        )
-                    },
-                    colors = ListItemDefaults.colors(
-                        containerColor = Color.Transparent,
-                        headlineColor = cardColors.contentColor,
-                        supportingColor = cardColors.contentColor
-                    )
-                )
+            item {
+                Spacer(modifier = Modifier.padding(vertical = 60.dp))
+            }
 
-                FlowRow {
-                    PaletteStyle.entries.toList().forEach { style ->
-                        val scheme = rememberDynamicColorScheme(
-                            primary = state.seedColor,
-                            isDark = state.isDark,
-                            isAmoled = state.isAmoled,
-                            style = style
-                        )
-
-                        SelectableMiniPalette(
-                            selected = state.style == style,
-                            onClick = {
-                                editState(
-                                    state.copy(
-                                        style = style
-                                    )
+            item {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = cardColors.containerColor.copy(alpha = 0.7f)
+                    ),
+                    modifier = Modifier
+                        .widthIn(max = 700.dp),
+                    shape = MaterialTheme.shapes.extraLarge
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = "Select Palette Style",
+                                    style = MaterialTheme.typography.titleLarge
                                 )
                             },
-                            contentDescription = { style.name },
-                            accents = listOf(
-                                TonalPalette.from(scheme.primary),
-                                TonalPalette.from(scheme.tertiary),
-                                TonalPalette.from(scheme.secondary)
+                            supportingContent = {
+                                Text(
+                                    text = "Select the variant of palette generated from seed color"
+                                )
+                            },
+                            colors = ListItemDefaults.colors(
+                                containerColor = Color.Transparent,
+                                headlineColor = cardColors.contentColor,
+                                supportingColor = cardColors.contentColor
                             )
                         )
-                    }
-                }
 
-                ListItem(
-                    headlineContent = {
-                        Text(
-                            text = "Select Seed Color",
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    },
-                    supportingContent = {
-                        Text(
-                            text = "Click on the Check Icon to generate palette"
-                        )
-                    },
-                    trailingContent = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            AlphaTile(
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .padding(10.dp)
-                                    .clip(CircleShape),
-                                controller = controller
-                            )
+                        FlowRow {
+                            PaletteStyle.entries.toList().forEach { style ->
+                                val scheme = rememberDynamicColorScheme(
+                                    primary = state.seedColor,
+                                    isDark = state.isDark,
+                                    isAmoled = state.isAmoled,
+                                    style = style
+                                )
 
-                            IconButton(
-                                onClick = {
-                                    editState(
-                                        state.copy(
-                                            seedColor = controller.selectedColor.value
+                                SelectableMiniPalette(
+                                    selected = state.style == style,
+                                    onClick = {
+                                        editState(
+                                            state.copy(
+                                                style = style
+                                            )
                                         )
+                                    },
+                                    contentDescription = { style.name },
+                                    accents = listOf(
+                                        TonalPalette.from(scheme.primary),
+                                        TonalPalette.from(scheme.tertiary),
+                                        TonalPalette.from(scheme.secondary)
                                     )
-                                },
-                                enabled = state.seedColor != controller.selectedColor.value,
-                                colors = IconButtonDefaults.filledIconButtonColors()
-                            ) {
-                                Icon(
-                                    imageVector = FontAwesomeIcons.Solid.Check,
-                                    contentDescription = "Select",
-                                    modifier = Modifier.size(24.dp)
                                 )
                             }
                         }
-                    },
-                    colors = ListItemDefaults.colors(
-                        containerColor = Color.Transparent,
-                        headlineColor = cardColors.contentColor,
-                        supportingColor = cardColors.contentColor,
-                        trailingIconColor = cardColors.contentColor
-                    )
-                )
 
-                HsvColorPicker(
-                    modifier = Modifier
-                        .height(250.dp)
-                        .padding(10.dp),
-                    controller = controller,
-                    initialColor = state.seedColor
-                )
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = "Select Seed Color",
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = "Click on the Check Icon to generate palette"
+                                )
+                            },
+                            trailingContent = {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    AlphaTile(
+                                        modifier = Modifier
+                                            .size(50.dp)
+                                            .padding(10.dp)
+                                            .clip(CircleShape),
+                                        controller = controller
+                                    )
 
-                BrightnessSlider(
-                    modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .padding(10.dp)
-                        .height(35.dp),
-                    controller = controller,
-                    initialColor = state.seedColor
-                )
+                                    IconButton(
+                                        onClick = {
+                                            editState(
+                                                state.copy(
+                                                    seedColor = controller.selectedColor.value
+                                                )
+                                            )
+                                        },
+                                        enabled = state.seedColor != controller.selectedColor.value,
+                                        colors = IconButtonDefaults.filledIconButtonColors()
+                                    ) {
+                                        Icon(
+                                            imageVector = FontAwesomeIcons.Solid.Check,
+                                            contentDescription = "Select",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                }
+                            },
+                            colors = ListItemDefaults.colors(
+                                containerColor = Color.Transparent,
+                                headlineColor = cardColors.contentColor,
+                                supportingColor = cardColors.contentColor,
+                                trailingIconColor = cardColors.contentColor
+                            )
+                        )
+
+                        HsvColorPicker(
+                            modifier = Modifier
+                                .height(250.dp)
+                                .padding(10.dp),
+                            controller = controller,
+                            initialColor = state.seedColor
+                        )
+
+                        BrightnessSlider(
+                            modifier = Modifier
+                                .fillMaxWidth(0.7f)
+                                .padding(10.dp)
+                                .height(35.dp),
+                            controller = controller,
+                            initialColor = state.seedColor
+                        )
+                    }
+                }
+            }
+
+            item {
+                ColorCopy()
             }
         }
     }

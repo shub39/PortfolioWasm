@@ -83,7 +83,7 @@ val PROJECTS = listOf(
         iconRes = null,
         tech = listOf(
             MainTech.Kotlin, MainTech.ComposeMultiplatform, MainTech.WebAssembly,
-            MainTech.Material3
+            MainTech.Material3, MainTech.AndroidStudio
         )
     ),
     Project(

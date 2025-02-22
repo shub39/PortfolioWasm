@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.shub39.portfolio.color.ColorCopy
 import com.shub39.portfolio.color.ColorPicker
 import com.shub39.portfolio.intro.Intro
 import com.shub39.portfolio.nav.NavRow
@@ -56,8 +55,8 @@ internal fun App() {
             ) {
                 AnimatedContent(
                     targetState = section
-                ) {
-                    when (it) {
+                ) { sections ->
+                    when (sections) {
                         Sections.Home -> Intro(
                             modifier = Modifier
                                 .padding(32.dp)
@@ -67,12 +66,6 @@ internal fun App() {
                         Sections.ColorPicker -> ColorPicker(
                             state = colorState,
                             editState = { colorState = it },
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxSize()
-                        )
-
-                        Sections.CopyColor -> ColorCopy(
                             modifier = Modifier
                                 .padding(16.dp)
                                 .fillMaxSize()

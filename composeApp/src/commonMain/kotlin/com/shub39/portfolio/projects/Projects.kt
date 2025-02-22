@@ -1,6 +1,7 @@
 package com.shub39.portfolio.projects
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -30,10 +32,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -41,6 +45,7 @@ import com.shub39.portfolio.components.ExpandingIconButton
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Github
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -49,6 +54,8 @@ fun Projects(
     modifier: Modifier = Modifier
 ) {
     val uriHandler = LocalUriHandler.current
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
     val cardColors = CardDefaults.cardColors()
 
@@ -70,6 +77,7 @@ fun Projects(
         contentAlignment = Alignment.Center
     ) {
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .animateContentSize()
                 .widthIn(max = 700.dp),
@@ -85,6 +93,16 @@ fun Projects(
                     colors = CardDefaults.cardColors(
                         containerColor = cardColors.containerColor.copy(alpha = 0.7f),
                         contentColor = cardColors.contentColor
+                    ),
+                    border = BorderStroke(
+                        width = 3.dp,
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.onPrimary,
+                                MaterialTheme.colorScheme.onSecondary,
+                                MaterialTheme.colorScheme.onTertiary
+                            )
+                        )
                     )
                 ) {
                     Text(
@@ -113,6 +131,10 @@ fun Projects(
                                     } else {
                                         selectedTech.plus(tech)
                                     }
+
+                                    coroutineScope.launch {
+                                        listState.animateScrollToItem(2)
+                                    }
                                 },
                                 label = { Text(text = tech.tech) }
                             )
@@ -135,6 +157,30 @@ fun Projects(
                                 text = "Clear"
                             )
                         }
+                    }
+                }
+            }
+
+            if (selectedTech.isNotEmpty()) {
+                item {
+                    Card(
+                        shape = MaterialTheme.shapes.extraLarge,
+                        colors = CardDefaults.cardColors(
+                            containerColor = cardColors.containerColor.copy(alpha = 0.7f),
+                            contentColor = cardColors.contentColor
+                        )
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            text = if (selectedProjects.isEmpty()) {
+                                "Quite the unusual selection of skills you look for \uD83D\uDE42"
+                            } else {
+                                "${selectedProjects.size} Result(s)"
+                            }
+                        )
                     }
                 }
             }
@@ -203,7 +249,11 @@ fun Projects(
                         FlowRow {
                             project.tech.forEach { tech ->
                                 AssistChip(
-                                    colors = AssistChipDefaults.assistChipColors(),
+                                    colors = if (tech in selectedTech) {
+                                        AssistChipDefaults.elevatedAssistChipColors()
+                                    } else {
+                                        AssistChipDefaults.assistChipColors()
+                                    },
                                     shape = CircleShape,
                                     modifier = Modifier.padding(horizontal = 8.dp),
                                     onClick = {},

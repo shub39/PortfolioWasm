@@ -1,25 +1,26 @@
 package com.shub39.portfolio.color
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.input.pointer.PointerIcon
-import androidx.compose.ui.input.pointer.pointerHoverIcon
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.shub39.portfolio.components.ExpandingIconButton
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Palette
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ColorSchemeDisplay(
+    tooltip: (Color) -> String,
     onClick: (Color) -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
@@ -50,47 +51,23 @@ fun ColorSchemeDisplay(
     )
 
     Column(modifier = Modifier.padding(16.dp)) {
-        colors.chunked(2).forEach { rowColors ->
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                rowColors.forEach { (name, color) ->
-                    ColorBox(
-                        name = name,
-                        color = color,
-                        modifier = Modifier.weight(1f),
-                        onClick = onClick
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            colors.forEach { (name, color) ->
+                ExpandingIconButton(
+                    modifier = Modifier.padding(4.dp),
+                    onClick = { onClick(color) },
+                    tooltip = "$name\n${tooltip(color)}"
+                ) {
+                    Icon(
+                        imageVector = FontAwesomeIcons.Solid.Palette,
+                        contentDescription = name,
+                        tint = color
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
         }
-    }
-}
-
-
-@Composable
-fun ColorBox(
-    name: String,
-    color: Color,
-    modifier: Modifier = Modifier,
-    onClick: (Color) -> Unit
-) {
-    Box(
-        modifier = modifier
-            .background(color, shape = RoundedCornerShape(8.dp))
-            .padding(8.dp)
-            .pointerHoverIcon(
-                icon = PointerIcon.Hand
-            )
-            .clickable { onClick(color) },
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = name,
-            color = if (color.luminance() > 0.5f) Color.Black else Color.White,
-            textAlign = TextAlign.Center,
-            fontSize = 14.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
     }
 }
