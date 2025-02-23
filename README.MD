@@ -13,3 +13,4 @@ My portfolio site made with Kotlin Wasm. Deployed on Netlify
 > - [Colorpicker Compose](https://github.com/skydoves/colorpicker-compose) for color picker
 > - [Haze](https://chrisbanes.github.io/haze/latest/) for blur
 > - [Hypnotic Canvas](https://github.com/mikepenz/HypnoticCanvas) for hypnotic background
+> - [Compose Hot Reload 🔥](https://github.com/JetBrains/compose-hot-reload)
