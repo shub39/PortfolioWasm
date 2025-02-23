@@ -20,33 +20,54 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mikepenz.hypnoticcanvas.shaderBackground
+import com.mikepenz.hypnoticcanvas.shaders.MeshGradient
 import com.shub39.portfolio.color.ColorPicker
 import com.shub39.portfolio.intro.Intro
 import com.shub39.portfolio.nav.NavRow
 import com.shub39.portfolio.projects.Projects
 import com.shub39.portfolio.theme.PortfolioTheme
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeSource
 
 @Composable
 internal fun App() {
     var colorState by remember { mutableStateOf(ColorState()) }
     var section by remember { mutableStateOf(Sections.Home) }
+    val navHazeState = remember { HazeState() }
+
+    var hypnotic by remember { mutableStateOf(true) }
 
     PortfolioTheme(
-       state = colorState
+        state = colorState
     ) {
         Surface(
             color = Color.Transparent,
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.primary,
-                            MaterialTheme.colorScheme.secondary,
-                            MaterialTheme.colorScheme.tertiary
+                .let {
+                    if (hypnotic) {
+                        it.shaderBackground(
+                            MeshGradient(
+                                colors = arrayOf(
+                                    MaterialTheme.colorScheme.primary,
+                                    MaterialTheme.colorScheme.secondary,
+                                    MaterialTheme.colorScheme.tertiary
+                                )
+                            )
                         )
-                    )
-                )
+                    } else {
+                        it.background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.primary,
+                                    MaterialTheme.colorScheme.secondary,
+                                    MaterialTheme.colorScheme.tertiary
+                                )
+                            )
+                        )
+                    }
+                }
                 .windowInsetsPadding(WindowInsets.safeDrawing)
         ) {
             Box(
@@ -54,7 +75,8 @@ internal fun App() {
                 contentAlignment = Alignment.Center
             ) {
                 AnimatedContent(
-                    targetState = section
+                    targetState = section,
+                    modifier = Modifier.hazeSource(navHazeState)
                 ) { sections ->
                     when (sections) {
                         Sections.Home -> Intro(
@@ -81,6 +103,9 @@ internal fun App() {
 
                 NavRow(
                     sections = section,
+                    hypnotic = hypnotic,
+                    onHypnoticChange = { hypnotic = !hypnotic },
+                    hazeState = navHazeState,
                     onChange = { section = it },
                     modifier = Modifier
                         .padding(bottom = 16.dp)

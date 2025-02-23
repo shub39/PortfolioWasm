@@ -32,6 +32,8 @@ kotlin {
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.materialKolor)
             implementation(libs.compose.colorpicker)
+            implementation(libs.haze.core)
+            implementation(libs.hypnoticCanvas)
         }
 
         desktopMain.dependencies {

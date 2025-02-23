@@ -11,3 +11,5 @@ My portfolio site made with Kotlin Wasm. Deployed on Netlify
 ## Libraries used
 > - [Material Kolor](https://github.com/jordond/MaterialKolor/) for palette generation
 > - [Colorpicker Compose](https://github.com/skydoves/colorpicker-compose) for color picker
+> - [Haze](https://chrisbanes.github.io/haze/latest/) for blur
+> - [Hypnotic Canvas](https://github.com/mikepenz/HypnoticCanvas) for hypnotic background

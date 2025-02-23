@@ -1,6 +1,7 @@
 package com.shub39.portfolio.nav
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,35 +14,66 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.Sections
 import com.shub39.portfolio.components.ExpandingIconButton
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Dizzy
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.PaintRoller
 import compose.icons.fontawesomeicons.solid.Tools
+import dev.chrisbanes.haze.HazeDefaults
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.hazeEffect
 
 @Composable
 fun NavRow(
     sections: Sections,
+    hypnotic: Boolean,
+    onHypnoticChange: () -> Unit,
+    hazeState: HazeState,
     onChange: (Sections) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    val cardStyle = HazeStyle(
+        backgroundColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
+        tints = listOf(),
+        blurRadius = 12.dp,
+        noiseFactor = HazeDefaults.noiseFactor
+    )
+
+    Box(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        contentAlignment = Alignment.Center
     ) {
         Card(
-            shape = CircleShape,
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
-            )
+                containerColor = Color.Transparent
+            ),
+            modifier = Modifier
+                .clip(CircleShape)
+                .hazeEffect(hazeState, cardStyle)
         ) {
             Row(
                 modifier = Modifier.padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
+                ExpandingIconButton(
+                    onClick = onHypnoticChange,
+                    tooltip = "Toggle Hypnotic background",
+                    colors = if (!hypnotic) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.filledIconButtonColors()
+                ) {
+                    Icon(
+                        imageVector = FontAwesomeIcons.Solid.Dizzy,
+                        contentDescription = "Hypnotic",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+
                 Sections.entries.forEach { secs ->
                     ExpandingIconButton(
                         onClick = {

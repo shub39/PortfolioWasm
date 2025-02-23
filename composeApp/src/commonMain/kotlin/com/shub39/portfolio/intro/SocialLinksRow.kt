@@ -7,6 +7,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.components.ExpandingIconButton
@@ -26,7 +27,7 @@ fun SocialLinksRow(
 
     val iconColors = IconButtonDefaults.filledTonalIconButtonColors(
         contentColor = MaterialTheme.colorScheme.onSecondary,
-        containerColor = MaterialTheme.colorScheme.secondary
+        containerColor = Color.Transparent
     )
 
     Row(modifier = modifier) {
