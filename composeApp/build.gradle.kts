@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
-    id("org.jetbrains.compose.hot-reload") version "1.0.0-dev-59"
+    alias(libs.plugins.hotreload)
 }
 
 kotlin {
