@@ -223,6 +223,10 @@ fun ColorPicker(
             item {
                 ColorCopy()
             }
+
+            item {
+                Spacer(modifier = Modifier.padding(vertical = 80.dp))
+            }
         }
     }
 }

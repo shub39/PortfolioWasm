@@ -21,7 +21,7 @@ enum class MainTech(val tech: String) {
     Widgets("Home screen widgets"),
     Shell("Shell"),
     Python("Python"),
-    Arch("Arch Linux"),
     Iot("Iot"),
-    Rpi("Raspberry Pi")
+    Rpi("Raspberry Pi"),
+    Linux("Linux")
 }

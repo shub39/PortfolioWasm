@@ -95,7 +95,7 @@ val PROJECTS = listOf(
         github = "https://github.com/shub39/dotfiles",
         iconRes = null,
         tech = listOf(
-            MainTech.Arch, MainTech.Shell
+            MainTech.Shell, MainTech.Linux
         )
     ),
     Project(

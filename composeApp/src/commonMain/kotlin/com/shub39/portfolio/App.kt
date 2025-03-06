@@ -1,7 +1,6 @@
 package com.shub39.portfolio
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mikepenz.hypnoticcanvas.shaderBackground
@@ -36,8 +34,6 @@ internal fun App() {
     var section by remember { mutableStateOf(Sections.Home) }
     val navHazeState = remember { HazeState() }
 
-    var hypnotic by remember { mutableStateOf(true) }
-
     PortfolioTheme(
         state = colorState
     ) {
@@ -45,29 +41,15 @@ internal fun App() {
             color = Color.Transparent,
             modifier = Modifier
                 .fillMaxSize()
-                .let {
-                    if (hypnotic) {
-                        it.shaderBackground(
-                            MeshGradient(
-                                colors = arrayOf(
-                                    MaterialTheme.colorScheme.primary,
-                                    MaterialTheme.colorScheme.secondary,
-                                    MaterialTheme.colorScheme.tertiary
-                                )
-                            )
+                .shaderBackground(
+                    MeshGradient(
+                        colors = arrayOf(
+                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.secondary,
+                            MaterialTheme.colorScheme.tertiary,
                         )
-                    } else {
-                        it.background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.primary,
-                                    MaterialTheme.colorScheme.secondary,
-                                    MaterialTheme.colorScheme.tertiary
-                                )
-                            )
-                        )
-                    }
-                }
+                    )
+                )
                 .windowInsetsPadding(WindowInsets.safeDrawing)
         ) {
             Box(
@@ -81,7 +63,7 @@ internal fun App() {
                     when (sections) {
                         Sections.Home -> Intro(
                             modifier = Modifier
-                                .padding(32.dp)
+                                .padding(horizontal = 32.dp)
                                 .fillMaxSize()
                         )
 
@@ -89,13 +71,13 @@ internal fun App() {
                             state = colorState,
                             editState = { colorState = it },
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(horizontal = 16.dp)
                                 .fillMaxSize()
                         )
 
                         Sections.Projects -> Projects(
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(horizontal = 16.dp)
                                 .fillMaxSize()
                         )
                     }
@@ -103,8 +85,6 @@ internal fun App() {
 
                 NavRow(
                     sections = section,
-                    hypnotic = hypnotic,
-                    onHypnoticChange = { hypnotic = !hypnotic },
                     hazeState = navHazeState,
                     onChange = { section = it },
                     modifier = Modifier

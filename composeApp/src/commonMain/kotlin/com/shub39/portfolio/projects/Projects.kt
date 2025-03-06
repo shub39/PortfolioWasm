@@ -25,6 +25,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,14 +40,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.components.ExpandingIconButton
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
+import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
+import compose.icons.fontawesomeicons.solid.Filter
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
+import portfolio.composeapp.generated.resources.JetBrainsMono_Regular
+import portfolio.composeapp.generated.resources.Res
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -70,6 +78,10 @@ fun Projects(
                 selectedTech.all { it in project.tech }
             }
         }
+    }
+
+    LaunchedEffect(Unit) {
+        listState.animateScrollToItem(2)
     }
 
     Box(
@@ -126,14 +138,14 @@ fun Projects(
                                 modifier = Modifier.padding(horizontal = 8.dp),
                                 selected = selectedTech.contains(tech),
                                 onClick = {
-                                    selectedTech = if (selectedTech.contains(tech)) {
-                                        selectedTech.minus(tech)
+                                    if (selectedTech.contains(tech)) {
+                                        selectedTech = selectedTech.minus(tech)
                                     } else {
-                                        selectedTech.plus(tech)
-                                    }
+                                        selectedTech = selectedTech.plus(tech)
 
-                                    coroutineScope.launch {
-                                        listState.animateScrollToItem(2)
+                                        coroutineScope.launch {
+                                            listState.animateScrollToItem(2)
+                                        }
                                     }
                                 },
                                 label = { Text(text = tech.tech) }
@@ -161,26 +173,48 @@ fun Projects(
                 }
             }
 
-            if (selectedTech.isNotEmpty()) {
-                item {
-                    Card(
-                        shape = MaterialTheme.shapes.extraLarge,
-                        colors = CardDefaults.cardColors(
-                            containerColor = cardColors.containerColor.copy(alpha = 0.7f),
-                            contentColor = cardColors.contentColor
-                        )
+            item {
+                Card(
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors = CardDefaults.cardColors(
+                        containerColor = cardColors.containerColor.copy(alpha = 0.7f),
+                        contentColor = cardColors.contentColor
+                    ),
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            text = if (selectedProjects.isEmpty()) {
+                            modifier = Modifier.weight(1f),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            text = if (selectedProjects.isEmpty() && selectedTech.isNotEmpty()) {
                                 "Quite the unusual selection of skills you look for..."
-                            } else {
+                            } else if (selectedTech.isNotEmpty()) {
                                 "${selectedProjects.size} Result(s)"
+                            } else {
+                                "All Projects"
                             }
                         )
+
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    listState.animateScrollToItem(0)
+                                }
+                            }
+                        ) {
+                            Icon(
+                                imageVector = FontAwesomeIcons.Solid.Filter,
+                                contentDescription = "Filters",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
                 }
             }
@@ -218,12 +252,14 @@ fun Projects(
                             ) {
                                 Text(
                                     text = project.name,
-                                    style = MaterialTheme.typography.titleLarge
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold
                                 )
 
                                 Text(
                                     text = project.shortDesc,
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontFamily = FontFamily(Font(Res.font.JetBrainsMono_Regular))
                                 )
                             }
 
@@ -256,7 +292,17 @@ fun Projects(
                                     },
                                     shape = CircleShape,
                                     modifier = Modifier.padding(horizontal = 8.dp),
-                                    onClick = {},
+                                    onClick = {
+                                        if (selectedTech.contains(tech)) {
+                                            selectedTech = selectedTech.minus(tech)
+                                        } else {
+                                            selectedTech = selectedTech.plus(tech)
+
+                                            coroutineScope.launch {
+                                                listState.animateScrollToItem(2)
+                                            }
+                                        }
+                                    },
                                     label = {
                                         Text(
                                             text = tech.tech

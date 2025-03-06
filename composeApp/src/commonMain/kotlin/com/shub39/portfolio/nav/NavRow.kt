@@ -21,7 +21,6 @@ import com.shub39.portfolio.Sections
 import com.shub39.portfolio.components.ExpandingIconButton
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.Dizzy
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.PaintRoller
 import compose.icons.fontawesomeicons.solid.Tools
@@ -33,8 +32,6 @@ import dev.chrisbanes.haze.hazeEffect
 @Composable
 fun NavRow(
     sections: Sections,
-    hypnotic: Boolean,
-    onHypnoticChange: () -> Unit,
     hazeState: HazeState,
     onChange: (Sections) -> Unit,
     modifier: Modifier = Modifier
@@ -62,18 +59,6 @@ fun NavRow(
                 modifier = Modifier.padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                ExpandingIconButton(
-                    onClick = onHypnoticChange,
-                    tooltip = "Toggle Hypnotic background",
-                    colors = if (!hypnotic) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.filledIconButtonColors()
-                ) {
-                    Icon(
-                        imageVector = FontAwesomeIcons.Solid.Dizzy,
-                        contentDescription = "Hypnotic",
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-
                 Sections.entries.forEach { secs ->
                     ExpandingIconButton(
                         onClick = {
