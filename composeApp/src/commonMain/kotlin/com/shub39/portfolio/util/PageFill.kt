@@ -10,10 +10,11 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun PageFill(
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(MaterialTheme.colorScheme.surface)
             .fillMaxSize(),
         contentAlignment = Alignment.Center

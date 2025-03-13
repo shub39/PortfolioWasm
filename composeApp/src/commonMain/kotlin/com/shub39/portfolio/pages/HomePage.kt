@@ -57,7 +57,8 @@ import portfolio.composeapp.generated.resources.jetbrainsmono
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HomePage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigate: (Routes) -> Unit
 ) = PageFill {
     val uriHandler = LocalUriHandler.current
     val scrollState = rememberScrollState()
@@ -139,7 +140,7 @@ fun HomePage(
                         NavigateInfo(FontAwesomeIcons.Solid.Palette, Routes.ThemerPage, "Colors")
                     ).forEach { info ->
                         Button(
-                            onClick = {  },
+                            onClick = { navigate(info.route) },
                             modifier = Modifier.padding(8.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.tertiary,

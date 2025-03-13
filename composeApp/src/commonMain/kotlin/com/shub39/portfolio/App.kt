@@ -1,6 +1,5 @@
 package com.shub39.portfolio
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
 import com.shub39.portfolio.util.PortfolioTheme
 
@@ -24,15 +24,22 @@ internal fun App() {
         state = colorState
     ) {
         NavHost(
+            modifier = Modifier,
             navController = navController,
             startDestination = Routes.HomePage
         ) {
             composable<Routes.HomePage> {
                 HomePage(
-                    modifier = Modifier.widthIn(max = 500.dp)
+                    modifier = Modifier.widthIn(max = 500.dp),
+                    navigate = { navController.navigate(it) }
                 )
             }
-            composable<Routes.AppsPage> { }
+            composable<Routes.AppsPage> {
+                AppsPage(
+                    modifier = Modifier.widthIn(max = 500.dp),
+                    navigate = { navController.navigate(it) }
+                )
+            }
             composable<Routes.AboutPage> { }
             composable<Routes.ProjectsPage> { }
             composable<Routes.ThemerPage> { }
