@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.hotreload)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -32,8 +33,8 @@ kotlin {
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.materialKolor)
             implementation(libs.compose.colorpicker)
-            implementation(libs.haze.core)
-            implementation(libs.hypnoticCanvas)
+            implementation(libs.jetbrains.compose.navigation)
+            implementation(libs.kotlinx.serialization.json)
         }
 
         desktopMain.dependencies {

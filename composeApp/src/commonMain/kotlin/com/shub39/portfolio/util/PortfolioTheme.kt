@@ -1,4 +1,4 @@
-package com.shub39.portfolio.theme
+package com.shub39.portfolio.util
 
 import androidx.compose.runtime.Composable
 import com.materialkolor.DynamicMaterialTheme
