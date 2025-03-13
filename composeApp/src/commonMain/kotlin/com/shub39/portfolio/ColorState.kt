@@ -7,7 +7,7 @@ import kotlin.random.Random
 data class ColorState(
     val isDark: Boolean = true,
     val isAmoled: Boolean = false,
-    val style: PaletteStyle = PaletteStyle.Expressive,
+    val style: PaletteStyle = PaletteStyle.TonalSpot,
     val seedColor: Color = randomColor()
 ) {
     companion object {
