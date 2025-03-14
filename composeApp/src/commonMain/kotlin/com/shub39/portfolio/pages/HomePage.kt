@@ -141,7 +141,7 @@ fun HomePage(
                     ).forEach { info ->
                         Button(
                             onClick = { navigate(info.route) },
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier.padding(4.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.tertiary,
                                 contentColor = MaterialTheme.colorScheme.onTertiary
