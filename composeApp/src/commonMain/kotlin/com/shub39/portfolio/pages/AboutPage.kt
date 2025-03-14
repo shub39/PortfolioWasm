@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,11 +20,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
@@ -39,9 +43,13 @@ import compose.icons.fontawesomeicons.brands.Android
 import compose.icons.fontawesomeicons.brands.Lastfm
 import compose.icons.fontawesomeicons.brands.Spotify
 import compose.icons.fontawesomeicons.brands.Youtube
+import compose.icons.fontawesomeicons.solid.Gamepad
 import compose.icons.fontawesomeicons.solid.Home
+import compose.icons.fontawesomeicons.solid.Music
 import compose.icons.fontawesomeicons.solid.Palette
+import compose.icons.fontawesomeicons.solid.PhotoVideo
 import compose.icons.fontawesomeicons.solid.Tools
+import compose.icons.fontawesomeicons.solid.Video
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -101,8 +109,9 @@ fun AboutPage(
 
                         Text(
                             text = "I'm Shubham Gorai. I like to code stuff into existence. " +
-                                    "Other than that I also like to rate music, play games " +
-                                    "and test out bleeding edge stuff. I aspire to learn the bass someday...",
+                                    "Other than that I also like to rate music, play games, " +
+                                    "test out bleeding edge stuff and nerd out about computer hardware" +
+                                    ". I aspire to learn the bass someday...",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                         )
