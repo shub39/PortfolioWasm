@@ -1,4 +1,5 @@
-package com.shub39.portfolio.components
+package com.shub39.portfolio.pages.components
+
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.hoverable
