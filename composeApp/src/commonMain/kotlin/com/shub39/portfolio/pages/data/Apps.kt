@@ -32,7 +32,7 @@ val APPS = listOf(
         github = "https://github.com/shub39/Rush",
         stars = 490,
         rating = 5f,
-        demo = null,
+        demo = Routes.RushDemo,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
         otherLinks = mapOf(
             "Fdroid" to "https://f-droid.org/packages/com.shub39.rush",
