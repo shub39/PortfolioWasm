@@ -39,7 +39,7 @@ fun ColorPickerDialog(
         onDismissRequest = onDismiss
     ) {
         Card(
-            modifier = Modifier.widthIn(max = 700.dp),
+            modifier = Modifier.widthIn(max = 500.dp),
             shape = MaterialTheme.shapes.extraLarge
         ) {
             Column(

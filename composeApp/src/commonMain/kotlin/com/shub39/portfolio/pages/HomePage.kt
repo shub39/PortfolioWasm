@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -27,13 +29,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.Routes
-import com.shub39.portfolio.pages.components.ExpandingIconButton
 import com.shub39.portfolio.pages.data.ButtonInfo
 import com.shub39.portfolio.pages.data.NavigateInfo
 import com.shub39.portfolio.util.PageFill
@@ -80,8 +83,8 @@ fun HomePage(
                 modifier = Modifier.padding(horizontal = 32.dp),
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.tertiary
                 )
             ) {
                 Column(
@@ -91,9 +94,22 @@ fun HomePage(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    val materialColor = MaterialTheme.colorScheme.tertiary
+                    val colorMatrix = ColorMatrix().apply {
+                        setToSaturation(0f)
+                        val r = materialColor.red
+                        val g = materialColor.green
+                        val b = materialColor.blue
+                        val a = materialColor.alpha
+                        setToScale(r, g, b, a)
+                    }
+
                     Image(
                         painter = painterResource(Res.drawable.eclipse),
                         contentDescription = "Eclipse",
+                        colorFilter = ColorFilter.colorMatrix(
+                            colorMatrix = colorMatrix
+                        ),
                         modifier = Modifier
                             .padding(16.dp)
                             .size(150.dp)
@@ -108,11 +124,51 @@ fun HomePage(
                     )
 
                     Text(
-                        text = "Beginner Android dev and Linux nerd",
+                        text = "Beginner Android dev and Linux nerd from India",
                         style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold
                     )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    FlowRow(
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        listOf(
+                            ButtonInfo(FontAwesomeIcons.Brands.Github, "https://github.com/shub39", "Github"),
+                            ButtonInfo(
+                                FontAwesomeIcons.Brands.Linkedin,
+                                "https://www.linkedin.com/in/shub39/",
+                                "LinkedIn"
+                            ),
+                            ButtonInfo(FontAwesomeIcons.Brands.Telegram, "https://t.me/shub39", "Telegram"),
+                            ButtonInfo(
+                                FontAwesomeIcons.Solid.Envelope,
+                                "mailto:cptnshubham39@gmail.com",
+                                "Email"
+                            )
+                        ).forEach { buttonInfo ->
+                            AssistChip(
+                                modifier =  Modifier.padding(horizontal = 4.dp),
+                                onClick = { uriHandler.openUri(buttonInfo.link) },
+                                label = { Text(buttonInfo.title) },
+                                shape = CircleShape,
+                                colors = AssistChipDefaults.assistChipColors(
+                                    containerColor = MaterialTheme.colorScheme.tertiary,
+                                    labelColor = MaterialTheme.colorScheme.onTertiary,
+                                    leadingIconContentColor = MaterialTheme.colorScheme.onTertiary
+                                ),
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = buttonInfo.imageVector,
+                                        contentDescription = buttonInfo.title,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            )
+                        }
+                    }
                 }
             }
 
@@ -122,8 +178,8 @@ fun HomePage(
                 modifier = Modifier.padding(horizontal = 32.dp),
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             ) {
                 FlowRow(
@@ -143,8 +199,8 @@ fun HomePage(
                             onClick = { navigate(info.route) },
                             modifier = Modifier.padding(4.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.tertiary,
-                                contentColor = MaterialTheme.colorScheme.onTertiary
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onSecondary
                             )
                         ) {
                             Row(
@@ -165,38 +221,6 @@ fun HomePage(
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row {
-                listOf(
-                    ButtonInfo(FontAwesomeIcons.Brands.Github, "https://github.com/shub39", "Github"),
-                    ButtonInfo(
-                        FontAwesomeIcons.Brands.Linkedin,
-                        "https://www.linkedin.com/in/shub39/",
-                        "LinkedIn"
-                    ),
-                    ButtonInfo(FontAwesomeIcons.Brands.Telegram, "https://t.me/shub39", "Telegram"),
-                    ButtonInfo(
-                        FontAwesomeIcons.Solid.Envelope,
-                        "mailto:cptnshubham39@gmail.com",
-                        "Email"
-                    )
-                ).forEach { buttonInfo ->
-                    ExpandingIconButton(
-                        onClick = { uriHandler.openUri(buttonInfo.link) },
-                        tooltip = buttonInfo.title
-                    ) {
-                        Icon(
-                            imageVector = buttonInfo.imageVector,
-                            contentDescription = buttonInfo.title,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 }
