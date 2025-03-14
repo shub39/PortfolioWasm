@@ -13,8 +13,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.shub39.portfolio.pages.AboutPage
 import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
+import com.shub39.portfolio.pages.ProjectsPage
+import com.shub39.portfolio.pages.ThemerPage
 import com.shub39.portfolio.util.PortfolioTheme
 
 @Composable
@@ -33,18 +36,55 @@ internal fun App() {
             composable<Routes.HomePage> {
                 HomePage(
                     modifier = Modifier.widthIn(max = 500.dp),
-                    navigate = { navController.navigate(it) }
+                    navigate = {
+                        navController.navigate(it) {
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
             composable<Routes.AppsPage> {
                 AppsPage(
                     modifier = Modifier.widthIn(max = 500.dp),
-                    navigate = { navController.navigate(it) }
+                    navigate = {
+                        navController.navigate(it) {
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
-            composable<Routes.AboutPage> { }
-            composable<Routes.ProjectsPage> { }
-            composable<Routes.ThemerPage> { }
+            composable<Routes.AboutPage> {
+                AboutPage(
+                    modifier = Modifier.widthIn(max = 500.dp),
+                    navigate = {
+                        navController.navigate(it) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
+            composable<Routes.ProjectsPage> {
+                ProjectsPage(
+                    modifier = Modifier.widthIn(max = 500.dp),
+                    navigate = {
+                        navController.navigate(it) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
+            composable<Routes.ThemerPage> {
+                ThemerPage(
+                    modifier = Modifier.widthIn(max = 500.dp),
+                    colorState = colorState,
+                    stateEdit = { colorState = it },
+                    navigate = {
+                        navController.navigate(it) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
         }
     }
 }
