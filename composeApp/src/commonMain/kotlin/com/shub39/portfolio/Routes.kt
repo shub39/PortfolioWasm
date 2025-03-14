@@ -10,6 +10,9 @@ sealed interface Routes {
     data object AppsPage: Routes
 
     @Serializable
+    data object RushDemo: Routes
+
+    @Serializable
     data object ProjectsPage: Routes
 
     @Serializable

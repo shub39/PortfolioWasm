@@ -18,6 +18,7 @@ import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
 import com.shub39.portfolio.pages.ProjectsPage
 import com.shub39.portfolio.pages.ThemerPage
+import com.shub39.portfolio.pages.rush_demo.RushDemo
 import com.shub39.portfolio.util.PortfolioTheme
 
 @Composable
@@ -51,6 +52,11 @@ internal fun App() {
                             launchSingleTop = true
                         }
                     }
+                )
+            }
+            composable<Routes.RushDemo> {
+                RushDemo(
+                    onBack = { navController.navigateUp() }
                 )
             }
             composable<Routes.AboutPage> {

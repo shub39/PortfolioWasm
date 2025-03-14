@@ -58,6 +58,7 @@ import compose.icons.fontawesomeicons.solid.Globe
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.Male
 import compose.icons.fontawesomeicons.solid.Palette
+import compose.icons.fontawesomeicons.solid.Play
 import compose.icons.fontawesomeicons.solid.Star
 import compose.icons.fontawesomeicons.solid.Tools
 import org.jetbrains.compose.resources.painterResource
@@ -201,6 +202,26 @@ fun AppsPage(
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     modifier = Modifier.padding(vertical = 16.dp)
                                 ) {
+                                    app.demo?.let {
+                                        ElevatedAssistChip(
+                                            onClick = { navigate(it) },
+                                            shape = CircleShape,
+                                            colors = AssistChipDefaults.assistChipColors(
+                                                containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                                labelColor = MaterialTheme.colorScheme.onSecondary,
+                                                leadingIconContentColor = MaterialTheme.colorScheme.onSecondary
+                                            ),
+                                            label = { Text(text = "Demo") },
+                                            leadingIcon = {
+                                                Icon(
+                                                    imageVector = FontAwesomeIcons.Solid.Play,
+                                                    contentDescription = "Demo",
+                                                    modifier = Modifier.size(18.dp)
+                                                )
+                                            }
+                                        )
+                                    }
+
                                     app.github?.let {
                                         ElevatedAssistChip(
                                             onClick = { uriHandler.openUri(it) },
