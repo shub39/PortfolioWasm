@@ -19,5 +19,9 @@ data class ColorState(
                 alpha = 1f
             )
         }
+
+        fun randomStyle(): PaletteStyle {
+            return PaletteStyle.entries.random()
+        }
     }
 }

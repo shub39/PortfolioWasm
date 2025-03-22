@@ -20,146 +20,111 @@ import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.shub39.portfolio.Routes
-import com.shub39.portfolio.pages.components.BottomBar
-import com.shub39.portfolio.pages.data.NavigateInfo
 import com.shub39.portfolio.pages.data.PROJECTS
 import com.shub39.portfolio.util.PageFill
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.brands.Android
 import compose.icons.fontawesomeicons.brands.Github
-import compose.icons.fontawesomeicons.solid.Home
-import compose.icons.fontawesomeicons.solid.Male
-import compose.icons.fontawesomeicons.solid.Palette
 import compose.icons.fontawesomeicons.solid.Star
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ProjectsPage(
-    modifier: Modifier = Modifier,
-    navigate: (Routes) -> Unit
+    modifier: Modifier = Modifier
 ) = PageFill {
     val uriHandler = LocalUriHandler.current
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = { Text("Other Projects") }
-            )
-        },
-        bottomBar = {
-            BottomBar(
-                navigate = navigate,
-                list = listOf(
-                    NavigateInfo(FontAwesomeIcons.Solid.Home, Routes.HomePage, "Home"),
-                    NavigateInfo(FontAwesomeIcons.Brands.Android, Routes.AppsPage, "Apps"),
-                    NavigateInfo(FontAwesomeIcons.Solid.Male, Routes.AboutPage, "About"),
-                    NavigateInfo(FontAwesomeIcons.Solid.Palette, Routes.ThemerPage, "Colors")
-                )
-            )
-        }
-    ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-
-            items(PROJECTS, key = { it.name }) { project ->
-                Card(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = MaterialTheme.shapes.extraLarge
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(PROJECTS, key = { it.name }) { project ->
+            Card(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                shape = MaterialTheme.shapes.extraLarge
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    Text(
+                        text = project.name,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = project.shortDescription,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+
+                    FlowRow(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(
-                            text = project.name,
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(
-                            text = project.shortDescription,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-
-                        FlowRow(
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            project.github?.let {
-                                ElevatedAssistChip(
-                                    onClick = { uriHandler.openUri(it) },
-                                    shape = CircleShape,
-                                    colors = AssistChipDefaults.assistChipColors(
-                                        containerColor = MaterialTheme.colorScheme.tertiary,
-                                        labelColor = MaterialTheme.colorScheme.onTertiary,
-                                        leadingIconContentColor = MaterialTheme.colorScheme.onTertiary
-                                    ),
-                                    label = { Text(text = "Github") },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = FontAwesomeIcons.Brands.Github,
-                                            contentDescription = "Github",
-                                            modifier = Modifier.size(18.dp)
-                                        )
-                                    }
-                                )
-                            }
-
-                            project.stars?.let {
-                                AssistChip(
-                                    onClick = {},
-                                    shape = CircleShape,
-                                    colors = AssistChipDefaults.assistChipColors(
-                                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                        labelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                        leadingIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                    ),
-                                    label = { Text(text = it.toString()) },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = FontAwesomeIcons.Solid.Star,
-                                            contentDescription = "Star",
-                                            modifier = Modifier.size(18.dp)
-                                        )
-                                    }
-                                )
-                            }
+                        project.github?.let {
+                            ElevatedAssistChip(
+                                onClick = { uriHandler.openUri(it) },
+                                shape = CircleShape,
+                                colors = AssistChipDefaults.assistChipColors(
+                                    containerColor = MaterialTheme.colorScheme.tertiary,
+                                    labelColor = MaterialTheme.colorScheme.onTertiary,
+                                    leadingIconContentColor = MaterialTheme.colorScheme.onTertiary
+                                ),
+                                label = { Text(text = "Github") },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = FontAwesomeIcons.Brands.Github,
+                                        contentDescription = "Github",
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            )
                         }
 
-                        Text(
-                            text = project.description,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        project.stars?.let {
+                            AssistChip(
+                                onClick = {},
+                                shape = CircleShape,
+                                colors = AssistChipDefaults.assistChipColors(
+                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    labelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    leadingIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                ),
+                                label = { Text(text = it.toString()) },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = FontAwesomeIcons.Solid.Star,
+                                        contentDescription = "Star",
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            )
+                        }
                     }
+
+                    Text(
+                        text = project.description,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
+        }
 
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

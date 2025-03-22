@@ -1,13 +1,13 @@
 [versions]
 
-kotlin = "2.1.20-RC"
-compose = "1.7.3"
+kotlin = "2.1.20-RC3"
+compose = "1.8.0-beta01"
 composeIcons = "1.1.1"
 materialKolor = "2.0.1"
 colorpicker = "1.1.2"
 kotlinx-coroutines = "1.10.1"
-hotreload = "1.0.0-alpha01"
-navigation = "2.8.0-alpha10"
+hotreload = "1.0.0-alpha03"
+navigation = "2.9.0-alpha15"
 serialization = "1.7.3"
 hypnoticcanvas = "0.4.0-b02"
 
@@ -19,7 +19,7 @@ compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", vers
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref= "navigation"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
-hypnoticcanvas = {group = "com.mikepenz.hypnoticcanvas", name = "hypnoticcanvas", version.ref = "hypnoticcanvas"}
+hypnoticcanvas = { group = "com.mikepenz.hypnoticcanvas", name = "hypnoticcanvas", version.ref = "hypnoticcanvas" }
 
 [plugins]
 

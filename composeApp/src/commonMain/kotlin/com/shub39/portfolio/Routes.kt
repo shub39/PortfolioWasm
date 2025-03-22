@@ -17,7 +17,4 @@ sealed interface Routes {
 
     @Serializable
     data object AboutPage: Routes
-
-    @Serializable
-    data object ThemerPage: Routes
 }
