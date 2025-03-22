@@ -10,9 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.shub39.portfolio.pages.AboutPage
 import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
@@ -22,9 +22,10 @@ import com.shub39.portfolio.pages.rush_demo.RushDemo
 import com.shub39.portfolio.util.PortfolioTheme
 
 @Composable
-internal fun App() {
+internal fun App(
+    navController: NavHostController
+) {
     var colorState by remember { mutableStateOf(ColorState()) }
-    val navController = rememberNavController()
 
     PortfolioTheme(
         state = colorState
@@ -36,7 +37,7 @@ internal fun App() {
         ) {
             composable<Routes.HomePage> {
                 HomePage(
-                    modifier = Modifier.widthIn(max = 500.dp),
+                    modifier = Modifier.widthIn(max = 700.dp),
                     navigate = {
                         navController.navigate(it) {
                             launchSingleTop = true
@@ -46,7 +47,7 @@ internal fun App() {
             }
             composable<Routes.AppsPage> {
                 AppsPage(
-                    modifier = Modifier.widthIn(max = 500.dp),
+                    modifier = Modifier.widthIn(max = 700.dp),
                     navigate = {
                         navController.navigate(it) {
                             launchSingleTop = true
@@ -61,7 +62,7 @@ internal fun App() {
             }
             composable<Routes.AboutPage> {
                 AboutPage(
-                    modifier = Modifier.widthIn(max = 500.dp),
+                    modifier = Modifier.widthIn(max = 700.dp),
                     navigate = {
                         navController.navigate(it) {
                             launchSingleTop = true
@@ -71,7 +72,7 @@ internal fun App() {
             }
             composable<Routes.ProjectsPage> {
                 ProjectsPage(
-                    modifier = Modifier.widthIn(max = 500.dp),
+                    modifier = Modifier.widthIn(max = 700.dp),
                     navigate = {
                         navController.navigate(it) {
                             launchSingleTop = true
@@ -81,7 +82,7 @@ internal fun App() {
             }
             composable<Routes.ThemerPage> {
                 ThemerPage(
-                    modifier = Modifier.widthIn(max = 500.dp),
+                    modifier = Modifier.widthIn(max = 700.dp),
                     colorState = colorState,
                     stateEdit = { colorState = it },
                     navigate = {
