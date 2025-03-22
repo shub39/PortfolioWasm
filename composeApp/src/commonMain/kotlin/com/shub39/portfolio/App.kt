@@ -3,7 +3,7 @@ package com.shub39.portfolio
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -73,21 +74,25 @@ internal fun App(
         Surface(
             color = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.shaderBackground(
-                MeshGradient(
-                    colors = arrayOf(
-                        MaterialTheme.colorScheme.surface,
-                        MaterialTheme.colorScheme.surface.lighten(1.5f),
-                        MaterialTheme.colorScheme.tertiaryContainer,
-                        MaterialTheme.colorScheme.surface.darken(1.5f),
-                        MaterialTheme.colorScheme.surface
-                    )
-                ),
-                speed = 3f
-            )
+            modifier = Modifier
+                .shaderBackground(
+                    MeshGradient(
+                        colors = arrayOf(
+                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.colorScheme.surface.lighten(1.5f),
+                            MaterialTheme.colorScheme.tertiaryContainer,
+                            MaterialTheme.colorScheme.surface.darken(1.5f),
+                            MaterialTheme.colorScheme.surface
+                        )
+                    ),
+                    speed = 3f
+                )
         ) {
-            Column {
-                AnimatedVisibility(currentRoute != Routes.RushDemo) {
+            Box {
+                AnimatedVisibility(
+                    visible = currentRoute != Routes.RushDemo,
+                    modifier = Modifier.align(Alignment.TopStart)
+                ) {
                     Row(
                         modifier = Modifier
                             .background(Color.Transparent)
@@ -116,7 +121,9 @@ internal fun App(
                     composable<Routes.AppsPage> {
                         currentRoute = Routes.AppsPage
                         AppsPage(
-                            modifier = Modifier.widthIn(max = 700.dp),
+                            modifier = Modifier
+                                .padding(top = 72.dp)
+                                .widthIn(max = 700.dp),
                             navigate = {
                                 navController.navigate(it) {
                                     launchSingleTop = true
@@ -133,13 +140,17 @@ internal fun App(
                     composable<Routes.AboutPage> {
                         currentRoute = Routes.AboutPage
                         AboutPage(
-                            modifier = Modifier.widthIn(max = 700.dp),
+                            modifier = Modifier
+                                .padding(top = 72.dp)
+                                .widthIn(max = 700.dp)
                         )
                     }
                     composable<Routes.ProjectsPage> {
                         currentRoute = Routes.ProjectsPage
                         ProjectsPage(
-                            modifier = Modifier.widthIn(max = 700.dp),
+                            modifier = Modifier
+                                .padding(top = 72.dp)
+                                .widthIn(max = 700.dp)
                         )
                     }
                 }
@@ -186,6 +197,7 @@ internal fun App(
                             onClick = {
                                 if (currentRoute != it.route) {
                                     navController.navigate(it.route)
+                                    scope.launch { drawerState.close() }
                                 }
                             },
                             icon = {

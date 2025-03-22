@@ -47,10 +47,6 @@ fun ProjectsPage(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-
         items(PROJECTS, key = { it.name }) { project ->
             Card(
                 modifier = Modifier.padding(horizontal = 16.dp),

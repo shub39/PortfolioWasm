@@ -69,10 +69,6 @@ fun AppsPage(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-
         items(APPS, key = { it.name }) { app ->
             var showExpanded by remember { mutableStateOf(false) }
 
