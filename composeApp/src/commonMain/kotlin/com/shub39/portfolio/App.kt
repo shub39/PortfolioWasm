@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -37,8 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.materialkolor.ktx.darken
-import com.materialkolor.ktx.lighten
 import com.mikepenz.hypnoticcanvas.shaderBackground
 import com.mikepenz.hypnoticcanvas.shaders.MeshGradient
 import com.shub39.portfolio.pages.AboutPage
@@ -75,13 +74,14 @@ internal fun App(
             color = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
+                .fillMaxSize()
                 .shaderBackground(
                     MeshGradient(
                         colors = arrayOf(
                             MaterialTheme.colorScheme.surface,
-                            MaterialTheme.colorScheme.surface.lighten(1.5f),
+                            MaterialTheme.colorScheme.primaryContainer,
                             MaterialTheme.colorScheme.tertiaryContainer,
-                            MaterialTheme.colorScheme.surface.darken(1.5f),
+                            MaterialTheme.colorScheme.secondaryContainer,
                             MaterialTheme.colorScheme.surface
                         )
                     ),
@@ -133,6 +133,7 @@ internal fun App(
                     }
                     composable<Routes.RushDemo> {
                         currentRoute = Routes.RushDemo
+
                         RushDemo(
                             onBack = { navController.navigateUp() }
                         )
