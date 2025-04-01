@@ -5,7 +5,8 @@ data class Project(
     val shortDescription: String,
     val description: String,
     val github: String? = null,
-    val stars: Int? = null
+    val stars: Int? = null,
+    val links: List<Pair<String, String>>? = null
 )
 
 val PROJECTS = listOf(
@@ -32,5 +33,15 @@ val PROJECTS = listOf(
                 "It supports fingerprint and face recognition and currently " +
                 "under development",
         github = "https://github.com/shub39/biometric-attendance"
+    ),
+    Project(
+        name = "HomePage",
+        shortDescription = "A simple Homepage for browsers",
+        description = "A simple Homepage for browsers that shows your last scrobble form LastFM over an animated background " +
+                "made with kotlin/wasm and deployed on github pages with github actions",
+        github = "https://github.com/shub39/HomePage",
+        links = listOf(
+            Pair("Demo", "https://shub39.github.io/HomePage")
+        )
     )
 )

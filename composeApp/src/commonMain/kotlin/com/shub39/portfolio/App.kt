@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DismissibleDrawerSheet
 import androidx.compose.material3.DismissibleNavigationDrawer
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,8 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.materialkolor.ktx.darken
-import com.materialkolor.ktx.lighten
 import com.mikepenz.hypnoticcanvas.shaderBackground
 import com.mikepenz.hypnoticcanvas.shaders.MeshGradient
 import com.shub39.portfolio.pages.AboutPage
@@ -75,40 +75,22 @@ internal fun App(
             color = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
+                .fillMaxSize()
                 .shaderBackground(
                     MeshGradient(
                         colors = arrayOf(
                             MaterialTheme.colorScheme.surface,
-                            MaterialTheme.colorScheme.surface.lighten(1.5f),
+                            MaterialTheme.colorScheme.primaryContainer,
                             MaterialTheme.colorScheme.tertiaryContainer,
-                            MaterialTheme.colorScheme.surface.darken(1.5f),
+                            MaterialTheme.colorScheme.secondaryContainer,
                             MaterialTheme.colorScheme.surface
-                        )
+                        ),
+                        scale = 5f
                     ),
                     speed = 3f
                 )
         ) {
             Box {
-                AnimatedVisibility(
-                    visible = currentRoute != Routes.RushDemo,
-                    modifier = Modifier.align(Alignment.TopStart)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .background(Color.Transparent)
-                            .padding(16.dp)
-                    ) {
-                        IconButton(
-                            onClick = { scope.launch { drawerState.open() } }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Menu,
-                                contentDescription = "Menu"
-                            )
-                        }
-                    }
-                }
-
                 NavHost(
                     modifier = Modifier.background(Color.Transparent),
                     navController = navController,
@@ -122,7 +104,6 @@ internal fun App(
                         currentRoute = Routes.AppsPage
                         AppsPage(
                             modifier = Modifier
-                                .padding(top = 72.dp)
                                 .widthIn(max = 700.dp),
                             navigate = {
                                 navController.navigate(it) {
@@ -133,6 +114,7 @@ internal fun App(
                     }
                     composable<Routes.RushDemo> {
                         currentRoute = Routes.RushDemo
+
                         RushDemo(
                             onBack = { navController.navigateUp() }
                         )
@@ -141,7 +123,6 @@ internal fun App(
                         currentRoute = Routes.AboutPage
                         AboutPage(
                             modifier = Modifier
-                                .padding(top = 72.dp)
                                 .widthIn(max = 700.dp)
                         )
                     }
@@ -149,10 +130,21 @@ internal fun App(
                         currentRoute = Routes.ProjectsPage
                         ProjectsPage(
                             modifier = Modifier
-                                .padding(top = 72.dp)
                                 .widthIn(max = 700.dp)
                         )
                     }
+                }
+
+                FilledTonalIconButton(
+                    onClick = { scope.launch { drawerState.open() } },
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.TopStart)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Menu"
+                    )
                 }
             }
         }

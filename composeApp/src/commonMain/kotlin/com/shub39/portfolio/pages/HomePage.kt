@@ -1,23 +1,25 @@
 package com.shub39.portfolio.pages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -41,70 +43,81 @@ import portfolio.composeapp.generated.resources.jetbrainsmono
 fun HomePage() = PageFill {
     val uriHandler = LocalUriHandler.current
 
-    Column(
+    Box(
         modifier = Modifier
             .padding(32.dp)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .clip(MaterialTheme.shapes.extraLarge)
+            .background(MaterialTheme.colorScheme.primaryContainer)
     ) {
-        Text(
-            text = "{shub39}",
-            fontFamily = FontFamily(Font(Res.font.jetbrainsmono)),
-            style = MaterialTheme.typography.displaySmall,
-            textAlign = TextAlign.Center,
-        )
-
-        Text(
-            text = "Beginner Android dev and Linux nerd from India",
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        FlowRow(
-            horizontalArrangement = Arrangement.Center
+        Column(
+            modifier = Modifier.padding(32.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            listOf(
-                ButtonInfo(
-                    FontAwesomeIcons.Brands.Github,
-                    "https://github.com/shub39",
-                    "Github"
-                ),
-                ButtonInfo(
-                    FontAwesomeIcons.Brands.Linkedin,
-                    "https://www.linkedin.com/in/shub39/",
-                    "LinkedIn"
-                ),
-                ButtonInfo(FontAwesomeIcons.Brands.Telegram, "https://t.me/shub39", "Telegram"),
-                ButtonInfo(
-                    FontAwesomeIcons.Solid.Envelope,
-                    "mailto:cptnshubham39@gmail.com",
-                    "Email"
-                )
-            ).forEach { buttonInfo ->
-                AssistChip(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { uriHandler.openUri(buttonInfo.link) },
-                    label = { Text(buttonInfo.title) },
-                    shape = CircleShape,
-                    colors = AssistChipDefaults.assistChipColors(
-                        containerColor = MaterialTheme.colorScheme.tertiary,
-                        labelColor = MaterialTheme.colorScheme.onTertiary,
-                        leadingIconContentColor = MaterialTheme.colorScheme.onTertiary
+            Text(
+                text = "{shub39}",
+                fontFamily = FontFamily(Font(Res.font.jetbrainsmono)),
+                style = MaterialTheme.typography.displaySmall,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+
+            Text(
+                text = "Beginner Android dev and Linux nerd from India",
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            FlowRow(
+                horizontalArrangement = Arrangement.Center
+            ) {
+                listOf(
+                    ButtonInfo(
+                        FontAwesomeIcons.Brands.Github,
+                        "https://github.com/shub39",
+                        "Github"
                     ),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = buttonInfo.imageVector,
-                            contentDescription = buttonInfo.title,
-                            modifier = Modifier.size(18.dp)
-                        )
+                    ButtonInfo(
+                        FontAwesomeIcons.Brands.Linkedin,
+                        "https://www.linkedin.com/in/shub39/",
+                        "LinkedIn"
+                    ),
+                    ButtonInfo(
+                        FontAwesomeIcons.Brands.Telegram,
+                        "https://t.me/shub39",
+                        "Telegram"
+                    ),
+                    ButtonInfo(
+                        FontAwesomeIcons.Solid.Envelope,
+                        "mailto:cptnshubham39@gmail.com",
+                        "Email"
+                    )
+                ).forEach { buttonInfo ->
+                    OutlinedButton(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            contentColor = MaterialTheme.colorScheme.primaryContainer
+                        ),
+                        onClick = { uriHandler.openUri(buttonInfo.link) }
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = buttonInfo.imageVector,
+                                contentDescription = buttonInfo.title,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Spacer(modifier = Modifier.size(4.dp))
+                            Text(buttonInfo.title)
+                        }
                     }
-                )
+                }
             }
         }
     }
-
 }
