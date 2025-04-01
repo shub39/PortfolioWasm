@@ -1,9 +1,7 @@
 package com.shub39.portfolio.pages
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -19,22 +17,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -69,12 +61,18 @@ fun AppsPage(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(APPS, key = { it.name }) { app ->
-            var showExpanded by remember { mutableStateOf(false) }
+        item {
+            Spacer(modifier = Modifier.height(32.dp))
+        }
 
+        items(APPS, key = { it.name }) { app ->
             Card(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                shape = MaterialTheme.shapes.extraLarge
+                shape = MaterialTheme.shapes.extraLarge,
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                )
             ) {
                 Column(
                     modifier = Modifier
@@ -158,112 +156,99 @@ fun AppsPage(
                         }
                     }
 
-                    AnimatedVisibility(
-                        visible = showExpanded
-                    ) {
-                        Column {
-                            Text(
-                                text = app.description
-                            )
 
-                            FlowRow(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                modifier = Modifier.padding(vertical = 16.dp)
-                            ) {
-                                app.demo?.let {
-                                    ElevatedAssistChip(
-                                        onClick = { navigate(it) },
-                                        shape = CircleShape,
-                                        colors = AssistChipDefaults.assistChipColors(
-                                            containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                            labelColor = MaterialTheme.colorScheme.onSecondary,
-                                            leadingIconContentColor = MaterialTheme.colorScheme.onSecondary
-                                        ),
-                                        label = { Text(text = "Demo") },
-                                        leadingIcon = {
-                                            Icon(
-                                                imageVector = FontAwesomeIcons.Solid.Play,
-                                                contentDescription = "Demo",
-                                                modifier = Modifier.size(18.dp)
-                                            )
-                                        }
-                                    )
-                                }
+                    Column {
+                        Text(
+                            text = app.description
+                        )
 
-                                app.github?.let {
-                                    ElevatedAssistChip(
-                                        onClick = { uriHandler.openUri(it) },
-                                        shape = CircleShape,
-                                        colors = AssistChipDefaults.assistChipColors(
-                                            containerColor = MaterialTheme.colorScheme.tertiary,
-                                            labelColor = MaterialTheme.colorScheme.onTertiary,
-                                            leadingIconContentColor = MaterialTheme.colorScheme.onTertiary
-                                        ),
-                                        label = { Text(text = "Github") },
-                                        leadingIcon = {
-                                            Icon(
-                                                imageVector = FontAwesomeIcons.Brands.Github,
-                                                contentDescription = "Github",
-                                                modifier = Modifier.size(18.dp)
-                                            )
-                                        }
-                                    )
-                                }
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.padding(vertical = 16.dp)
+                        ) {
+                            app.demo?.let {
+                                ElevatedAssistChip(
+                                    onClick = { navigate(it) },
+                                    shape = CircleShape,
+                                    colors = AssistChipDefaults.assistChipColors(
+                                        containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                        labelColor = MaterialTheme.colorScheme.onSecondary,
+                                        leadingIconContentColor = MaterialTheme.colorScheme.onSecondary
+                                    ),
+                                    label = { Text(text = "Demo") },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = FontAwesomeIcons.Solid.Play,
+                                            contentDescription = "Demo",
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                )
+                            }
 
-                                app.playstore?.let {
+                            app.github?.let {
+                                ElevatedAssistChip(
+                                    onClick = { uriHandler.openUri(it) },
+                                    shape = CircleShape,
+                                    colors = AssistChipDefaults.assistChipColors(
+                                        containerColor = MaterialTheme.colorScheme.tertiary,
+                                        labelColor = MaterialTheme.colorScheme.onTertiary,
+                                        leadingIconContentColor = MaterialTheme.colorScheme.onTertiary
+                                    ),
+                                    label = { Text(text = "Github") },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = FontAwesomeIcons.Brands.Github,
+                                            contentDescription = "Github",
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                )
+                            }
+
+                            app.playstore?.let {
+                                ElevatedAssistChip(
+                                    onClick = { uriHandler.openUri(it) },
+                                    shape = CircleShape,
+                                    colors = AssistChipDefaults.assistChipColors(
+                                        containerColor = MaterialTheme.colorScheme.primary,
+                                        labelColor = MaterialTheme.colorScheme.onPrimary,
+                                        leadingIconContentColor = MaterialTheme.colorScheme.onPrimary
+                                    ),
+                                    label = { Text(text = "Play Store") },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = FontAwesomeIcons.Brands.GooglePlay,
+                                            contentDescription = "Playstore",
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                )
+                            }
+
+                            app.otherLinks?.let { links ->
+                                links.forEach {
                                     ElevatedAssistChip(
-                                        onClick = { uriHandler.openUri(it) },
+                                        onClick = { uriHandler.openUri(it.value) },
                                         shape = CircleShape,
                                         colors = AssistChipDefaults.assistChipColors(
                                             containerColor = MaterialTheme.colorScheme.primary,
                                             labelColor = MaterialTheme.colorScheme.onPrimary,
                                             leadingIconContentColor = MaterialTheme.colorScheme.onPrimary
                                         ),
-                                        label = { Text(text = "Play Store") },
+                                        label = { Text(text = it.key) },
                                         leadingIcon = {
                                             Icon(
-                                                imageVector = FontAwesomeIcons.Brands.GooglePlay,
-                                                contentDescription = "Playstore",
+                                                imageVector = FontAwesomeIcons.Solid.Globe,
+                                                contentDescription = it.key,
                                                 modifier = Modifier.size(18.dp)
                                             )
                                         }
                                     )
                                 }
-
-                                app.otherLinks?.let { links ->
-                                    links.forEach {
-                                        ElevatedAssistChip(
-                                            onClick = { uriHandler.openUri(it.value) },
-                                            shape = CircleShape,
-                                            colors = AssistChipDefaults.assistChipColors(
-                                                containerColor = MaterialTheme.colorScheme.primary,
-                                                labelColor = MaterialTheme.colorScheme.onPrimary,
-                                                leadingIconContentColor = MaterialTheme.colorScheme.onPrimary
-                                            ),
-                                            label = { Text(text = it.key) },
-                                            leadingIcon = {
-                                                Icon(
-                                                    imageVector = FontAwesomeIcons.Solid.Globe,
-                                                    contentDescription = it.key,
-                                                    modifier = Modifier.size(18.dp)
-                                                )
-                                            }
-                                        )
-                                    }
-                                }
                             }
                         }
                     }
-
-                    Icon(
-                        imageVector = if (!showExpanded) {
-                            Icons.Default.ArrowDropDown
-                        } else {
-                            Icons.Default.Close
-                        },
-                        modifier = Modifier.clickable { showExpanded = !showExpanded },
-                        contentDescription = "Drop Down"
-                    )
                 }
             }
         }

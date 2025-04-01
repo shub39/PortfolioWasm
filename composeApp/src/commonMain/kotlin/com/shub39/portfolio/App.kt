@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DismissibleDrawerSheet
 import androidx.compose.material3.DismissibleNavigationDrawer
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -83,32 +84,13 @@ internal fun App(
                             MaterialTheme.colorScheme.tertiaryContainer,
                             MaterialTheme.colorScheme.secondaryContainer,
                             MaterialTheme.colorScheme.surface
-                        )
+                        ),
+                        scale = 5f
                     ),
                     speed = 3f
                 )
         ) {
             Box {
-                AnimatedVisibility(
-                    visible = currentRoute != Routes.RushDemo,
-                    modifier = Modifier.align(Alignment.TopStart)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .background(Color.Transparent)
-                            .padding(16.dp)
-                    ) {
-                        IconButton(
-                            onClick = { scope.launch { drawerState.open() } }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Menu,
-                                contentDescription = "Menu"
-                            )
-                        }
-                    }
-                }
-
                 NavHost(
                     modifier = Modifier.background(Color.Transparent),
                     navController = navController,
@@ -122,7 +104,6 @@ internal fun App(
                         currentRoute = Routes.AppsPage
                         AppsPage(
                             modifier = Modifier
-                                .padding(top = 72.dp)
                                 .widthIn(max = 700.dp),
                             navigate = {
                                 navController.navigate(it) {
@@ -142,7 +123,6 @@ internal fun App(
                         currentRoute = Routes.AboutPage
                         AboutPage(
                             modifier = Modifier
-                                .padding(top = 72.dp)
                                 .widthIn(max = 700.dp)
                         )
                     }
@@ -150,10 +130,21 @@ internal fun App(
                         currentRoute = Routes.ProjectsPage
                         ProjectsPage(
                             modifier = Modifier
-                                .padding(top = 72.dp)
                                 .widthIn(max = 700.dp)
                         )
                     }
+                }
+
+                FilledTonalIconButton(
+                    onClick = { scope.launch { drawerState.open() } },
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.TopStart)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Menu"
+                    )
                 }
             }
         }

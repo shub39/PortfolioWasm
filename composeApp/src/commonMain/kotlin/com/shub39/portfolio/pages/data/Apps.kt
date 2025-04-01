@@ -30,7 +30,7 @@ val APPS = listOf(
                 "colorful cards, with features like synced lyrics and importing lyrics for local files. " +
                 "it is a perfect tool for audiophiles and music nerds like myself.",
         github = "https://github.com/shub39/Rush",
-        stars = 490,
+        stars = 507,
         rating = 5f,
         demo = Routes.RushDemo,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
@@ -58,12 +58,12 @@ val APPS = listOf(
     ),
     App(
         name = "Dharmik",
-        shortDescription = "Browse Hindu Texts",
+        shortDescription = "Browse Bhagavad Gita",
         imageResource = Res.drawable.dharmik_icon,
-        description = "A simple app to browse Hindu texts, currently contains Atharvaveda and Bhagavad Gita",
+        description = "A simple app to browse Bhagavad Gita with auduio transcriptions in three languages",
         github = "https://github.com/shub39/Dharmik",
         demo = null,
-        stars = 15,
+        stars = 22,
         playstore = null,
         otherLinks = mapOf(
             "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.dharmik/latest"
@@ -77,7 +77,7 @@ val APPS = listOf(
                 "Locations and Episodes from Rick and Morty.",
         github = "https://github.com/shub39/Plumbus",
         demo = null,
-        stars = 12,
+        stars = 13,
         playstore = null,
         otherLinks = null
     )

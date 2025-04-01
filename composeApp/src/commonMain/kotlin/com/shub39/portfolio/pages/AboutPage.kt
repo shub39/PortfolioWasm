@@ -47,6 +47,10 @@ fun AboutPage(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         item {
+            Spacer(modifier = Modifier.height(32.dp))
+        }
+
+        item {
             Card(
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = CardDefaults.cardColors(
@@ -65,8 +69,9 @@ fun AboutPage(
                     )
 
                     Text(
-                        text = "I'm Shubham Gorai. I like to code stuff into existence. " +
-                                "Other than that I also like to rate music, play games, " +
+                        text = "I'm Shubham Gorai. I'm a 19 year old from India who loves" +
+                                " to code stuff into existence. \n\n" +
+                                "I also like to rate music, play games, " +
                                 "test out bleeding edge stuff and nerd out about computer hardware" +
                                 ". I aspire to learn the bass someday...",
                         style = MaterialTheme.typography.bodyLarge,

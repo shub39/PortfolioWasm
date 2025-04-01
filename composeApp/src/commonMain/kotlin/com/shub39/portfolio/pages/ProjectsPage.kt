@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
+import compose.icons.fontawesomeicons.solid.Globe
 import compose.icons.fontawesomeicons.solid.Star
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -47,10 +49,18 @@ fun ProjectsPage(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        item {
+            Spacer(modifier = Modifier.height(32.dp))
+        }
+
         items(PROJECTS, key = { it.name }) { project ->
             Card(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                shape = MaterialTheme.shapes.extraLarge
+                shape = MaterialTheme.shapes.extraLarge,
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                )
             ) {
                 Column(
                     modifier = Modifier
@@ -112,6 +122,28 @@ fun ProjectsPage(
                                     )
                                 }
                             )
+                        }
+
+                        project.links?.let {
+                            it.forEach { link ->
+                                AssistChip(
+                                    onClick = { uriHandler.openUri(link.second) },
+                                    shape = CircleShape,
+                                    colors = AssistChipDefaults.assistChipColors(
+                                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                        labelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        leadingIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                    ),
+                                    label = { Text(text = link.first) },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = FontAwesomeIcons.Solid.Globe,
+                                            contentDescription = "Star",
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
 
