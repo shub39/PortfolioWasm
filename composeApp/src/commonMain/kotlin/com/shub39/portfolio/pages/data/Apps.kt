@@ -1,6 +1,5 @@
 package com.shub39.portfolio.pages.data
 
-import com.shub39.portfolio.Routes
 import org.jetbrains.compose.resources.DrawableResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.dharmik_icon
@@ -16,7 +15,6 @@ data class App(
     val github: String? = null,
     val stars: Int? = null,
     val rating: Float? = null,
-    val demo: Routes? = null,
     val playstore: String? = null,
     val otherLinks: Map<String, String>? = null,
 )
@@ -30,9 +28,8 @@ val APPS = listOf(
                 "colorful cards, with features like synced lyrics and importing lyrics for local files. " +
                 "it is a perfect tool for audiophiles and music nerds like myself.",
         github = "https://github.com/shub39/Rush",
-        stars = 507,
+        stars = 540,
         rating = 5f,
-        demo = Routes.RushDemo,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
         otherLinks = mapOf(
             "Fdroid" to "https://f-droid.org/packages/com.shub39.rush",
@@ -48,8 +45,7 @@ val APPS = listOf(
                 " While learning android I made this app for myself that brings together all the features that I" +
                 " like keeping everything simple.",
         github = "https://github.com/shub39/Grit",
-        demo = null,
-        stars = 140,
+        stars = 150,
         playstore = null,
         otherLinks = mapOf(
             "Fdroid" to "https://f-droid.org/packages/com.shub39.grit",
@@ -62,8 +58,7 @@ val APPS = listOf(
         imageResource = Res.drawable.dharmik_icon,
         description = "A simple app to browse Bhagavad Gita with auduio transcriptions in three languages",
         github = "https://github.com/shub39/Dharmik",
-        demo = null,
-        stars = 22,
+        stars = 31,
         playstore = null,
         otherLinks = mapOf(
             "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.dharmik/latest"
@@ -76,7 +71,6 @@ val APPS = listOf(
         description = "Compose Multiplatform app to browse info on Characters, " +
                 "Locations and Episodes from Rick and Morty.",
         github = "https://github.com/shub39/Plumbus",
-        demo = null,
         stars = 13,
         playstore = null,
         otherLinks = null

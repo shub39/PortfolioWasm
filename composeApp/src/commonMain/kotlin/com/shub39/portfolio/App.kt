@@ -1,6 +1,5 @@
 package com.shub39.portfolio
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,7 +46,6 @@ import com.shub39.portfolio.pages.HomePage
 import com.shub39.portfolio.pages.ProjectsPage
 import com.shub39.portfolio.pages.components.ThemerOptions
 import com.shub39.portfolio.pages.data.NavigateInfo
-import com.shub39.portfolio.pages.rush_demo.RushDemo
 import com.shub39.portfolio.util.PortfolioTheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
@@ -104,19 +102,7 @@ internal fun App(
                         currentRoute = Routes.AppsPage
                         AppsPage(
                             modifier = Modifier
-                                .widthIn(max = 700.dp),
-                            navigate = {
-                                navController.navigate(it) {
-                                    launchSingleTop = true
-                                }
-                            }
-                        )
-                    }
-                    composable<Routes.RushDemo> {
-                        currentRoute = Routes.RushDemo
-
-                        RushDemo(
-                            onBack = { navController.navigateUp() }
+                                .widthIn(max = 700.dp)
                         )
                     }
                     composable<Routes.AboutPage> {

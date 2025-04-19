@@ -34,7 +34,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.shub39.portfolio.Routes
 import com.shub39.portfolio.pages.data.APPS
 import com.shub39.portfolio.util.PageFill
 import compose.icons.FontAwesomeIcons
@@ -43,7 +42,6 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
 import compose.icons.fontawesomeicons.brands.GooglePlay
 import compose.icons.fontawesomeicons.solid.Globe
-import compose.icons.fontawesomeicons.solid.Play
 import compose.icons.fontawesomeicons.solid.Star
 import org.jetbrains.compose.resources.painterResource
 
@@ -51,7 +49,6 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun AppsPage(
     modifier: Modifier = Modifier,
-    navigate: (Routes) -> Unit
 ) = PageFill {
     val uriHandler = LocalUriHandler.current
 
@@ -166,26 +163,6 @@ fun AppsPage(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier.padding(vertical = 16.dp)
                         ) {
-                            app.demo?.let {
-                                ElevatedAssistChip(
-                                    onClick = { navigate(it) },
-                                    shape = CircleShape,
-                                    colors = AssistChipDefaults.assistChipColors(
-                                        containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                        labelColor = MaterialTheme.colorScheme.onSecondary,
-                                        leadingIconContentColor = MaterialTheme.colorScheme.onSecondary
-                                    ),
-                                    label = { Text(text = "Demo") },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = FontAwesomeIcons.Solid.Play,
-                                            contentDescription = "Demo",
-                                            modifier = Modifier.size(18.dp)
-                                        )
-                                    }
-                                )
-                            }
-
                             app.github?.let {
                                 ElevatedAssistChip(
                                     onClick = { uriHandler.openUri(it) },
