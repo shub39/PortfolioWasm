@@ -1,6 +1,7 @@
 package com.shub39.portfolio.pages
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +21,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
@@ -30,7 +34,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +47,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.shub39.portfolio.pages.data.APPS
 import com.shub39.portfolio.util.PageFill
 import com.skydoves.landscapist.coil3.CoilImage
@@ -63,6 +73,8 @@ fun AppsPage(
 ) = PageFill {
     val uriHandler = LocalUriHandler.current
     val coroutineScope = rememberCoroutineScope()
+
+    var dialogImage by remember { mutableStateOf<String?>(null) }
 
     LazyColumn(
         modifier = modifier
@@ -184,6 +196,7 @@ fun AppsPage(
 
                         LazyRow(
                             state = state,
+                            modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             items(app.screenshots) {
@@ -201,6 +214,7 @@ fun AppsPage(
                                         .width(180.dp)
                                         .height(320.dp)
                                         .clip(MaterialTheme.shapes.small)
+                                        .clickable { dialogImage = it }
                                 )
                             }
                         }
@@ -240,7 +254,7 @@ fun AppsPage(
                         }
                     }
 
-                    Column {
+                    Column(modifier = Modifier.fillMaxWidth()) {
                         Text(
                             text = app.description
                         )
@@ -318,6 +332,39 @@ fun AppsPage(
 
         item {
             Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+
+    if (dialogImage != null) {
+        Dialog(
+            onDismissRequest = { dialogImage = null },
+            properties = DialogProperties(
+                usePlatformDefaultWidth = false
+            )
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(32.dp)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CoilImage(
+                    imageModel = { dialogImage },
+                    modifier = Modifier
+                        .fillMaxHeight()
+                )
+
+                FilledTonalIconButton(
+                    onClick = { dialogImage = null },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
         }
     }
 }

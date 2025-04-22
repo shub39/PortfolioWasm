@@ -88,7 +88,10 @@ internal fun App(
                     speed = 3f
                 )
         ) {
-            Box {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
                 NavHost(
                     modifier = Modifier.background(Color.Transparent),
                     navController = navController,
@@ -102,21 +105,21 @@ internal fun App(
                         currentRoute = Routes.AppsPage
                         AppsPage(
                             modifier = Modifier
-                                .widthIn(max = 700.dp)
+                                .widthIn(max = 900.dp)
                         )
                     }
                     composable<Routes.AboutPage> {
                         currentRoute = Routes.AboutPage
                         AboutPage(
                             modifier = Modifier
-                                .widthIn(max = 700.dp)
+                                .widthIn(max = 900.dp)
                         )
                     }
                     composable<Routes.ProjectsPage> {
                         currentRoute = Routes.ProjectsPage
                         ProjectsPage(
                             modifier = Modifier
-                                .widthIn(max = 700.dp)
+                                .widthIn(max = 900.dp)
                         )
                     }
                 }
@@ -189,7 +192,7 @@ internal fun App(
                     }
 
                     HorizontalDivider(
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 32.dp),
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 

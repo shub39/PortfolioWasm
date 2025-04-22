@@ -38,6 +38,7 @@ kotlin {
             implementation(libs.hypnoticcanvas)
             implementation(libs.landscapist.coil)
             implementation(libs.landscapist.placeholder)
+            implementation(libs.sdpssp)
         }
 
         desktopMain.dependencies {
