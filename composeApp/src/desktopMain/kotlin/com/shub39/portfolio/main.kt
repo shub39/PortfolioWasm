@@ -4,8 +4,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
 import androidx.navigation.compose.rememberNavController
-import org.jetbrains.compose.reload.DevelopmentEntryPoint
-
 
 fun main() {
     singleWindowApplication(
@@ -15,8 +13,6 @@ fun main() {
     ) {
         val navController = rememberNavController()
 
-        DevelopmentEntryPoint {
-            App(navController)
-        }
+        App(navController)
     }
 }

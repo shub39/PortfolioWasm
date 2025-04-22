@@ -36,6 +36,8 @@ kotlin {
             implementation(libs.jetbrains.compose.navigation)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.hypnoticcanvas)
+            implementation(libs.landscapist.coil)
+            implementation(libs.landscapist.placeholder)
         }
 
         desktopMain.dependencies {

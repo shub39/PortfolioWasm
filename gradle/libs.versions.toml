@@ -10,6 +10,7 @@ hotreload = "1.0.0-alpha05"
 navigation = "2.9.0-alpha15"
 serialization = "1.7.3"
 hypnoticcanvas = "0.4.0-b02"
+landscapist = "2.4.2"
 
 [libraries]
 
@@ -20,6 +21,8 @@ kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-co
 jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref= "navigation"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 hypnoticcanvas = { group = "com.mikepenz.hypnoticcanvas", name = "hypnoticcanvas", version.ref = "hypnoticcanvas" }
+landscapist-coil = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapist" }
+landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist" }
 
 [plugins]
 

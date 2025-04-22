@@ -1,8 +1,8 @@
 package com.shub39.portfolio.pages
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -23,10 +25,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,14 +40,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.pages.data.APPS
 import com.shub39.portfolio.util.PageFill
+import com.skydoves.landscapist.coil3.CoilImage
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
 import compose.icons.fontawesomeicons.brands.GooglePlay
+import compose.icons.fontawesomeicons.solid.ArrowLeft
+import compose.icons.fontawesomeicons.solid.ArrowRight
 import compose.icons.fontawesomeicons.solid.Globe
 import compose.icons.fontawesomeicons.solid.Star
-import org.jetbrains.compose.resources.painterResource
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -51,6 +58,7 @@ fun AppsPage(
     modifier: Modifier = Modifier,
 ) = PageFill {
     val uriHandler = LocalUriHandler.current
+    val coroutineScope = rememberCoroutineScope()
 
     LazyColumn(
         modifier = modifier
@@ -82,9 +90,8 @@ fun AppsPage(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Image(
-                            painter = painterResource(app.imageResource),
-                            contentDescription = app.name,
+                        CoilImage(
+                            imageModel = { app.iconUrl },
                             modifier = Modifier
                                 .size(75.dp)
                                 .clip(CircleShape)
@@ -153,6 +160,58 @@ fun AppsPage(
                         }
                     }
 
+                    Box {
+                        val state = rememberLazyListState()
+
+                        LazyRow(
+                            state = state,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(app.screenshots) {
+                                CoilImage(
+                                    imageModel = { it },
+                                    modifier = Modifier
+                                        .width(180.dp)
+                                        .height(320.dp)
+                                        .clip(MaterialTheme.shapes.small)
+                                )
+                            }
+                        }
+
+                        FilledTonalIconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    state.animateScrollToItem(
+                                        (state.firstVisibleItemIndex + 1).coerceAtLeast(0)
+                                    )
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.CenterEnd)
+                        ) {
+                            Icon(
+                                imageVector = FontAwesomeIcons.Solid.ArrowRight,
+                                contentDescription = "Scroll Right",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+
+                        FilledTonalIconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    state.animateScrollToItem(
+                                        (state.firstVisibleItemIndex - 1).coerceAtLeast(0)
+                                    )
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.CenterStart)
+                        ) {
+                            Icon(
+                                imageVector = FontAwesomeIcons.Solid.ArrowLeft,
+                                contentDescription = "Scroll Left",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
 
                     Column {
                         Text(
