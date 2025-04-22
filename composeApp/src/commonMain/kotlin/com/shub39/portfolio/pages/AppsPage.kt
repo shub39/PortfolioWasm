@@ -34,6 +34,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,6 +42,9 @@ import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.pages.data.APPS
 import com.shub39.portfolio.util.PageFill
 import com.skydoves.landscapist.coil3.CoilImage
+import com.skydoves.landscapist.components.rememberImageComponent
+import com.skydoves.landscapist.placeholder.shimmer.Shimmer
+import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
@@ -92,6 +96,21 @@ fun AppsPage(
                     ) {
                         CoilImage(
                             imageModel = { app.iconUrl },
+                            component = rememberImageComponent {
+                                +ShimmerPlugin(
+                                    Shimmer.Resonate(
+                                        baseColor = Color.Transparent,
+                                        highlightColor = MaterialTheme.colorScheme.onSurface
+                                    )
+                                )
+                            },
+                            failure = {
+                                Icon(
+                                    imageVector = FontAwesomeIcons.Solid.Globe,
+                                    contentDescription = "Icon",
+                                    modifier = Modifier.size(75.dp)
+                                )
+                            },
                             modifier = Modifier
                                 .size(75.dp)
                                 .clip(CircleShape)
@@ -170,6 +189,14 @@ fun AppsPage(
                             items(app.screenshots) {
                                 CoilImage(
                                     imageModel = { it },
+                                    component = rememberImageComponent {
+                                        +ShimmerPlugin(
+                                            Shimmer.Resonate(
+                                                baseColor = Color.Transparent,
+                                                highlightColor = MaterialTheme.colorScheme.onSurface
+                                            )
+                                        )
+                                    },
                                     modifier = Modifier
                                         .width(180.dp)
                                         .height(320.dp)
