@@ -112,7 +112,7 @@ fun HomePage() = PageFill {
                                 contentDescription = buttonInfo.title,
                                 modifier = Modifier.size(18.dp)
                             )
-                            Spacer(modifier = Modifier.size(4.dp))
+                            Spacer(modifier = Modifier.size(8.dp))
                             Text(buttonInfo.title)
                         }
                     }

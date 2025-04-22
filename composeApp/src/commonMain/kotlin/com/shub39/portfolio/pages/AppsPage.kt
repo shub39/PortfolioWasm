@@ -1,13 +1,15 @@
 package com.shub39.portfolio.pages
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,45 +17,64 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.shub39.portfolio.Routes
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.shub39.portfolio.pages.data.APPS
 import com.shub39.portfolio.util.PageFill
+import com.skydoves.landscapist.coil3.CoilImage
+import com.skydoves.landscapist.components.rememberImageComponent
+import com.skydoves.landscapist.placeholder.shimmer.Shimmer
+import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
 import compose.icons.fontawesomeicons.brands.GooglePlay
+import compose.icons.fontawesomeicons.solid.ArrowLeft
+import compose.icons.fontawesomeicons.solid.ArrowRight
 import compose.icons.fontawesomeicons.solid.Globe
-import compose.icons.fontawesomeicons.solid.Play
 import compose.icons.fontawesomeicons.solid.Star
-import org.jetbrains.compose.resources.painterResource
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AppsPage(
     modifier: Modifier = Modifier,
-    navigate: (Routes) -> Unit
 ) = PageFill {
     val uriHandler = LocalUriHandler.current
+    val coroutineScope = rememberCoroutineScope()
+
+    var dialogImage by remember { mutableStateOf<String?>(null) }
 
     LazyColumn(
         modifier = modifier
@@ -85,9 +106,23 @@ fun AppsPage(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Image(
-                            painter = painterResource(app.imageResource),
-                            contentDescription = app.name,
+                        CoilImage(
+                            imageModel = { app.iconUrl },
+                            component = rememberImageComponent {
+                                +ShimmerPlugin(
+                                    Shimmer.Resonate(
+                                        baseColor = Color.Transparent,
+                                        highlightColor = MaterialTheme.colorScheme.onSurface
+                                    )
+                                )
+                            },
+                            failure = {
+                                Icon(
+                                    imageVector = FontAwesomeIcons.Solid.Globe,
+                                    contentDescription = "Icon",
+                                    modifier = Modifier.size(75.dp)
+                                )
+                            },
                             modifier = Modifier
                                 .size(75.dp)
                                 .clip(CircleShape)
@@ -156,8 +191,70 @@ fun AppsPage(
                         }
                     }
 
+                    Box {
+                        val state = rememberLazyListState()
 
-                    Column {
+                        LazyRow(
+                            state = state,
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(app.screenshots) {
+                                CoilImage(
+                                    imageModel = { it },
+                                    component = rememberImageComponent {
+                                        +ShimmerPlugin(
+                                            Shimmer.Resonate(
+                                                baseColor = Color.Transparent,
+                                                highlightColor = MaterialTheme.colorScheme.onSurface
+                                            )
+                                        )
+                                    },
+                                    modifier = Modifier
+                                        .width(180.dp)
+                                        .height(320.dp)
+                                        .clip(MaterialTheme.shapes.small)
+                                        .clickable { dialogImage = it }
+                                )
+                            }
+                        }
+
+                        FilledTonalIconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    state.animateScrollToItem(
+                                        (state.firstVisibleItemIndex + 1).coerceAtLeast(0)
+                                    )
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.CenterEnd)
+                        ) {
+                            Icon(
+                                imageVector = FontAwesomeIcons.Solid.ArrowRight,
+                                contentDescription = "Scroll Right",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+
+                        FilledTonalIconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    state.animateScrollToItem(
+                                        (state.firstVisibleItemIndex - 1).coerceAtLeast(0)
+                                    )
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.CenterStart)
+                        ) {
+                            Icon(
+                                imageVector = FontAwesomeIcons.Solid.ArrowLeft,
+                                contentDescription = "Scroll Left",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+
+                    Column(modifier = Modifier.fillMaxWidth()) {
                         Text(
                             text = app.description
                         )
@@ -166,26 +263,6 @@ fun AppsPage(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier.padding(vertical = 16.dp)
                         ) {
-                            app.demo?.let {
-                                ElevatedAssistChip(
-                                    onClick = { navigate(it) },
-                                    shape = CircleShape,
-                                    colors = AssistChipDefaults.assistChipColors(
-                                        containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                        labelColor = MaterialTheme.colorScheme.onSecondary,
-                                        leadingIconContentColor = MaterialTheme.colorScheme.onSecondary
-                                    ),
-                                    label = { Text(text = "Demo") },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = FontAwesomeIcons.Solid.Play,
-                                            contentDescription = "Demo",
-                                            modifier = Modifier.size(18.dp)
-                                        )
-                                    }
-                                )
-                            }
-
                             app.github?.let {
                                 ElevatedAssistChip(
                                     onClick = { uriHandler.openUri(it) },
@@ -255,6 +332,39 @@ fun AppsPage(
 
         item {
             Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+
+    if (dialogImage != null) {
+        Dialog(
+            onDismissRequest = { dialogImage = null },
+            properties = DialogProperties(
+                usePlatformDefaultWidth = false
+            )
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(32.dp)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CoilImage(
+                    imageModel = { dialogImage },
+                    modifier = Modifier
+                        .fillMaxHeight()
+                )
+
+                FilledTonalIconButton(
+                    onClick = { dialogImage = null },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
         }
     }
 }

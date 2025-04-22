@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -83,7 +83,7 @@ fun ThemerOptions(
                     Text("Randomize colors and style")
                 },
                 trailingContent = {
-                    IconButton(
+                    FilledTonalIconButton(
                         onClick = {
                             stateEdit(
                                 colorState.copy(
