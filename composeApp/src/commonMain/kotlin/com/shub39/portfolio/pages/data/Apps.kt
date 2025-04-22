@@ -16,15 +16,15 @@ data class App(
 val APPS = listOf(
     App(
         name = "Rush",
-        iconUrl = "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/icon.png?raw=true",
+        iconUrl = "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png",
         screenshots = listOf(
-            "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?raw=true",
-            "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png?raw=true",
-            "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png?raw=true",
-            "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png?raw=true",
-            "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png?raw=true",
-            "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png?raw=true",
-            "https://github.com/shub39/Rush/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png?raw=true"
+            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png",
+            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png",
+            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png",
+            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png",
+            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png",
+            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png",
+            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png"
         ),
         shortDescription = "Search, Save and Share Lyrics like Spotify!",
         description = "Rush is an Android App to get lyrics for your favorite tracks and share them through " +
@@ -41,14 +41,14 @@ val APPS = listOf(
     ),
     App(
         name = "Grit",
-        iconUrl = "https://github.com/shub39/Grit/blob/master/fastlane/metadata/android/en-US/images/icon.png?raw=true",
+        iconUrl = "https://raw.githubusercontent.com/shub39/Grit/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png",
         screenshots = listOf(
-            "https://github.com/shub39/Grit/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?raw=true",
-            "https://github.com/shub39/Grit/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png?raw=true",
-            "https://github.com/shub39/Grit/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png?raw=true",
-            "https://github.com/shub39/Grit/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png?raw=true",
-            "https://github.com/shub39/Grit/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png?raw=true",
-            "https://github.com/shub39/Grit/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png?raw=true",
+            "https://raw.githubusercontent.com/shub39/Grit/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png",
+            "https://raw.githubusercontent.com/shub39/Grit/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png",
+            "https://raw.githubusercontent.com/shub39/Grit/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png",
+            "https://raw.githubusercontent.com/shub39/Grit/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png",
+            "https://raw.githubusercontent.com/shub39/Grit/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png",
+            "https://raw.githubusercontent.com/shub39/Grit/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png",
         ),
         shortDescription = "A simple ToDo list and Habit Tracker",
         description = "There are plenty of todo list and habit tracker apps for android. " +
@@ -65,12 +65,12 @@ val APPS = listOf(
     ),
     App(
         name = "Dharmik",
-        iconUrl = "https://github.com/shub39/Dharmik/blob/master/fastlane/metadata/android/en-US/images/icon.png?raw=true",
+        iconUrl = "https://raw.githubusercontent.com/shub39/Dharmik/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png",
         screenshots = listOf(
-            "https://github.com/shub39/Dharmik/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?raw=true",
-            "https://github.com/shub39/Dharmik/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png?raw=true",
-            "https://github.com/shub39/Dharmik/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png?raw=true",
-            "https://github.com/shub39/Dharmik/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png?raw=true",
+            "https://raw.githubusercontent.com/shub39/Dharmik/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png",
+            "https://raw.githubusercontent.com/shub39/Dharmik/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png",
+            "https://raw.githubusercontent.com/shub39/Dharmik/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png",
+            "https://raw.githubusercontent.com/shub39/Dharmik/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png",
         ),
         shortDescription = "Browse Bhagavad Gita",
         description = "A simple app to browse Bhagavad Gita with auduio transcriptions in three languages",
@@ -83,12 +83,12 @@ val APPS = listOf(
     ),
     App(
         name = "Plumbus",
-        iconUrl = "https://github.com/shub39/Plumbus/blob/master/fastlane/metadata/android/en-US/images/icon.png?raw=true",
+        iconUrl = "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png",
         screenshots = listOf(
-            "https://github.com/shub39/Plumbus/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?raw=true",
-            "https://github.com/shub39/Plumbus/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png?raw=true",
-            "https://github.com/shub39/Plumbus/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png?raw=true",
-            "https://github.com/shub39/Plumbus/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png?raw=true",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png",
         ),
         shortDescription = "Browse info on Rick and Morty",
         description = "Compose Multiplatform app to browse info on Characters, " +
