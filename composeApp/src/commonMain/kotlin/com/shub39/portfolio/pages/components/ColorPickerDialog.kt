@@ -9,15 +9,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,8 +36,7 @@ fun ColorPickerDialog(
         onDismissRequest = onDismiss
     ) {
         Card(
-            modifier = Modifier.widthIn(max = 500.dp),
-            shape = MaterialTheme.shapes.extraLarge
+            modifier = Modifier.widthIn(max = 500.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -69,8 +65,7 @@ fun ColorPickerDialog(
                 AlphaTile(
                     modifier = Modifier
                         .size(80.dp)
-                        .padding(vertical = 10.dp)
-                        .clip(RoundedCornerShape(6.dp)),
+                        .padding(vertical = 10.dp),
                     controller = controller
                 )
 

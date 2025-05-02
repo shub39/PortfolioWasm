@@ -31,7 +31,7 @@ val APPS = listOf(
                 "colorful cards, with features like synced lyrics and importing lyrics for local files. " +
                 "it is a perfect tool for audiophiles and music nerds like myself.",
         github = "https://github.com/shub39/Rush",
-        stars = 540,
+        stars = 550,
         rating = 5f,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
         otherLinks = mapOf(
@@ -56,7 +56,7 @@ val APPS = listOf(
                 " While learning android I made this app for myself that brings together all the features that I" +
                 " like keeping everything simple.",
         github = "https://github.com/shub39/Grit",
-        stars = 150,
+        stars = 160,
         playstore = null,
         otherLinks = mapOf(
             "Fdroid" to "https://f-droid.org/packages/com.shub39.grit",
@@ -75,7 +75,7 @@ val APPS = listOf(
         shortDescription = "Browse Bhagavad Gita",
         description = "A simple app to browse Bhagavad Gita with auduio transcriptions in three languages",
         github = "https://github.com/shub39/Dharmik",
-        stars = 31,
+        stars = 34,
         playstore = null,
         otherLinks = mapOf(
             "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.dharmik/latest"
@@ -89,6 +89,10 @@ val APPS = listOf(
             "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png",
             "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png",
             "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png",
+            "https://raw.githubusercontent.com/shub39/Plumbus/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/8.png"
         ),
         shortDescription = "Browse info on Rick and Morty",
         description = "Compose Multiplatform app to browse info on Characters, " +

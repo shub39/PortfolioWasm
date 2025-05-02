@@ -1,9 +1,13 @@
 package com.shub39.portfolio
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +19,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DismissibleDrawerSheet
 import androidx.compose.material3.DismissibleNavigationDrawer
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
@@ -25,12 +30,14 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -60,6 +67,8 @@ import kotlinx.coroutines.launch
 internal fun App(
     navController: NavHostController
 ) {
+    var showDrawer by remember { mutableStateOf(false) }
+
     val scope = rememberCoroutineScope()
 
     var colorState by remember { mutableStateOf(ColorState()) }
@@ -69,143 +78,201 @@ internal fun App(
     PortfolioTheme(
         state = colorState
     ) {
-        Surface(
-            color = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier
-                .fillMaxSize()
-                .shaderBackground(
-                    MeshGradient(
-                        colors = arrayOf(
-                            MaterialTheme.colorScheme.surface,
-                            MaterialTheme.colorScheme.primaryContainer,
-                            MaterialTheme.colorScheme.tertiaryContainer,
-                            MaterialTheme.colorScheme.secondaryContainer,
-                            MaterialTheme.colorScheme.surface
-                        ),
-                        scale = 5f
-                    ),
-                    speed = 3f
-                )
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                NavHost(
-                    modifier = Modifier.background(Color.Transparent),
-                    navController = navController,
-                    startDestination = Routes.HomePage
-                ) {
-                    composable<Routes.HomePage> {
-                        currentRoute = Routes.HomePage
-                        HomePage()
-                    }
-                    composable<Routes.AppsPage> {
-                        currentRoute = Routes.AppsPage
-                        AppsPage(
-                            modifier = Modifier
-                                .widthIn(max = 900.dp)
-                        )
-                    }
-                    composable<Routes.AboutPage> {
-                        currentRoute = Routes.AboutPage
-                        AboutPage(
-                            modifier = Modifier
-                                .widthIn(max = 900.dp)
-                        )
-                    }
-                    composable<Routes.ProjectsPage> {
-                        currentRoute = Routes.ProjectsPage
-                        ProjectsPage(
-                            modifier = Modifier
-                                .widthIn(max = 900.dp)
-                        )
-                    }
-                }
-
-                FilledTonalIconButton(
-                    onClick = { scope.launch { drawerState.open() } },
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopStart)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = "Menu"
-                    )
-                }
+            LaunchedEffect(this.maxWidth) {
+                showDrawer = this@BoxWithConstraints.maxWidth > 1100.dp
+                drawerState.close()
             }
-        }
 
-        DismissibleNavigationDrawer(
-            drawerContent = {
-                DismissibleDrawerSheet(
-                    drawerState = drawerState,
-                    drawerContainerColor = MaterialTheme.colorScheme.surface,
-                    drawerContentColor = MaterialTheme.colorScheme.onSurface,
-                    drawerShape = RoundedCornerShape(
-                        topEnd = 20.dp,
-                        bottomEnd = 20.dp
+            Surface(
+                color = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .shaderBackground(
+                        MeshGradient(
+                            colors = arrayOf(
+                                MaterialTheme.colorScheme.surface,
+                                MaterialTheme.colorScheme.primaryContainer,
+                                MaterialTheme.colorScheme.tertiaryContainer,
+                                MaterialTheme.colorScheme.secondaryContainer,
+                                MaterialTheme.colorScheme.surface
+                            ),
+                            scale = 5f
+                        ),
+                        speed = 3f
                     )
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        IconButton(
-                            onClick = { scope.launch { drawerState.close() } }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Close"
-                            )
-                        }
-                    }
+            ) {
+                Row {
+                   AnimatedVisibility(
+                       visible = showDrawer
+                   ) {
+                       DismissibleDrawerSheet(
+                           drawerState = DrawerState(DrawerValue.Open),
+                           drawerShape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
+                           drawerContainerColor = MaterialTheme.colorScheme.surface,
+                           drawerContentColor = MaterialTheme.colorScheme.onSurface
+                       ) {
+                           Spacer(modifier = Modifier.padding(16.dp))
 
-                    listOf(
-                        NavigateInfo(FontAwesomeIcons.Solid.Home, Routes.HomePage, "Home"),
-                        NavigateInfo(FontAwesomeIcons.Brands.Android, Routes.AppsPage, "Apps"),
-                        NavigateInfo(FontAwesomeIcons.Solid.Tools, Routes.ProjectsPage, "Projects"),
-                        NavigateInfo(FontAwesomeIcons.Solid.Male, Routes.AboutPage, "About")
-                    ).forEach {
-                        NavigationDrawerItem(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            label = { Text(it.title) },
-                            selected = currentRoute == it.route,
-                            onClick = {
-                                if (currentRoute != it.route) {
-                                    navController.navigate(it.route)
-                                    scope.launch { drawerState.close() }
-                                }
-                            },
-                            icon = {
-                                Icon(
-                                    imageVector = it.imageVector,
-                                    contentDescription = it.title,
-                                    modifier = Modifier.size(20.dp)
+                           listOf(
+                               NavigateInfo(FontAwesomeIcons.Solid.Home, Routes.HomePage, "Home"),
+                               NavigateInfo(FontAwesomeIcons.Brands.Android, Routes.AppsPage, "Apps"),
+                               NavigateInfo(FontAwesomeIcons.Solid.Tools, Routes.ProjectsPage, "Projects"),
+                               NavigateInfo(FontAwesomeIcons.Solid.Male, Routes.AboutPage, "About")
+                           ).forEach {
+                               NavigationDrawerItem(
+                                   modifier = Modifier.padding(horizontal = 4.dp),
+                                   label = { Text(it.title) },
+                                   selected = currentRoute == it.route,
+                                   onClick = {
+                                       if (currentRoute != it.route) {
+                                           navController.navigate(it.route)
+                                       }
+                                   },
+                                   icon = {
+                                       Icon(
+                                           imageVector = it.imageVector,
+                                           contentDescription = it.title,
+                                           modifier = Modifier.size(20.dp)
+                                       )
+                                   }
+                               )
+                           }
+
+                           HorizontalDivider(
+                               modifier = Modifier.padding(vertical = 8.dp, horizontal = 32.dp),
+                               color = MaterialTheme.colorScheme.onSurfaceVariant
+                           )
+
+                           ThemerOptions(
+                               colorState = colorState,
+                               stateEdit = { colorState = it }
+                           )
+                       }
+                   }
+
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        NavHost(
+                            modifier = Modifier.background(Color.Transparent),
+                            navController = navController,
+                            startDestination = Routes.HomePage
+                        ) {
+                            composable<Routes.HomePage> {
+                                currentRoute = Routes.HomePage
+                                HomePage()
+                            }
+                            composable<Routes.AppsPage> {
+                                currentRoute = Routes.AppsPage
+                                AppsPage(
+                                    modifier = Modifier
+                                        .widthIn(max = 900.dp)
                                 )
                             }
+                            composable<Routes.AboutPage> {
+                                currentRoute = Routes.AboutPage
+                                AboutPage(
+                                    modifier = Modifier
+                                        .widthIn(max = 900.dp)
+                                )
+                            }
+                            composable<Routes.ProjectsPage> {
+                                currentRoute = Routes.ProjectsPage
+                                ProjectsPage(
+                                    modifier = Modifier
+                                        .widthIn(max = 900.dp)
+                                )
+                            }
+                        }
+
+                        if (!showDrawer) {
+                            FilledTonalIconButton(
+                                onClick = { scope.launch { drawerState.open() } },
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(Alignment.TopStart)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Menu,
+                                    contentDescription = "Menu"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            DismissibleNavigationDrawer(
+                drawerContent = {
+                    DismissibleDrawerSheet(
+                        drawerState = drawerState,
+                        drawerShape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
+                        drawerContainerColor = MaterialTheme.colorScheme.surface,
+                        drawerContentColor = MaterialTheme.colorScheme.onSurface
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            IconButton(
+                                onClick = { scope.launch { drawerState.close() } }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = "Close"
+                                )
+                            }
+                        }
+
+                        listOf(
+                            NavigateInfo(FontAwesomeIcons.Solid.Home, Routes.HomePage, "Home"),
+                            NavigateInfo(FontAwesomeIcons.Brands.Android, Routes.AppsPage, "Apps"),
+                            NavigateInfo(FontAwesomeIcons.Solid.Tools, Routes.ProjectsPage, "Projects"),
+                            NavigateInfo(FontAwesomeIcons.Solid.Male, Routes.AboutPage, "About")
+                        ).forEach {
+                            NavigationDrawerItem(
+                                modifier = Modifier.padding(horizontal = 4.dp),
+                                label = { Text(it.title) },
+                                selected = currentRoute == it.route,
+                                onClick = {
+                                    if (currentRoute != it.route) {
+                                        navController.navigate(it.route)
+                                        scope.launch { drawerState.close() }
+                                    }
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = it.imageVector,
+                                        contentDescription = it.title,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                            )
+                        }
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 8.dp, horizontal = 32.dp),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+
+                        ThemerOptions(
+                            colorState = colorState,
+                            stateEdit = { colorState = it }
                         )
                     }
-
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 32.dp),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-
-                    ThemerOptions(
-                        colorState = colorState,
-                        stateEdit = { colorState = it }
-                    )
-                }
-            },
-            drawerState = drawerState,
-            gesturesEnabled = false,
-            content = {}
-        )
+                },
+                drawerState = drawerState,
+                gesturesEnabled = false,
+                content = {}
+            )
+        }
     }
 }
 

@@ -41,8 +41,7 @@ fun AboutPage(
     val uriHandler = LocalUriHandler.current
 
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
@@ -54,8 +53,8 @@ fun AboutPage(
             Card(
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onSecondary
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f),
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             ) {
                 Column(
@@ -65,16 +64,16 @@ fun AboutPage(
                 ) {
                     Text(
                         text = "Hello :)",
+                        fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.displaySmall
                     )
 
                     Text(
-                        text = "I'm Shubham Gorai. I'm a 19 year old from India who loves" +
-                                " to code stuff into existence. \n\n" +
-                                "I also like to rate music, play games, " +
-                                "test out bleeding edge stuff and nerd out about computer hardware" +
-                                ". I aspire to learn the bass someday...",
-                        style = MaterialTheme.typography.bodyLarge,
+                        text = "\nI'm Shubham Gorai, a 19-year-old from India who loves coding things into existence. \n" +
+                                "When I'm not immersed in code, you'll probably find me rating music, gaming, \n" +
+                                "testing bleeding-edge tech, or geeking out over computer hardware. \n" +
+                                "One day, I plan to pick up the bass and learn to slap...\n",
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
 
