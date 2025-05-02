@@ -45,8 +45,7 @@ fun ProjectsPage(
     val uriHandler = LocalUriHandler.current
 
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
@@ -58,7 +57,7 @@ fun ProjectsPage(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f),
                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             ) {
@@ -77,7 +76,9 @@ fun ProjectsPage(
                     Text(
                         text = project.shortDescription,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium
                     )
 
                     FlowRow(
@@ -149,7 +150,8 @@ fun ProjectsPage(
 
                     Text(
                         text = project.description,
-                        style = MaterialTheme.typography.bodyMedium
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }

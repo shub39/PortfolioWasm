@@ -93,7 +93,7 @@ fun AppsPage(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.5f),
                     contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             ) {
@@ -126,7 +126,7 @@ fun AppsPage(
                                 )
                             },
                             modifier = Modifier
-                                .size(75.dp)
+                                .size(85.dp)
                                 .clip(CircleShape)
                         )
 
@@ -135,13 +135,15 @@ fun AppsPage(
                         Column {
                             Text(
                                 text = app.name,
+                                style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold
                             )
 
                             Text(
                                 text = app.shortDescription,
-                                style = MaterialTheme.typography.titleSmall,
+                                style = MaterialTheme.typography.titleMedium,
                                 maxLines = 1,
+                                fontWeight = FontWeight.Bold,
                                 overflow = TextOverflow.Ellipsis
                             )
 
@@ -258,7 +260,9 @@ fun AppsPage(
 
                     Column(modifier = Modifier.fillMaxWidth()) {
                         Text(
-                            text = app.description
+                            text = app.description,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold
                         )
 
                         FlowRow(
@@ -355,7 +359,7 @@ fun AppsPage(
                     modifier = Modifier.fillMaxHeight(),
                     imageOptions = ImageOptions(
                         contentScale = ContentScale.Fit
-                    ),
+                    )
                 )
 
                 FilledTonalIconButton(

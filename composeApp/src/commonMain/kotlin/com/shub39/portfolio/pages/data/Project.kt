@@ -22,7 +22,7 @@ val PROJECTS = listOf(
         description = "Dotfiles stand for configuration files, as an Arch Linux user " +
                 "these are my heavily customised dotfiles for the Hyprland tiling window " +
                 "manager.",
-        stars = 200,
+        stars = 240,
         github = "https://github.com/shub39/dotfiles"
     ),
     Project(
