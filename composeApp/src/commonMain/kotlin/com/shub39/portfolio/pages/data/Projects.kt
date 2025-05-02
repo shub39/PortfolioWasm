@@ -6,6 +6,8 @@ data class Project(
     val description: String,
     val github: String? = null,
     val stars: Int? = null,
+    val screenshots: List<String>? = null,
+    val imageDimensions: Pair<Int, Int> = Pair(160, 90),
     val links: List<Pair<String, String>>? = null
 )
 
@@ -22,7 +24,14 @@ val PROJECTS = listOf(
         description = "Dotfiles stand for configuration files, as an Arch Linux user " +
                 "these are my heavily customised dotfiles for the Hyprland tiling window " +
                 "manager.",
+        screenshots = listOf(
+            "https://raw.githubusercontent.com/shub39/dotfiles/refs/heads/main/screenshots/1.png",
+            "https://raw.githubusercontent.com/shub39/dotfiles/refs/heads/main/screenshots/2.png",
+            "https://raw.githubusercontent.com/shub39/dotfiles/refs/heads/main/screenshots/3.png",
+            "https://raw.githubusercontent.com/shub39/dotfiles/refs/heads/main/screenshots/4.png"
+        ),
         stars = 240,
+        imageDimensions = Pair(320, 180),
         github = "https://github.com/shub39/dotfiles"
     ),
     Project(
