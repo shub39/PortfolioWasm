@@ -3,7 +3,6 @@ package com.shub39.portfolio
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
-import androidx.navigation.compose.rememberNavController
 
 fun main() {
     singleWindowApplication(
@@ -11,8 +10,6 @@ fun main() {
         state = WindowState(width = 800.dp, height = 800.dp),
         alwaysOnTop = true
     ) {
-        val navController = rememberNavController()
-
-        App(navController)
+        App()
     }
 }
