@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -75,15 +74,21 @@ fun ProjectsPage(
 
     var dialogImage by remember { mutableStateOf<String?>(null) }
 
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            Spacer(modifier = Modifier.height(32.dp))
-        }
+        Spacer(modifier = Modifier.height(32.dp))
 
-        items(PROJECTS, key = { it.name }) { project ->
+        Text(
+            text = "Other Projects",
+            style = MaterialTheme.typography.displaySmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        PROJECTS.forEach { project ->
             Card(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 shape = MaterialTheme.shapes.extraLarge,
@@ -253,9 +258,7 @@ fun ProjectsPage(
             }
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 
     if (dialogImage != null) {

@@ -2,17 +2,21 @@ package com.shub39.portfolio
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -30,23 +34,22 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.mikepenz.hypnoticcanvas.shaderBackground
 import com.mikepenz.hypnoticcanvas.shaders.MeshGradient
+import com.shub39.portfolio.ColorState.Companion.randomColor
 import com.shub39.portfolio.pages.AboutPage
 import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
@@ -61,19 +64,24 @@ import compose.icons.fontawesomeicons.brands.Android
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.Male
 import compose.icons.fontawesomeicons.solid.Tools
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun App(
-    navController: NavHostController
-) {
+internal fun App() {
+    val listState = rememberLazyListState()
     var showDrawer by remember { mutableStateOf(false) }
-
     val scope = rememberCoroutineScope()
-
+    val currentIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     var colorState by remember { mutableStateOf(ColorState()) }
     var drawerState = rememberDrawerState(DrawerValue.Closed)
-    var currentRoute: Routes by remember { mutableStateOf(Routes.HomePage) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(5000)
+            colorState = colorState.randomColor()
+        }
+    }
 
     PortfolioTheme(
         state = colorState
@@ -91,19 +99,33 @@ internal fun App(
                 contentColor = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .fillMaxSize()
-                    .shaderBackground(
-                        MeshGradient(
-                            colors = arrayOf(
-                                MaterialTheme.colorScheme.surface,
-                                MaterialTheme.colorScheme.primaryContainer,
-                                MaterialTheme.colorScheme.tertiaryContainer,
-                                MaterialTheme.colorScheme.secondaryContainer,
-                                MaterialTheme.colorScheme.surface
-                            ),
-                            scale = 5f
-                        ),
-                        speed = 3f
-                    )
+                    .let {
+                        if (showDrawer) {
+                            it.shaderBackground(
+                                MeshGradient(
+                                    colors = arrayOf(
+                                        MaterialTheme.colorScheme.surface,
+                                        MaterialTheme.colorScheme.primaryContainer,
+                                        MaterialTheme.colorScheme.tertiaryContainer,
+                                        MaterialTheme.colorScheme.secondaryContainer,
+                                        MaterialTheme.colorScheme.surface
+                                    ),
+                                    scale = 2f
+                                ),
+                                speed = 2f
+                            )
+                        } else it.background(
+                            brush = Brush.linearGradient(
+                                listOf(
+                                    MaterialTheme.colorScheme.surface,
+                                    MaterialTheme.colorScheme.primaryContainer,
+                                    MaterialTheme.colorScheme.tertiaryContainer,
+                                    MaterialTheme.colorScheme.secondaryContainer,
+                                    MaterialTheme.colorScheme.surface
+                                )
+                            )
+                        )
+                    }
             ) {
                 Row {
                    AnimatedVisibility(
@@ -118,19 +140,17 @@ internal fun App(
                            Spacer(modifier = Modifier.padding(16.dp))
 
                            listOf(
-                               NavigateInfo(FontAwesomeIcons.Solid.Home, Routes.HomePage, "Home"),
-                               NavigateInfo(FontAwesomeIcons.Brands.Android, Routes.AppsPage, "Apps"),
-                               NavigateInfo(FontAwesomeIcons.Solid.Tools, Routes.ProjectsPage, "Projects"),
-                               NavigateInfo(FontAwesomeIcons.Solid.Male, Routes.AboutPage, "About")
+                               NavigateInfo(FontAwesomeIcons.Solid.Home, 0, "Home"),
+                               NavigateInfo(FontAwesomeIcons.Brands.Android, 1, "Apps"),
+                               NavigateInfo(FontAwesomeIcons.Solid.Tools, 2, "Projects"),
+                               NavigateInfo(FontAwesomeIcons.Solid.Male, 3, "About")
                            ).forEach {
                                NavigationDrawerItem(
                                    modifier = Modifier.padding(horizontal = 4.dp),
                                    label = { Text(it.title) },
-                                   selected = currentRoute == it.route,
+                                   selected = currentIndex == it.index,
                                    onClick = {
-                                       if (currentRoute != it.route) {
-                                           navController.navigate(it.route)
-                                       }
+                                       scope.launch { listState.animateScrollToItem(it.index) }
                                    },
                                    icon = {
                                        Icon(
@@ -158,34 +178,40 @@ internal fun App(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        NavHost(
-                            modifier = Modifier.background(Color.Transparent),
-                            navController = navController,
-                            startDestination = Routes.HomePage
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            state = listState
                         ) {
-                            composable<Routes.HomePage> {
-                                currentRoute = Routes.HomePage
-                                HomePage()
+                            item {
+                                HomePage(
+                                    modifier = Modifier
+                                        .height(this@BoxWithConstraints.maxHeight)
+                                        .fillMaxWidth()
+                                )
                             }
-                            composable<Routes.AppsPage> {
-                                currentRoute = Routes.AppsPage
+
+                            item {
                                 AppsPage(
                                     modifier = Modifier
-                                        .widthIn(max = 900.dp)
+                                        .heightIn(min = this@BoxWithConstraints.maxHeight)
+                                        .widthIn(max = 800.dp)
                                 )
                             }
-                            composable<Routes.AboutPage> {
-                                currentRoute = Routes.AboutPage
-                                AboutPage(
-                                    modifier = Modifier
-                                        .widthIn(max = 900.dp)
-                                )
-                            }
-                            composable<Routes.ProjectsPage> {
-                                currentRoute = Routes.ProjectsPage
+
+                            item {
                                 ProjectsPage(
                                     modifier = Modifier
-                                        .widthIn(max = 900.dp)
+                                        .heightIn(min = this@BoxWithConstraints.maxHeight)
+                                        .widthIn(max = 800.dp)
+                                )
+                            }
+
+                            item {
+                                AboutPage(
+                                    modifier = Modifier
+                                        .heightIn(min = this@BoxWithConstraints.maxHeight)
+                                        .widthIn(max = 800.dp)
                                 )
                             }
                         }
@@ -232,19 +258,19 @@ internal fun App(
                         }
 
                         listOf(
-                            NavigateInfo(FontAwesomeIcons.Solid.Home, Routes.HomePage, "Home"),
-                            NavigateInfo(FontAwesomeIcons.Brands.Android, Routes.AppsPage, "Apps"),
-                            NavigateInfo(FontAwesomeIcons.Solid.Tools, Routes.ProjectsPage, "Projects"),
-                            NavigateInfo(FontAwesomeIcons.Solid.Male, Routes.AboutPage, "About")
+                            NavigateInfo(FontAwesomeIcons.Solid.Home, 0, "Home"),
+                            NavigateInfo(FontAwesomeIcons.Brands.Android, 1, "Apps"),
+                            NavigateInfo(FontAwesomeIcons.Solid.Tools, 2, "Projects"),
+                            NavigateInfo(FontAwesomeIcons.Solid.Male, 3, "About")
                         ).forEach {
                             NavigationDrawerItem(
                                 modifier = Modifier.padding(horizontal = 4.dp),
                                 label = { Text(it.title) },
-                                selected = currentRoute == it.route,
+                                selected = currentIndex == it.index,
                                 onClick = {
-                                    if (currentRoute != it.route) {
-                                        navController.navigate(it.route)
-                                        scope.launch { drawerState.close() }
+                                    scope.launch {
+                                        drawerState.close()
+                                        listState.animateScrollToItem(it.index)
                                     }
                                 },
                                 icon = {
@@ -270,7 +296,15 @@ internal fun App(
                 },
                 drawerState = drawerState,
                 gesturesEnabled = false,
-                content = {}
+                content = {
+                    if (drawerState.isOpen) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clickable { scope.launch { drawerState.close() } }
+                        )
+                    }
+                }
             )
         }
     }

@@ -8,20 +8,17 @@ data class ColorState(
     val isDark: Boolean = true,
     val isAmoled: Boolean = false,
     val style: PaletteStyle = PaletteStyle.TonalSpot,
-    val seedColor: Color = randomColor()
+    val seedColor: Color = Color.Blue
 ) {
     companion object {
-        fun randomColor(): Color {
-            return Color(
-                red = Random.nextFloat(),
-                green = Random.nextFloat(),
-                blue = Random.nextFloat(),
-                alpha = 1f
+        fun ColorState.randomColor(): ColorState {
+            return copy(
+                seedColor = Color(
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    Random.nextFloat()
+                )
             )
-        }
-
-        fun randomStyle(): PaletteStyle {
-            return PaletteStyle.entries.random()
         }
     }
 }

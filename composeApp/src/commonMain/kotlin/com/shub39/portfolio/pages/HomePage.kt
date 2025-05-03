@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -19,13 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.materialkolor.ktx.lighten
 import com.shub39.portfolio.pages.data.ButtonInfo
 import com.shub39.portfolio.util.PageFill
 import compose.icons.FontAwesomeIcons
@@ -33,32 +32,50 @@ import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
 import compose.icons.fontawesomeicons.brands.Linkedin
-import compose.icons.fontawesomeicons.brands.Telegram
 import compose.icons.fontawesomeicons.brands.Twitter
+import compose.icons.fontawesomeicons.solid.ArrowUp
 import compose.icons.fontawesomeicons.solid.Envelope
-import org.jetbrains.compose.resources.Font
-import portfolio.composeapp.generated.resources.Res
-import portfolio.composeapp.generated.resources.jetbrainsmono
+import compose.icons.fontawesomeicons.solid.Mouse
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun HomePage() = PageFill {
+fun HomePage(modifier: Modifier = Modifier) = PageFill(modifier = modifier) {
     val uriHandler = LocalUriHandler.current
+
+    Button(
+        onClick = {},
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        ),
+        modifier = Modifier
+            .padding(bottom = 32.dp)
+            .align(Alignment.BottomCenter)
+    ) {
+        Icon(
+            imageVector = FontAwesomeIcons.Solid.Mouse,
+            contentDescription = "Scroll",
+            modifier = Modifier.size(20.dp)
+        )
+
+        Spacer(modifier = Modifier.padding(4.dp))
+
+        Icon(
+            imageVector = FontAwesomeIcons.Solid.ArrowUp,
+            contentDescription = "Scroll",
+            modifier = Modifier.size(20.dp)
+        )
+
+        Spacer(modifier = Modifier.padding(4.dp))
+
+        Text("Scroll")
+    }
 
     Box(
         modifier = Modifier
             .padding(32.dp)
             .clip(MaterialTheme.shapes.extraLarge)
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        MaterialTheme.colorScheme.primaryContainer.lighten(2f),
-                        MaterialTheme.colorScheme.primaryContainer,
-                        MaterialTheme.colorScheme.primaryContainer.lighten(2f)
-                    )
-                ),
-                alpha = 0.5f
-            )
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f))
     ) {
         Column(
             modifier = Modifier.padding(32.dp),
@@ -66,8 +83,7 @@ fun HomePage() = PageFill {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "{shub39}",
-                fontFamily = FontFamily(Font(Res.font.jetbrainsmono)),
+                text = "Shubham Gorai",
                 style = MaterialTheme.typography.displaySmall,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -75,7 +91,7 @@ fun HomePage() = PageFill {
             )
 
             Text(
-                text = "Beginner Android dev and Linux nerd from India",
+                text = "Android dev and Linux nerd from India",
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -97,11 +113,6 @@ fun HomePage() = PageFill {
                         FontAwesomeIcons.Brands.Linkedin,
                         "https://www.linkedin.com/in/shub39/",
                         "LinkedIn"
-                    ),
-                    ButtonInfo(
-                        FontAwesomeIcons.Brands.Telegram,
-                        "https://t.me/shub39",
-                        "Telegram"
                     ),
                     ButtonInfo(
                         FontAwesomeIcons.Solid.Envelope,
