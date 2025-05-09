@@ -1,4 +1,4 @@
-package com.shub39.portfolio.pages.components
+package com.shub39.portfolio.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

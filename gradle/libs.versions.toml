@@ -9,9 +9,7 @@ kotlinx-coroutines = "1.10.1"
 hotreload = "1.0.0-alpha08"
 navigation = "2.9.0-alpha15"
 serialization = "1.7.3"
-hypnoticcanvas = "0.4.0-b02"
 landscapist = "2.4.2"
-sdpssp = "1.0.6"
 
 [libraries]
 
@@ -21,10 +19,8 @@ compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", vers
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref= "navigation"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
-hypnoticcanvas = { group = "com.mikepenz.hypnoticcanvas", name = "hypnoticcanvas", version.ref = "hypnoticcanvas" }
 landscapist-coil = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapist" }
 landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist" }
-sdpssp = { module = "network.chaintech:sdp-ssp-compose-multiplatform", version.ref = "sdpssp" }
 
 [plugins]
 

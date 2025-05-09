@@ -35,10 +35,8 @@ kotlin {
             implementation(libs.compose.colorpicker)
             implementation(libs.jetbrains.compose.navigation)
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.hypnoticcanvas)
             implementation(libs.landscapist.coil)
             implementation(libs.landscapist.placeholder)
-            implementation(libs.sdpssp)
         }
 
         desktopMain.dependencies {

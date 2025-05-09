@@ -47,14 +47,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mikepenz.hypnoticcanvas.shaderBackground
-import com.mikepenz.hypnoticcanvas.shaders.MeshGradient
-import com.shub39.portfolio.ColorState.Companion.randomColor
 import com.shub39.portfolio.pages.AboutPage
 import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
 import com.shub39.portfolio.pages.ProjectsPage
-import com.shub39.portfolio.pages.components.ThemerOptions
+import com.shub39.portfolio.components.ThemerOptions
 import com.shub39.portfolio.pages.data.NavigateInfo
 import com.shub39.portfolio.util.PortfolioTheme
 import compose.icons.FontAwesomeIcons
@@ -64,7 +61,6 @@ import compose.icons.fontawesomeicons.brands.Android
 import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.Male
 import compose.icons.fontawesomeicons.solid.Tools
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -75,13 +71,6 @@ internal fun App() {
     val currentIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     var colorState by remember { mutableStateOf(ColorState()) }
     var drawerState = rememberDrawerState(DrawerValue.Closed)
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(5000)
-            colorState = colorState.randomColor()
-        }
-    }
 
     PortfolioTheme(
         state = colorState
@@ -99,22 +88,7 @@ internal fun App() {
                 contentColor = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .fillMaxSize()
-                    .let {
-                        if (showDrawer) {
-                            it.shaderBackground(
-                                MeshGradient(
-                                    colors = arrayOf(
-                                        MaterialTheme.colorScheme.surface,
-                                        MaterialTheme.colorScheme.primaryContainer,
-                                        MaterialTheme.colorScheme.tertiaryContainer,
-                                        MaterialTheme.colorScheme.secondaryContainer,
-                                        MaterialTheme.colorScheme.surface
-                                    ),
-                                    scale = 2f
-                                ),
-                                speed = 2f
-                            )
-                        } else it.background(
+                    .background(
                             brush = Brush.linearGradient(
                                 listOf(
                                     MaterialTheme.colorScheme.surface,
@@ -125,7 +99,6 @@ internal fun App() {
                                 )
                             )
                         )
-                    }
             ) {
                 Row {
                    AnimatedVisibility(
@@ -309,4 +282,3 @@ internal fun App() {
         }
     }
 }
-
