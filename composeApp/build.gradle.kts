@@ -83,6 +83,6 @@ tasks.register<Copy>("copyWasmArtifacts") {
     into(layout.projectDirectory.dir("site"))
 }
 
-tasks.register<ComposeHotRun>("runHot") {
+tasks.withType<ComposeHotRun>().configureEach {
     mainClass.set("com.shub39.portfolio.MainKt")
 }

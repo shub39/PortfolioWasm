@@ -12,7 +12,7 @@ fun PortfolioTheme(
     DynamicMaterialTheme(
         seedColor = state.seedColor,
         useDarkTheme = state.isDark,
-        withAmoled = state.isAmoled,
+        withAmoled = false,
         style = state.style,
         typography = provideTypography(1f),
         animate = true,
