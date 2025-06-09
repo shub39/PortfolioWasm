@@ -11,6 +11,12 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.hotreload)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.preloader)
+}
+
+preloader {
+    jsModuleName.set("composeApp")
+    logo.set(project.file("src/commonMain/composeResources/drawable/eclipse.svg"))
 }
 
 kotlin {
@@ -37,6 +43,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.landscapist.coil)
             implementation(libs.landscapist.placeholder)
+            implementation(libs.material.icons.core)
         }
 
         desktopMain.dependencies {
@@ -63,8 +70,14 @@ composeCompiler {
     featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }
 
-tasks.register<Copy>("copyWasmArtifacts") {
+tasks.register<Delete>("deleteSiteDir") {
     dependsOn("wasmJsBrowserDistribution")
+
+    delete(layout.projectDirectory.dir("site"))
+}
+
+tasks.register<Copy>("copyWasmArtifacts") {
+    dependsOn("deleteSiteDir")
 
     from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
     into(layout.projectDirectory.dir("site"))

@@ -3,11 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="favicon.ico" sizes="any">
-        <link rel="preload" href="fcaad1700084e4ac7e16.wasm" as="fetch" crossorigin/>
-        <link rel="preload" href="91b8871cb4c59278d921.wasm" as="fetch" crossorigin/>
-        <link rel="preload" href="composeResources/portfolio.composeapp.generated.resources/font/manrope.ttf" as="fetch" type="font/ttf" crossorigin/>
-        <link rel="preload" href="composeResources/portfolio.composeapp.generated.resources/font/jetbrainsmono.ttf" as="fetch" type="font/ttf" crossorigin/>
+        <link rel="icon" href="/favicon.ico" sizes="any">
         <title>Portfolio</title>
         <style>
             html,
@@ -19,7 +15,28 @@
                 overflow: hidden;
             }
         </style>
-    </head>
-    <body></body>
+    
+<!-- PRELOADER_INJECT_START -->
+<link type="text/css" rel="stylesheet" href="preloader/preloader.css">
+<!-- PRELOADER_INJECT_END -->
+</head>
+    <body>
+<!-- PRELOADER_INJECT_START -->
+<div class="loader-container" style="width: 100%;">
+    <div class="loader"></div>
+    <h2 id="progress" style="font-family: Tajawal; text-align: center;"></h2>
+    <h2 style="font-family: Tajawal; text-align: center;">Loading ...</h2>
+    <img src="./preloader/eclipse.svg" style="height: 80px;">
+</div>
+<!-- PRELOADER_INJECT_END -->
+</body>
     <script src="composeApp.js"></script>
+
+<!-- PRELOADER_INJECT_START -->
+<script src="preloader/Preload.js"></script>
+<!-- PRELOADER_INJECT_END -->
+
+<!-- PRELOADER_INJECT_START -->
+<script type="application/javascript" src="preloader/preloader.js"></script>
+<!-- PRELOADER_INJECT_END -->
 </html>
