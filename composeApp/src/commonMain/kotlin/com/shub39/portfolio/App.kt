@@ -1,17 +1,31 @@
 package com.shub39.portfolio
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ButtonGroupDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -28,15 +42,21 @@ import com.shub39.portfolio.pages.AboutPage
 import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
 import com.shub39.portfolio.pages.ProjectsPage
+import com.shub39.portfolio.pages.data.SECTIONS
 import com.shub39.portfolio.util.PortfolioTheme
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun App() {
     val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyListState()
     val currentIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     var colorState by remember { mutableStateOf(ColorState()) }
+
+    val onScroll = { index: Int ->
+        coroutineScope.launch { listState.animateScrollToItem(index) }
+    }
 
     PortfolioTheme(
         state = colorState
@@ -69,10 +89,14 @@ internal fun App() {
                                 modifier = Modifier
                                     .height(this@BoxWithConstraints.maxHeight)
                                     .fillMaxWidth(),
-                                onScroll = {
-                                    coroutineScope.launch { listState.animateScrollToItem(it) }
+                                onScroll = { onScroll(it) },
+                                darkTheme = colorState.isDark,
+                                onRandomizeSeed = {
+                                    colorState = colorState.randomizeSeed()
                                 },
-                                onToggleDarkMode = { colorState = colorState.copy(isDark = !colorState.isDark) }
+                                onToggleDarkMode = {
+                                    colorState = colorState.copy(isDark = !colorState.isDark)
+                                }
                             )
                         }
 
@@ -97,6 +121,44 @@ internal fun App() {
                                 modifier = Modifier
                                     .heightIn(min = this@BoxWithConstraints.maxHeight)
                                     .widthIn(max = 1200.dp)
+                            )
+                        }
+                    }
+                }
+            }
+
+            AnimatedVisibility(
+                visible = currentIndex != 0,
+                enter = fadeIn(),
+                exit = fadeOut(),
+                modifier = Modifier.align(Alignment.BottomCenter)
+            ) {
+                FlowRow(
+                    modifier = Modifier
+                        .padding(32.dp)
+                        .widthIn(max = 800.dp),
+                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    SECTIONS.forEachIndexed { index, info ->
+                        val interactionSource = remember { MutableInteractionSource() }
+                        val isHovered by interactionSource.collectIsHoveredAsState()
+
+                        ToggleButton(
+                            checked = isHovered,
+                            onCheckedChange = { onScroll(info.index) },
+                            interactionSource = interactionSource,
+                            colors = ToggleButtonDefaults.toggleButtonColors(),
+                            shapes = when (index) {
+                                0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                SECTIONS.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                                else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                            }
+                        ) {
+                            Icon(
+                                imageVector = info.imageVector,
+                                contentDescription = info.title,
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                     }

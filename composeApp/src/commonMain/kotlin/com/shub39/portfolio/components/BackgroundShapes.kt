@@ -3,7 +3,6 @@ package com.shub39.portfolio.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -12,9 +11,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialShapes.Companion.Diamond
 import androidx.compose.material3.MaterialShapes.Companion.Gem
@@ -49,12 +48,6 @@ fun BackgroundShapes(
         label = "rotation_animation"
     )
 
-    val animatedSize by animateDpAsState(
-        targetValue = if (visible) 400.dp else 200.dp,
-        animationSpec = tween(durationMillis = 500),
-        label = "shape_size_animation"
-    )
-
     AnimatedVisibility(
         visible = visible,
         enter = fadeIn(tween(1000)),
@@ -64,7 +57,8 @@ fun BackgroundShapes(
             Box(
                 modifier = Modifier
                     .offset(x = 150.dp, y = (-150).dp)
-                    .size(animatedSize)
+                    .fillMaxSize(0.5f)
+                    .aspectRatio(1f)
                     .rotate(rotationDegrees)
                     .background(
                         color = MaterialTheme.colorScheme.secondary,
@@ -75,20 +69,9 @@ fun BackgroundShapes(
 
             Box(
                 modifier = Modifier
-                    .offset(x = 250.dp)
-                    .size(animatedSize)
-                    .rotate(rotationDegrees)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = VerySunny.toShape()
-                    )
-                    .align(Alignment.CenterEnd)
-            )
-
-            Box(
-                modifier = Modifier
                     .offset(x = 150.dp, y = 150.dp)
-                    .size(animatedSize)
+                    .fillMaxSize(0.5f)
+                    .aspectRatio(1f)
                     .rotate(rotationDegrees)
                     .background(
                         color = MaterialTheme.colorScheme.tertiary,
@@ -99,11 +82,38 @@ fun BackgroundShapes(
 
             Box(
                 modifier = Modifier
-                    .offset(x = (-150).dp, y = (-150).dp)
-                    .size(animatedSize)
+                    .offset(x = 150.dp)
+                    .fillMaxSize(0.5f)
+                    .aspectRatio(1f)
                     .rotate(rotationDegrees)
                     .background(
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = VerySunny.toShape()
+                    )
+                    .align(Alignment.CenterEnd)
+            )
+
+            Box(
+                modifier = Modifier
+                    .offset(x = (-150).dp, y = 150.dp)
+                    .fillMaxSize(0.5f)
+                    .aspectRatio(1f)
+                    .rotate(rotationDegrees)
+                    .background(
+                        color = MaterialTheme.colorScheme.inversePrimary,
+                        shape = Diamond.toShape()
+                    )
+                    .align(Alignment.BottomStart)
+            )
+
+            Box(
+                modifier = Modifier
+                    .offset(x = (-150).dp, y = (-150).dp)
+                    .fillMaxSize(0.5f)
+                    .aspectRatio(1f)
+                    .rotate(rotationDegrees)
+                    .background(
+                        color = MaterialTheme.colorScheme.tertiaryContainer,
                         shape = Sunny.toShape()
                     )
                     .align(Alignment.TopStart)
@@ -111,26 +121,15 @@ fun BackgroundShapes(
 
             Box(
                 modifier = Modifier
-                    .offset(x = (-250).dp)
-                    .size(animatedSize)
+                    .offset(x = (-150).dp)
+                    .fillMaxSize(0.5f)
+                    .aspectRatio(1f)
                     .rotate(rotationDegrees)
                     .background(
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.inverseSurface,
                         shape = Pill.toShape()
                     )
                     .align(Alignment.CenterStart)
-            )
-
-            Box(
-                modifier = Modifier
-                    .offset(x = (-150).dp, y = 150.dp)
-                    .size(animatedSize)
-                    .rotate(rotationDegrees)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = Diamond.toShape()
-                    )
-                    .align(Alignment.BottomStart)
             )
         }
     }

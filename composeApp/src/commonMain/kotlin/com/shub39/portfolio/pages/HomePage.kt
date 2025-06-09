@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,10 +15,13 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonGroupDefaults
+import androidx.compose.material3.ButtonShapes
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
@@ -39,25 +43,67 @@ import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Android
 import compose.icons.fontawesomeicons.solid.ArrowUp
-import compose.icons.fontawesomeicons.solid.Home
 import compose.icons.fontawesomeicons.solid.Male
+import compose.icons.fontawesomeicons.solid.Moon
 import compose.icons.fontawesomeicons.solid.Mouse
+import compose.icons.fontawesomeicons.solid.Palette
+import compose.icons.fontawesomeicons.solid.Sun
 import compose.icons.fontawesomeicons.solid.Tools
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun HomePage(
     modifier: Modifier = Modifier,
+    darkTheme: Boolean,
     onScroll: (Int) -> Unit,
-    onToggleDarkMode: () -> Unit
+    onToggleDarkMode: () -> Unit,
+    onRandomizeSeed: () -> Unit
 ) = PageFill(modifier = modifier) {
     val uriHandler = LocalUriHandler.current
 
+    Row(
+        modifier = Modifier
+            .padding(32.dp)
+            .align(Alignment.TopEnd)
+    ) {
+        FilledTonalIconButton(
+            onClick = onRandomizeSeed,
+            shapes = IconButtonShapes(
+                pressedShape = MaterialTheme.shapes.extraLarge,
+                shape = MaterialTheme.shapes.medium
+            )
+        ) {
+            Icon(
+                imageVector = FontAwesomeIcons.Solid.Palette,
+                contentDescription = "Toggle Dark Mode",
+                modifier = Modifier.size(24.dp)
+            )
+        }
+
+        FilledTonalIconButton(
+            onClick = onToggleDarkMode,
+            shapes = IconButtonShapes(
+                pressedShape = MaterialTheme.shapes.extraLarge,
+                shape = MaterialTheme.shapes.medium
+            )
+        ) {
+            Icon(
+                imageVector = if (darkTheme) FontAwesomeIcons.Solid.Sun else FontAwesomeIcons.Solid.Moon,
+                contentDescription = "Toggle Dark Mode",
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+
     Button(
-        onClick = {},
+        onClick = { onScroll(1) },
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        ),
+        shapes = ButtonShapes(
+            pressedShape = MaterialTheme.shapes.extraLarge,
+            shape = MaterialTheme.shapes.medium
         ),
         modifier = Modifier
             .padding(bottom = 32.dp)
@@ -148,7 +194,9 @@ fun HomePage(
         }
 
         FlowRow(
-            modifier = Modifier.widthIn(max = 800.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .widthIn(max = 800.dp),
             horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {

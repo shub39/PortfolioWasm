@@ -1,6 +1,5 @@
 package com.shub39.portfolio.pages
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,9 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -35,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,19 +55,15 @@ import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.Github
 import compose.icons.fontawesomeicons.brands.GooglePlay
-import compose.icons.fontawesomeicons.solid.ArrowLeft
-import compose.icons.fontawesomeicons.solid.ArrowRight
 import compose.icons.fontawesomeicons.solid.Globe
 import compose.icons.fontawesomeicons.solid.Star
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AppsPage(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = PageFill {
     val uriHandler = LocalUriHandler.current
-    val coroutineScope = rememberCoroutineScope()
 
     var dialogImage by remember { mutableStateOf<String?>(null) }
 
@@ -83,19 +74,12 @@ fun AppsPage(
     ) {
         Spacer(modifier = Modifier.height(32.dp))
 
-        Text(
-            text = "My Apps",
-            style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
-        )
-
         APPS.forEach { app ->
             Card(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.5f),
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             ) {
@@ -194,69 +178,6 @@ fun AppsPage(
                                     )
                                 }
                             }
-                        }
-                    }
-
-                    Box {
-                        val state = rememberLazyListState()
-
-                        LazyRow(
-                            state = state,
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(app.screenshots) {
-                                CoilImage(
-                                    imageModel = { it },
-                                    component = rememberImageComponent {
-                                        +ShimmerPlugin(
-                                            Shimmer.Resonate(
-                                                baseColor = Color.Transparent,
-                                                highlightColor = MaterialTheme.colorScheme.onSurface
-                                            )
-                                        )
-                                    },
-                                    modifier = Modifier
-                                        .width(180.dp)
-                                        .height(320.dp)
-                                        .clip(MaterialTheme.shapes.small)
-                                        .clickable { dialogImage = it }
-                                )
-                            }
-                        }
-
-                        FilledTonalIconButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    state.animateScrollToItem(
-                                        (state.firstVisibleItemIndex + 1).coerceAtLeast(0)
-                                    )
-                                }
-                            },
-                            modifier = Modifier.align(Alignment.CenterEnd)
-                        ) {
-                            Icon(
-                                imageVector = FontAwesomeIcons.Solid.ArrowRight,
-                                contentDescription = "Scroll Right",
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
-
-                        FilledTonalIconButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    state.animateScrollToItem(
-                                        (state.firstVisibleItemIndex - 1).coerceAtLeast(0)
-                                    )
-                                }
-                            },
-                            modifier = Modifier.align(Alignment.CenterStart)
-                        ) {
-                            Icon(
-                                imageVector = FontAwesomeIcons.Solid.ArrowLeft,
-                                contentDescription = "Scroll Left",
-                                modifier = Modifier.size(24.dp)
-                            )
                         }
                     }
 

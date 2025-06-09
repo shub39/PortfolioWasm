@@ -13,3 +13,11 @@ data class ColorState(
         Random.nextFloat()
     )
 )
+
+fun ColorState.randomizeSeed(): ColorState = copy(
+    seedColor = Color(
+        Random.nextFloat(),
+        Random.nextFloat(),
+        Random.nextFloat()
+    )
+)

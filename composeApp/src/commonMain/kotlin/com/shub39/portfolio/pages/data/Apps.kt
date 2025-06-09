@@ -31,7 +31,7 @@ val APPS = listOf(
                 "colorful cards, with features like synced lyrics and importing lyrics for local files. " +
                 "it is a perfect tool for audiophiles and music nerds like myself.",
         github = "https://github.com/shub39/Rush",
-        stars = 550,
+        stars = 590,
         rating = 5f,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
         otherLinks = mapOf(
@@ -56,7 +56,7 @@ val APPS = listOf(
                 " While learning android I made this app for myself that brings together all the features that I" +
                 " like keeping everything simple.",
         github = "https://github.com/shub39/Grit",
-        stars = 160,
+        stars = 200,
         playstore = null,
         otherLinks = mapOf(
             "Fdroid" to "https://f-droid.org/packages/com.shub39.grit",
@@ -75,7 +75,7 @@ val APPS = listOf(
         shortDescription = "Browse Bhagavad Gita",
         description = "A simple app to browse Bhagavad Gita with auduio transcriptions in three languages",
         github = "https://github.com/shub39/Dharmik",
-        stars = 34,
+        stars = 45,
         playstore = null,
         otherLinks = mapOf(
             "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.dharmik/latest"
@@ -98,7 +98,7 @@ val APPS = listOf(
         description = "Compose Multiplatform app to browse info on Characters, " +
                 "Locations and Episodes from Rick and Morty.",
         github = "https://github.com/shub39/Plumbus",
-        stars = 13,
+        stars = 18,
         playstore = null,
         otherLinks = null
     )
