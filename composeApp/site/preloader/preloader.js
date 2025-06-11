@@ -1,10 +1,10 @@
 const list = [
+    "composeResources/portfolio.composeapp.generated.resources/values/strings.commonMain.cvr",
     "composeResources/portfolio.composeapp.generated.resources/drawable/eclipse.png",
     "composeResources/portfolio.composeapp.generated.resources/drawable/eclipse.svg",
     "composeResources/portfolio.composeapp.generated.resources/font/manrope.ttf",
-    "composeResources/portfolio.composeapp.generated.resources/values/strings.commonMain.cvr",
-    "1d23c4f5cf5f53399a5e.wasm",
     "577ada5edaee067f36d2.wasm",
+    "44b98fb87faff3739012.wasm",
     "composeApp.js",
 ]
 

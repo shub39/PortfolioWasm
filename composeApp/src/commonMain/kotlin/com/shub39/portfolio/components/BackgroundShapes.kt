@@ -9,16 +9,11 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MaterialShapes.Companion.Diamond
-import androidx.compose.material3.MaterialShapes.Companion.Gem
-import androidx.compose.material3.MaterialShapes.Companion.Pentagon
-import androidx.compose.material3.MaterialShapes.Companion.Pill
 import androidx.compose.material3.MaterialShapes.Companion.Sunny
 import androidx.compose.material3.MaterialShapes.Companion.VerySunny
 import androidx.compose.material3.MaterialTheme
@@ -56,80 +51,41 @@ fun BackgroundShapes(
         Box(modifier = modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
-                    .offset(x = 150.dp, y = (-150).dp)
                     .fillMaxSize(0.5f)
                     .aspectRatio(1f)
                     .rotate(rotationDegrees)
-                    .background(
+                    .border(
+                        width = 3.dp,
                         color = MaterialTheme.colorScheme.secondary,
-                        shape = Pentagon.toShape()
+                        shape = VerySunny.toShape()
                     )
-                    .align(Alignment.TopEnd)
+                    .align(Alignment.Center)
             )
 
             Box(
                 modifier = Modifier
-                    .offset(x = 150.dp, y = 150.dp)
-                    .fillMaxSize(0.5f)
+                    .fillMaxSize(0.7f)
                     .aspectRatio(1f)
                     .rotate(rotationDegrees)
-                    .background(
-                        color = MaterialTheme.colorScheme.tertiary,
-                        shape = Gem.toShape()
-                    )
-                    .align(Alignment.BottomEnd)
-            )
-
-            Box(
-                modifier = Modifier
-                    .offset(x = 150.dp)
-                    .fillMaxSize(0.5f)
-                    .aspectRatio(1f)
-                    .rotate(rotationDegrees)
-                    .background(
+                    .border(
+                        width = 3.dp,
                         color = MaterialTheme.colorScheme.primary,
+                        shape = Sunny.toShape()
+                    )
+                    .align(Alignment.Center)
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .aspectRatio(1f)
+                    .rotate(rotationDegrees)
+                    .border(
+                        width = 3.dp,
+                        color = MaterialTheme.colorScheme.tertiary,
                         shape = VerySunny.toShape()
                     )
                     .align(Alignment.CenterEnd)
-            )
-
-            Box(
-                modifier = Modifier
-                    .offset(x = (-150).dp, y = 150.dp)
-                    .fillMaxSize(0.5f)
-                    .aspectRatio(1f)
-                    .rotate(rotationDegrees)
-                    .background(
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        shape = Diamond.toShape()
-                    )
-                    .align(Alignment.BottomStart)
-            )
-
-            Box(
-                modifier = Modifier
-                    .offset(x = (-150).dp, y = (-150).dp)
-                    .fillMaxSize(0.5f)
-                    .aspectRatio(1f)
-                    .rotate(rotationDegrees)
-                    .background(
-                        color = MaterialTheme.colorScheme.tertiaryContainer,
-                        shape = Sunny.toShape()
-                    )
-                    .align(Alignment.TopStart)
-            )
-
-            Box(
-                modifier = Modifier
-                    .offset(x = (-150).dp)
-                    .fillMaxSize(0.5f)
-                    .aspectRatio(1f)
-                    .rotate(rotationDegrees)
-                    .background(
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        shape = Pill.toShape()
-                    )
-                    .align(Alignment.CenterStart)
             )
         }
     }

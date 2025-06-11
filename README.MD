@@ -8,5 +8,4 @@ portfolio site made with Kotlin Wasm
 
 ## Libraries used
 > - [Material Kolor](https://github.com/jordond/MaterialKolor/) for palette generation
-> - [Hypnotic Canvas](https://github.com/mikepenz/HypnoticCanvas) for hypnotic background
 > - [Compose Hot Reload 🔥](https://github.com/JetBrains/compose-hot-reload)
