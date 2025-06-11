@@ -52,14 +52,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.shub39.portfolio.pages.data.APPS
 import com.shub39.portfolio.util.PageFill
+import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
@@ -90,31 +91,35 @@ fun AppsPage(
     ) {
         Spacer(modifier = Modifier.height(32.dp))
 
-        Card(
-            shape = MaterialTheme.shapes.extraExtraLarge,
-            modifier = Modifier.padding(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Card(
+                shape = MaterialTheme.shapes.extraExtraLarge,
+                modifier = Modifier.padding(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
             ) {
-                Icon(
-                    imageVector = FontAwesomeIcons.Brands.Android,
-                    contentDescription = "Android",
-                    modifier = Modifier.size(50.dp)
-                )
+                Row(
+                    modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = FontAwesomeIcons.Brands.Android,
+                        contentDescription = "Android",
+                        modifier = Modifier.size(50.dp)
+                    )
 
-                Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
 
-                Text(
-                    text = "My Apps",
-                    style = MaterialTheme.typography.displayMediumEmphasized,
-                    fontStyle = FontStyle.Italic
-                )
+                    Text(
+                        text = "My Apps",
+                        style = MaterialTheme.typography.displayMediumEmphasized
+                    )
+                }
             }
         }
 
@@ -176,14 +181,13 @@ fun AppsPage(
                                 .clip(Square.toShape())
                         )
 
-                        Spacer(modifier = Modifier.padding(8.dp))
+                        Spacer(modifier = Modifier.padding(4.dp))
 
                         Column {
                             Text(
                                 text = app.name,
-                                style = MaterialTheme.typography.displayMediumEmphasized,
-                                fontWeight = FontWeight.Bold,
-                                fontStyle = FontStyle.Italic
+                                style = MaterialTheme.typography.displaySmall,
+                                fontWeight = FontWeight.Bold
                             )
 
                             Row(
@@ -209,7 +213,7 @@ fun AppsPage(
                                     )
                                 }
 
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(4.dp))
 
                                 app.rating?.let {
                                     AssistChip(
@@ -357,6 +361,9 @@ fun AppsPage(
                     PageFill {
                         CoilImage(
                             imageModel = { screenshots[it] },
+                            imageOptions = ImageOptions(
+                                contentScale = ContentScale.Fit
+                            ),
                             modifier = Modifier
                                 .height(this@BoxWithConstraints.maxHeight - 150.dp)
                                 .clip(MaterialTheme.shapes.small),

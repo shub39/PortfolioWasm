@@ -33,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -140,7 +139,6 @@ fun HomePage(
                 text = "Shubham Gorai",
                 style = MaterialTheme.typography.displayLargeEmphasized,
                 fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
                 maxLines = 1,
                 autoSize = TextAutoSize.StepBased(
                     minFontSize = 24.sp,

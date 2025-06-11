@@ -4,7 +4,7 @@ const list = [
     "composeResources/portfolio.composeapp.generated.resources/drawable/eclipse.svg",
     "composeResources/portfolio.composeapp.generated.resources/font/manrope.ttf",
     "577ada5edaee067f36d2.wasm",
-    "44b98fb87faff3739012.wasm",
+    "205ba790e129b268705a.wasm",
     "composeApp.js",
 ]
 
