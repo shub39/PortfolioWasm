@@ -27,9 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.graphics.shapes.RoundedPolygon
 import com.shub39.portfolio.util.PageFill
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -46,29 +44,15 @@ private val allShapes = listOf(
     Clover4Leaf
 )
 
-private data class BackgroundShape(
-    val shape: RoundedPolygon,
-    val color: Color
-)
-
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BackgroundShapes(
     visible: Boolean
 ) = PageFill {
-    val colors = listOf(
-        MaterialTheme.colorScheme.inversePrimary,
-        MaterialTheme.colorScheme.inverseSurface,
-        MaterialTheme.colorScheme.surfaceVariant,
-        MaterialTheme.colorScheme.inverseOnSurface
-    )
     val shapes by remember {
         mutableStateOf(
             (0..20).map {
-                BackgroundShape(
-                    shape = allShapes.random(),
-                    color = colors.random()
-                )
+                allShapes.random()
             }
         )
     }
@@ -83,14 +67,18 @@ fun BackgroundShapes(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             maxItemsInEachRow = 4
         ) {
-            shapes.forEach {
+            shapes.forEachIndexed { index, shape ->
                 Box(
                     modifier = Modifier
                         .size(300.dp)
                         .aspectRatio(1f)
                         .background(
-                            color = it.color,
-                            shape = it.shape.toShape()
+                            color = if (index % 2 == 0) {
+                                MaterialTheme.colorScheme.inversePrimary
+                            } else {
+                                MaterialTheme.colorScheme.surfaceVariant
+                            },
+                            shape = shape.toShape()
                         )
                 )
             }
