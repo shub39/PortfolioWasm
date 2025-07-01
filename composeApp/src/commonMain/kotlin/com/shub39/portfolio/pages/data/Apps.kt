@@ -23,11 +23,10 @@ val APPS = listOf(
             "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png",
             "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png",
             "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png",
-            "https://raw.githubusercontent.com/shub39/Rush/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png"
         ),
         shortDescription = "Search, Save and Share Lyrics like Spotify!",
         github = "https://github.com/shub39/Rush",
-        stars = 590,
+        stars = 600,
         rating = 5f,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
         otherLinks = mapOf(
@@ -48,8 +47,8 @@ val APPS = listOf(
         ),
         shortDescription = "A simple ToDo list and Habit Tracker",
         github = "https://github.com/shub39/Grit",
-        stars = 200,
-        playstore = null,
+        stars = 250,
+        playstore = "https://play.google.com/store/apps/details?id=com.shub39.grit",
         otherLinks = mapOf(
             "Fdroid" to "https://f-droid.org/packages/com.shub39.grit",
             "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.grit/latest"
@@ -87,7 +86,7 @@ val APPS = listOf(
         ),
         shortDescription = "Browse info on Rick and Morty",
         github = "https://github.com/shub39/Plumbus",
-        stars = 18,
+        stars = 15,
         playstore = null,
         otherLinks = null
     )
