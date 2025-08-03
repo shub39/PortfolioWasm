@@ -26,7 +26,7 @@ val APPS = listOf(
         ),
         shortDescription = "Search, Save and Share Lyrics like Spotify!",
         github = "https://github.com/shub39/Rush",
-        stars = 600,
+        stars = 650,
         rating = 5f,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.rush.play",
         otherLinks = mapOf(
@@ -47,7 +47,7 @@ val APPS = listOf(
         ),
         shortDescription = "A simple ToDo list and Habit Tracker",
         github = "https://github.com/shub39/Grit",
-        stars = 250,
+        stars = 350,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.grit",
         otherLinks = mapOf(
             "Fdroid" to "https://f-droid.org/packages/com.shub39.grit",
@@ -65,7 +65,7 @@ val APPS = listOf(
         ),
         shortDescription = "Browse Bhagavad Gita",
         github = "https://github.com/shub39/Dharmik",
-        stars = 45,
+        stars = 50,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.dharmik.online",
         otherLinks = mapOf(
             "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.dharmik/latest"
@@ -86,7 +86,7 @@ val APPS = listOf(
         ),
         shortDescription = "Browse info on Rick and Morty",
         github = "https://github.com/shub39/Plumbus",
-        stars = 15,
+        stars = 20,
         playstore = null,
         otherLinks = null
     )

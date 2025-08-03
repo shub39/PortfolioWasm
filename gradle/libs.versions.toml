@@ -4,11 +4,8 @@ kotlin = "2.1.20"
 compose = "1.9.0-alpha02"
 composeIcons = "1.1.1"
 materialKolor = "2.0.1"
-colorpicker = "1.1.2"
 kotlinx-coroutines = "1.10.1"
 hotreload = "1.0.0-beta02"
-navigation = "2.9.0-alpha15"
-serialization = "1.7.3"
 landscapist = "2.5.0"
 preloader = "1.0.3"
 materialIconsCore = "1.7.3"
@@ -17,10 +14,7 @@ materialIconsCore = "1.7.3"
 
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
-compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
-jetbrains-compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref= "navigation"}
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 landscapist-coil = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapist" }
 landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist" }
 material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
