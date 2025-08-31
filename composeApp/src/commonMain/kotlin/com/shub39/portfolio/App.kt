@@ -1,98 +1,103 @@
 package com.shub39.portfolio
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Apps
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.shub39.portfolio.components.BackgroundShapes
+import com.shub39.portfolio.Routes.Companion.routes
+import com.shub39.portfolio.data.NavigationDestination
 import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
 import com.shub39.portfolio.util.PortfolioTheme
-import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+
+@Serializable
+private sealed interface Routes {
+    @Serializable
+    data object Home : Routes
+    @Serializable
+    data object Apps : Routes
+
+    companion object {
+        val routes = listOf(
+            NavigationDestination(
+                icon = Icons.Rounded.Home,
+                label = "Home",
+                route = Routes.Home
+            ),
+            NavigationDestination(
+                icon = Icons.Rounded.Apps,
+                label = "Apps",
+                route = Routes.Apps
+            )
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun App() {
-    val coroutineScope = rememberCoroutineScope()
-    val listState = rememberLazyListState()
-    val currentIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
     var colorState by remember { mutableStateOf(ColorState()) }
-
-    val onScroll = { index: Int ->
-        coroutineScope.launch { listState.animateScrollToItem(index) }
-    }
+    var currentPage: Routes by remember { mutableStateOf(Routes.Home) }
 
     PortfolioTheme(
         state = colorState
     ) {
-        BoxWithConstraints(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surfaceDim)
-        ) {
-            Surface(
-                color = Color.Transparent,
-                contentColor = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    BackgroundShapes(
-                        visible = currentIndex == 0
+        NavigationSuiteScaffold(
+            navigationSuiteItems = {
+                routes.forEach { route ->
+                    item(
+                        selected = currentPage == route.route,
+                        onClick = { currentPage = route.route },
+                        icon = {
+                            Icon(
+                                imageVector = route.icon,
+                                contentDescription = null
+                            )
+                        },
+                        label = { Text(route.label) }
                     )
+                }
+            }
+        ) {
+            AnimatedContent(
+                targetState = currentPage,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                when (it) {
+                    Routes.Home -> {
+                        HomePage(
+                            modifier = Modifier.fillMaxSize(),
+                            darkTheme = colorState.isDark,
+                            onRandomizeSeed = {
+                                colorState = colorState.randomizeSeed()
+                            },
+                            onToggleDarkMode = {
+                                colorState = colorState.copy(isDark = !colorState.isDark)
+                            }
+                        )
+                    }
 
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        contentPadding = PaddingValues(bottom = 32.dp),
-                        state = listState
-                    ) {
-                        item {
-                            HomePage(
-                                modifier = Modifier
-                                    .height(this@BoxWithConstraints.maxHeight)
-                                    .fillMaxWidth(),
-                                onScroll = { onScroll(it) },
-                                darkTheme = colorState.isDark,
-                                onRandomizeSeed = {
-                                    colorState = colorState.randomizeSeed()
-                                },
-                                onToggleDarkMode = {
-                                    colorState = colorState.copy(isDark = !colorState.isDark)
-                                }
-                            )
-                        }
-
-                        item {
-                            AppsPage(
-                                modifier = Modifier
-                                    .heightIn(min = this@BoxWithConstraints.maxHeight)
-                                    .widthIn(max = 1200.dp)
-                            )
-                        }
+                    Routes.Apps -> {
+                        AppsPage(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .widthIn(max = 1200.dp)
+                        )
                     }
                 }
             }

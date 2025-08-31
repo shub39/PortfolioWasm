@@ -5,10 +5,9 @@ compose = "1.9.0-alpha02"
 composeIcons = "1.1.1"
 materialKolor = "2.0.1"
 kotlinx-coroutines = "1.10.1"
-hotreload = "1.0.0-beta02"
+hotreload = "1.0.0-beta05"
 landscapist = "2.5.0"
 preloader = "1.0.3"
-materialIconsCore = "1.7.3"
 
 [libraries]
 
@@ -17,7 +16,6 @@ materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "ma
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 landscapist-coil = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapist" }
 landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist" }
-material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 
 [plugins]
 

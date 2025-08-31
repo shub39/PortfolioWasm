@@ -1,4 +1,4 @@
-package com.shub39.portfolio.pages.data
+package com.shub39.portfolio.data
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

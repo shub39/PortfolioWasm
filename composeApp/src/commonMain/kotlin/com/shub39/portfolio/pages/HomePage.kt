@@ -13,10 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.TextAutoSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonGroupDefaults
-import androidx.compose.material3.ButtonShapes
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -36,13 +33,11 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.shub39.portfolio.pages.data.SOCIAL_LINKS
+import com.shub39.portfolio.data.SOCIAL_LINKS
 import com.shub39.portfolio.util.PageFill
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.ArrowUp
 import compose.icons.fontawesomeicons.solid.Moon
-import compose.icons.fontawesomeicons.solid.Mouse
 import compose.icons.fontawesomeicons.solid.Palette
 import compose.icons.fontawesomeicons.solid.Sun
 
@@ -51,7 +46,6 @@ import compose.icons.fontawesomeicons.solid.Sun
 fun HomePage(
     modifier: Modifier = Modifier,
     darkTheme: Boolean,
-    onScroll: (Int) -> Unit,
     onToggleDarkMode: () -> Unit,
     onRandomizeSeed: () -> Unit
 ) = PageFill(modifier = modifier) {
@@ -89,39 +83,6 @@ fun HomePage(
                 modifier = Modifier.size(24.dp)
             )
         }
-    }
-
-    Button(
-        onClick = { onScroll(1) },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-        ),
-        shapes = ButtonShapes(
-            pressedShape = MaterialTheme.shapes.extraLarge,
-            shape = MaterialTheme.shapes.medium
-        ),
-        modifier = Modifier
-            .padding(bottom = 32.dp)
-            .align(Alignment.BottomCenter)
-    ) {
-        Icon(
-            imageVector = FontAwesomeIcons.Solid.Mouse,
-            contentDescription = "Scroll",
-            modifier = Modifier.size(20.dp)
-        )
-
-        Spacer(modifier = Modifier.padding(4.dp))
-
-        Icon(
-            imageVector = FontAwesomeIcons.Solid.ArrowUp,
-            contentDescription = "Scroll",
-            modifier = Modifier.size(20.dp)
-        )
-
-        Spacer(modifier = Modifier.padding(4.dp))
-
-        Text("Scroll")
     }
 
     Card(

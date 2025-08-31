@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -58,7 +60,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.shub39.portfolio.pages.data.APPS
+import com.shub39.portfolio.data.APPS
 import com.shub39.portfolio.util.PageFill
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
@@ -85,45 +87,49 @@ fun AppsPage(
 
     var screenshots by remember { mutableStateOf<List<String>>(emptyList()) }
 
-    Column(
+    LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
+        item {
+            Spacer(modifier = Modifier.height(32.dp))
+        }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Card(
-                shape = MaterialTheme.shapes.extraExtraLarge,
-                modifier = Modifier.padding(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                )
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                Card(
+                    shape = MaterialTheme.shapes.extraExtraLarge,
+                    modifier = Modifier.padding(16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
                 ) {
-                    Icon(
-                        imageVector = FontAwesomeIcons.Brands.Android,
-                        contentDescription = "Android",
-                        modifier = Modifier.size(50.dp)
-                    )
+                    Row(
+                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = FontAwesomeIcons.Brands.Android,
+                            contentDescription = "Android",
+                            modifier = Modifier.size(50.dp)
+                        )
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
 
-                    Text(
-                        text = "My Apps",
-                        style = MaterialTheme.typography.displayMediumEmphasized
-                    )
+                        Text(
+                            text = "My Apps",
+                            style = MaterialTheme.typography.displayMediumEmphasized
+                        )
+                    }
                 }
             }
         }
 
-        APPS.forEachIndexed { index, app ->
+        itemsIndexed(APPS) { index, app ->
             Card(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 shape = when (index) {
@@ -335,7 +341,9 @@ fun AppsPage(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
     }
 
     if (screenshots.isNotEmpty()) {
