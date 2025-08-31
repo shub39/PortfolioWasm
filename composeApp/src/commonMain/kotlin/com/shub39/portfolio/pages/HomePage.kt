@@ -12,10 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonGroupDefaults
-import androidx.compose.material3.ButtonShapes
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -90,11 +91,7 @@ fun HomePage(
 
             Button(
                 onClick = onNavigateToApps,
-                modifier = Modifier.height(buttonSize),
-                shapes = ButtonShapes(
-                    shape = MaterialTheme.shapes.medium,
-                    pressedShape = MaterialTheme.shapes.extraLarge
-                )
+                modifier = Modifier.height(buttonSize)
             ) {
                 Icon(
                     imageVector = FontAwesomeIcons.Brands.Android,
@@ -105,6 +102,12 @@ fun HomePage(
                 Text(
                     text = "My Apps",
                     style = ButtonDefaults.textStyleFor(buttonSize)
+                )
+                Spacer(modifier = Modifier.width(ButtonDefaults.MediumIconSpacing))
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
+                    contentDescription = null,
+                    modifier = Modifier.size(ButtonDefaults.MediumIconSize)
                 )
             }
         }

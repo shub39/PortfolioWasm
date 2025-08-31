@@ -8,12 +8,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.Font
 import portfolio.composeapp.generated.resources.Res
-import portfolio.composeapp.generated.resources.manrope
+import portfolio.composeapp.generated.resources.figtree
 
 @Composable
 fun provideTypography(scale: Float = 1f): Typography {
     val font = FontFamily(
-        Font(Res.font.manrope, FontWeight.Normal),
+        Font(Res.font.figtree, FontWeight.Normal),
     )
 
     return Typography(

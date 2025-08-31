@@ -3,6 +3,7 @@ package com.shub39.portfolio
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Home
@@ -16,10 +17,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.Routes.Companion.routes
 import com.shub39.portfolio.data.NavigationDestination
 import com.shub39.portfolio.pages.AppsPage
 import com.shub39.portfolio.pages.HomePage
+import com.shub39.portfolio.util.PageFill
 import com.shub39.portfolio.util.PortfolioTheme
 import kotlinx.serialization.Serializable
 
@@ -55,41 +58,43 @@ internal fun App() {
     PortfolioTheme(
         state = colorState
     ) {
-        NavigationSuiteScaffold(
-            navigationSuiteItems = {
-                routes.forEach { route ->
-                    item(
-                        selected = currentPage == route.route,
-                        onClick = { currentPage = route.route },
-                        icon = {
-                            Icon(
-                                imageVector = route.icon,
-                                contentDescription = null
-                            )
-                        },
-                        label = { Text(route.label) }
-                    )
-                }
-            }
-        ) {
-            AnimatedContent(
-                targetState = currentPage,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                when (it) {
-                    Routes.Home -> {
-                        HomePage(
-                            modifier = Modifier.fillMaxHeight(),
-                            onNavigateToApps = {
-                                currentPage = Routes.Apps
-                            }
+        PageFill {
+            NavigationSuiteScaffold(
+                navigationSuiteItems = {
+                    routes.forEach { route ->
+                        item(
+                            selected = currentPage == route.route,
+                            onClick = { currentPage = route.route },
+                            icon = {
+                                Icon(
+                                    imageVector = route.icon,
+                                    contentDescription = null
+                                )
+                            },
+                            alwaysShowLabel = false,
+                            label = { Text(route.label) }
                         )
                     }
+                },
+                modifier = Modifier.widthIn(max = 1000.dp)
+            ) {
+                AnimatedContent(
+                    targetState = currentPage,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    when (it) {
+                        Routes.Home -> {
+                            HomePage(
+                                modifier = Modifier.fillMaxHeight(),
+                                onNavigateToApps = {
+                                    currentPage = Routes.Apps
+                                }
+                            )
+                        }
 
-                    Routes.Apps -> {
-                        AppsPage(
-                            modifier = Modifier.fillMaxHeight()
-                        )
+                        Routes.Apps -> {
+                            AppsPage()
+                        }
                     }
                 }
             }

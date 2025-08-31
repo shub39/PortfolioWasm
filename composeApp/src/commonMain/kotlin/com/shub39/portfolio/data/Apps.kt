@@ -55,6 +55,26 @@ val APPS = listOf(
         )
     ),
     App(
+        name = "Momentum",
+        iconUrl = "https://raw.githubusercontent.com/shub39/Momentum/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png",
+        screenshots = listOf(
+            "https://raw.githubusercontent.com/shub39/Momentum/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png",
+            "https://raw.githubusercontent.com/shub39/Momentum/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png",
+            "https://raw.githubusercontent.com/shub39/Momentum/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png",
+            "https://raw.githubusercontent.com/shub39/Momentum/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png",
+            "https://raw.githubusercontent.com/shub39/Momentum/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png",
+            "https://raw.githubusercontent.com/shub39/Momentum/refs/heads/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png",
+        ),
+        shortDescription = "App to make Montages easily",
+        github = "https://github.com/shub39/Momentum",
+        stars = 0,
+        playstore = "https://play.google.com/store/apps/details?id=shub39.momentum",
+        otherLinks = mapOf(
+            "Fdroid" to "https://f-droid.org/packages/com.shub39.grit",
+            "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.grit/latest"
+        )
+    ),
+    App(
         name = "Dharmik",
         iconUrl = "https://raw.githubusercontent.com/shub39/Dharmik/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png",
         screenshots = listOf(
@@ -68,6 +88,7 @@ val APPS = listOf(
         stars = 50,
         playstore = "https://play.google.com/store/apps/details?id=com.shub39.dharmik.online",
         otherLinks = mapOf(
+            "Fdroid" to "https://f-droid.org/packages/com.shub39.dharmik",
             "IzzyOnDroid" to "https://apt.izzysoft.de/packages/com.shub39.dharmik/latest"
         )
     ),
