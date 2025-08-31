@@ -3,7 +3,6 @@ package com.shub39.portfolio
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Home
@@ -17,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.shub39.portfolio.Routes.Companion.routes
 import com.shub39.portfolio.data.NavigationDestination
 import com.shub39.portfolio.pages.AppsPage
@@ -81,22 +79,16 @@ internal fun App() {
                 when (it) {
                     Routes.Home -> {
                         HomePage(
-                            modifier = Modifier.fillMaxSize(),
-                            darkTheme = colorState.isDark,
-                            onRandomizeSeed = {
-                                colorState = colorState.randomizeSeed()
-                            },
-                            onToggleDarkMode = {
-                                colorState = colorState.copy(isDark = !colorState.isDark)
+                            modifier = Modifier.fillMaxHeight(),
+                            onNavigateToApps = {
+                                currentPage = Routes.Apps
                             }
                         )
                     }
 
                     Routes.Apps -> {
                         AppsPage(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .widthIn(max = 1200.dp)
+                            modifier = Modifier.fillMaxHeight()
                         )
                     }
                 }

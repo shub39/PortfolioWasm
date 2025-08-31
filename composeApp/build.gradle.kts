@@ -37,6 +37,7 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation("org.jetbrains.compose.material3:material3:1.9.0-alpha04")
             implementation(compose.material3AdaptiveNavigationSuite) {
                 exclude(group = "org.jetbrains.androidx.window")
             }

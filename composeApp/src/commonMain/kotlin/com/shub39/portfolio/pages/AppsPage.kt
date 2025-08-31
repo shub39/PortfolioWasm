@@ -82,19 +82,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun AppsPage(
     modifier: Modifier = Modifier
-) = PageFill {
+) {
     val uriHandler = LocalUriHandler.current
 
     var screenshots by remember { mutableStateOf<List<String>>(emptyList()) }
 
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        contentPadding = PaddingValues(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        item {
-            Spacer(modifier = Modifier.height(32.dp))
-        }
-
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),

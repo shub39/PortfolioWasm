@@ -15,6 +15,7 @@ fun PageFill(
     Box(
         modifier = modifier
             .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) { content() }
+        contentAlignment = Alignment.Center,
+        content = content
+    )
 }
