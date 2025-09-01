@@ -16,7 +16,7 @@ fun PageFill(
 ) {
     Box(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surfaceBright)
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
         content = content
